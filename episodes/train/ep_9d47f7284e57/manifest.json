@@ -1,0 +1,35 @@
+{
+  "base_currency": "KZT",
+  "company_name": "Fictional Whitlock Logistics GmbH",
+  "counts": {
+    "documents": 135,
+    "fx_rates": 111,
+    "invoices": 97,
+    "ledger_rows": 533,
+    "payments": 38
+  },
+  "env_version": "auditgym-1.0.0",
+  "episode_id": "ep_9d47f7284e57",
+  "money": {
+    "amounts": "integer minor units",
+    "exponents": {
+      "AED": 2,
+      "CHF": 2,
+      "EUR": 2,
+      "GBP": 2,
+      "JPY": 0,
+      "KZT": 2,
+      "USD": 2
+    }
+  },
+  "period_end": "2025-07-31T23:59:59+05:00",
+  "period_start": "2025-07-01T00:00:00+05:00",
+  "rounding": {
+    "fx_rate_places": 6,
+    "mode": "half_even",
+    "unit": "base_minor"
+  },
+  "schema_version": "1.0.0",
+  "timezone": "Asia/Almaty",
+  "utc_offset": "+05:00"
+}

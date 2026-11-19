@@ -1,0 +1,128 @@
+{
+  "base_currency": "EUR",
+  "episode_id": "ep_49eb909ce148",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-2026-6208"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-92d25ed6fa",
+          "D-21f3590ede",
+          "R-5234c18e"
+        ]
+      ],
+      "expected_amount_minor": 4525,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 4,
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-2026-9065"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-6a1210a4e4",
+          "D-535f38becb",
+          "R-51c11a69"
+        ]
+      ],
+      "expected_amount_minor": 280000,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 280,
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "PAY-208539"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-5ddd7a6d52",
+          "R-7e6b1f81",
+          "fx:2026-08-20:CHF:EUR"
+        ]
+      ],
+      "expected_amount_minor": 1813,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "PAY-247039"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-c7216f3495",
+          "R-0b517481",
+          "R-5103140a"
+        ],
+        [
+          "D-c7216f3495",
+          "R-0b517481"
+        ],
+        [
+          "D-c7216f3495",
+          "R-5103140a"
+        ]
+      ],
+      "expected_amount_minor": 221760,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 221,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "PAY-856095"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-9f2b6bbb14",
+          "R-01a7d629",
+          "fx:2026-08-31:CHF:EUR"
+        ]
+      ],
+      "expected_amount_minor": 240444,
+      "issue_id": "iss_05",
+      "scenario": null,
+      "tolerance_minor": 240,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "PAY-240548"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-4fe531fc00",
+          "R-2f5df8d3",
+          "R-a48e9a2b",
+          "R-b88073f6"
+        ],
+        [
+          "D-4fe531fc00",
+          "R-2f5df8d3"
+        ]
+      ],
+      "expected_amount_minor": 421520,
+      "issue_id": "iss_06",
+      "scenario": null,
+      "tolerance_minor": 421,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

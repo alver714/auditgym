@@ -1,0 +1,87 @@
+{
+  "base_currency": "USD",
+  "episode_id": "ep_b8f2ac332461",
+  "issues": [
+    {
+      "affected_ids": [
+        "RCPT-82612"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-37ab93bcff",
+          "R-2b759807",
+          "fx:2026-11-11:GBP:USD"
+        ]
+      ],
+      "expected_amount_minor": 1369,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "F-HNFZQX"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-c9d4026ddb",
+          "R-684bb43e"
+        ]
+      ],
+      "expected_amount_minor": 14795,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 14,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "F-6EUZJ3"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-eae4969e66",
+          "R-293e1dd4"
+        ]
+      ],
+      "expected_amount_minor": 214659,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 214,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "RCPT-61611"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-b6ca4db3a6",
+          "R-1b978879",
+          "R-550bf95c",
+          "R-6a16b553",
+          "R-b25a6c77",
+          "D-183613ca23",
+          "fx:2026-11-09:JPY:USD"
+        ],
+        [
+          "D-b6ca4db3a6",
+          "R-6a16b553",
+          "D-183613ca23",
+          "fx:2026-11-09:JPY:USD"
+        ]
+      ],
+      "expected_amount_minor": 473187,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 473,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

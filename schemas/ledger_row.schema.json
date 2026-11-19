@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "one row of ledger.csv (empty CSV field = null)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "row_id",
+    "timestamp",
+    "account",
+    "debit_minor",
+    "credit_minor",
+    "currency",
+    "entity_id",
+    "invoice_id",
+    "payment_id"
+  ],
+  "properties": {
+    "row_id": {
+      "type": "string",
+      "pattern": "^R-[0-9a-f]{8}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+      "description": "ISO-8601 timestamp WITH utc offset"
+    },
+    "account": {
+      "type": "string"
+    },
+    "debit_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "credit_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "entity_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "invoice_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payment_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "description": "Exactly one of debit_minor / credit_minor is > 0. All rows are in the base currency."
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "truth.json (PRIVATE, grader only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "base_currency",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "base_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issue_id",
+          "type",
+          "affected_ids",
+          "expected_amount_minor",
+          "currency",
+          "tolerance_minor",
+          "evidence_sets",
+          "scenario"
+        ],
+        "properties": {
+          "issue_id": {
+            "type": "string",
+            "pattern": "^iss_\\d{2}$"
+          },
+          "type": {
+            "enum": [
+              "duplicate_invoice",
+              "payment_misallocation",
+              "fx_error",
+              "period_cutoff"
+            ]
+          },
+          "affected_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+              "type": "string"
+            }
+          },
+          "expected_amount_minor": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "tolerance_minor": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_sets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 10,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "scenario": {
+            "enum": [
+              "fx_partial_payment_at_boundary",
+              "cutoff_with_wrong_rate_date",
+              null
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "base_currency": "KZT",
+  "episode_id": "ep_9d47f7284e57",
+  "issues": [
+    {
+      "affected_ids": [
+        "PAY-828399"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "D-4fbcbd2e1e",
+          "R-0952c842",
+          "R-89c117b3",
+          "R-97a251ee"
+        ],
+        [
+          "D-4fbcbd2e1e",
+          "R-0952c842"
+        ]
+      ],
+      "expected_amount_minor": 5297600,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 5297,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

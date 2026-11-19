@@ -1,0 +1,10 @@
+.venv/
+.scratch/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+reports/
+.DS_Store
+# grader_data/{train,dev} holds truth for the OPEN splits and is shipped on purpose.
+# Holdout truth is never written to disk (generated in-memory by `check`).

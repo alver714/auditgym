@@ -1,0 +1,35 @@
+{
+  "base_currency": "EUR",
+  "company_name": "Fictional Ullswater Logistics Ltd",
+  "counts": {
+    "documents": 71,
+    "fx_rates": 72,
+    "invoices": 50,
+    "ledger_rows": 597,
+    "payments": 21
+  },
+  "env_version": "auditgym-1.0.0",
+  "episode_id": "ep_c30c45593fa7",
+  "money": {
+    "amounts": "integer minor units",
+    "exponents": {
+      "AED": 2,
+      "CHF": 2,
+      "EUR": 2,
+      "GBP": 2,
+      "JPY": 0,
+      "KZT": 2,
+      "USD": 2
+    }
+  },
+  "period_end": "2026-02-28T23:59:59+05:00",
+  "period_start": "2026-02-01T00:00:00+05:00",
+  "rounding": {
+    "fx_rate_places": 6,
+    "mode": "half_even",
+    "unit": "base_minor"
+  },
+  "schema_version": "1.0.0",
+  "timezone": "Asia/Almaty",
+  "utc_offset": "+05:00"
+}

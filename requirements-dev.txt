@@ -1,0 +1,6 @@
+# Full pin set (direct + transitive), resolved on CPython 3.11.15. The AuditGym runtime itself is
+# stdlib-only; these packages are needed only to run the test-suite (python -m auditgym check).
+pytest==8.3.3
+pluggy==1.7.0
+iniconfig==2.3.1
+packaging==26.3

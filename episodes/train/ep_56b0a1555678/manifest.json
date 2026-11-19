@@ -1,0 +1,35 @@
+{
+  "base_currency": "USD",
+  "company_name": "Fictional Fernhollow Tiles Ltd",
+  "counts": {
+    "documents": 125,
+    "fx_rates": 72,
+    "invoices": 90,
+    "ledger_rows": 643,
+    "payments": 35
+  },
+  "env_version": "auditgym-1.0.0",
+  "episode_id": "ep_56b0a1555678",
+  "money": {
+    "amounts": "integer minor units",
+    "exponents": {
+      "AED": 2,
+      "CHF": 2,
+      "EUR": 2,
+      "GBP": 2,
+      "JPY": 0,
+      "KZT": 2,
+      "USD": 2
+    }
+  },
+  "period_end": "2025-04-30T23:59:59+00:00",
+  "period_start": "2025-04-01T00:00:00+00:00",
+  "rounding": {
+    "fx_rate_places": 6,
+    "mode": "half_even",
+    "unit": "base_minor"
+  },
+  "schema_version": "1.0.0",
+  "timezone": "UTC",
+  "utc_offset": "+00:00"
+}

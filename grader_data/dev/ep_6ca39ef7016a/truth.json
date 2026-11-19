@@ -1,0 +1,92 @@
+{
+  "base_currency": "EUR",
+  "episode_id": "ep_6ca39ef7016a",
+  "issues": [
+    {
+      "affected_ids": [
+        "BNKDRTZG52Z"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-11e080e258",
+          "R-a2907a8b",
+          "fx:2025-11-21:JPY:EUR"
+        ]
+      ],
+      "expected_amount_minor": 31095,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 31,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "BNKZZZ64BHX"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-ee87f29535",
+          "R-d5c3fad1",
+          "fx:2025-11-25:JPY:EUR"
+        ]
+      ],
+      "expected_amount_minor": 104,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "INV-2025-6226"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-00db9ae1d6",
+          "R-21de6937"
+        ]
+      ],
+      "expected_amount_minor": 2052,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 2,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "BNKR6RM7TJC"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-6a971e6aba",
+          "R-4ca28e6f",
+          "R-50b70e4e",
+          "D-b3a9c3272a",
+          "fx:2025-11-26:JPY:EUR"
+        ],
+        [
+          "D-6a971e6aba",
+          "R-4ca28e6f",
+          "D-b3a9c3272a",
+          "fx:2025-11-26:JPY:EUR"
+        ],
+        [
+          "D-6a971e6aba",
+          "R-50b70e4e",
+          "D-b3a9c3272a",
+          "fx:2025-11-26:JPY:EUR"
+        ]
+      ],
+      "expected_amount_minor": 982887,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 982,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

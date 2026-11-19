@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "one row of trajectories/*.jsonl (one env step of one run)",
+  "description": "Rows of one run are consecutive and ordered by step (step 0 = the reset observation, action null). The step-0 row also carries `header`, the run-level stamp. In mode=eval the policy-visible `reward` of the last row is 0.0 by design; the real reward is header.grader_reward_shared (== grader_report.reward_shared). A truncated run has truncated=true on its last row and never contains a submit action.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "episode_id",
+    "step",
+    "action",
+    "observation",
+    "reward",
+    "terminated",
+    "truncated",
+    "policy"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string",
+      "pattern": "^ep_[0-9a-f]{12}$"
+    },
+    "step": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "action": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "action.schema.json"
+        }
+      ]
+    },
+    "observation": {
+      "$ref": "observation.schema.json"
+    },
+    "reward": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "terminated": {
+      "type": "boolean"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "policy": {
+      "type": "string"
+    },
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "header_version",
+        "env_version",
+        "config_id",
+        "config_version",
+        "config_hash",
+        "mode",
+        "policy",
+        "seed",
+        "steps",
+        "terminated",
+        "truncated",
+        "ended_by",
+        "time_truncated",
+        "deterministic",
+        "reward_visible_to_policy",
+        "grader_reward_shared",
+        "trajectory_sha256"
+      ],
+      "properties": {
+        "header_version": {
+          "const": 1
+        },
+        "env_version": {
+          "type": "string"
+        },
+        "config_id": {
+          "type": "string"
+        },
+        "config_version": {
+          "type": "string"
+        },
+        "config_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "mode": {
+          "enum": [
+            "train",
+            "eval"
+          ]
+        },
+        "policy": {
+          "type": "string"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "split": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "terminated": {
+          "type": "boolean"
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "ended_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "submit | steps | time | abandoned"
+        },
+        "time_truncated": {
+          "type": "boolean",
+          "description": "true iff the WALL CLOCK cut the run short (ended_by == time); step-budget truncation is truncated=true with time_truncated=false"
+        },
+        "deterministic": {
+          "type": "boolean",
+          "description": "true iff the run used the in-process deterministic mode (wall clock frozen)"
+        },
+        "reward_visible_to_policy": {
+          "type": "boolean",
+          "description": "false in eval mode: row.reward of the final step is 0.0 by design"
+        },
+        "grader_reward_shared": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "grader_f1": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "trajectory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "label": {
+          "type": "string",
+          "description": "present on oracle reference rows and on the shipped samples"
+        }
+      }
+    }
+  }
+}

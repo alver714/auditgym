@@ -1,0 +1,35 @@
+{
+  "base_currency": "USD",
+  "company_name": "Fictional Windermoor Logistics LLP",
+  "counts": {
+    "documents": 127,
+    "fx_rates": 39,
+    "invoices": 79,
+    "ledger_rows": 749,
+    "payments": 48
+  },
+  "env_version": "auditgym-1.0.0",
+  "episode_id": "ep_4634f9b05934",
+  "money": {
+    "amounts": "integer minor units",
+    "exponents": {
+      "AED": 2,
+      "CHF": 2,
+      "EUR": 2,
+      "GBP": 2,
+      "JPY": 0,
+      "KZT": 2,
+      "USD": 2
+    }
+  },
+  "period_end": "2025-08-31T23:59:59+05:00",
+  "period_start": "2025-08-01T00:00:00+05:00",
+  "rounding": {
+    "fx_rate_places": 6,
+    "mode": "half_even",
+    "unit": "base_minor"
+  },
+  "schema_version": "1.0.0",
+  "timezone": "Asia/Almaty",
+  "utc_offset": "+05:00"
+}

@@ -1,0 +1,4573 @@
+{
+  "all_hard_checks_passed": true,
+  "checks": [
+    {
+      "detail": "1043 passed in 64.89s (0:01:04) (66.5s)",
+      "hard": true,
+      "name": "pytest",
+      "status": "PASS",
+      "step": "1"
+    },
+    {
+      "detail": "10 episodes",
+      "hard": true,
+      "name": "train: regeneration is byte-identical (x2)",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "10 compared, 0 not committed",
+      "hard": true,
+      "name": "train: matches committed episodes/train/",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "10 episodes",
+      "hard": true,
+      "name": "dev: regeneration is byte-identical (x2)",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "10 compared, 0 not committed",
+      "hard": true,
+      "name": "dev: matches committed episodes/dev/",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "dev@1.3.0, holdout@1.3.0, train@1.3.0",
+      "hard": true,
+      "name": "every shipped config has config_id, config_version and a resolvable config_hash",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "3 configs locked",
+      "hard": true,
+      "name": "configs lock (CONFIG_VERSIONS.json) binds every config_id@config_version to its content hash (no content change without a version bump)",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "6 episodes, python 3.11.15 on Darwin",
+      "hard": true,
+      "name": "golden digests (tests/golden_hashes.json) match this machine (episodes, truth, trajectories)",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "2211 rows in 3 files",
+      "hard": true,
+      "name": "every shipped trajectory row conforms to schemas/trajectory_row.schema.json",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "trajectories.jsonl policies ['careful_auditor', 'careful_auditor_degraded', 'flag_all', 'random_explorer', 'reconcile']",
+      "hard": true,
+      "name": "oracle rows are in oracle_reference.jsonl (labelled), not mixed into trajectories.jsonl",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "truncated by ['steps', 'time'], eval-mode samples 1",
+      "hard": true,
+      "name": "samples.jsonl has an eval-mode run (reward hidden) and truncated=true runs (steps and wall clock)",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "2 distinct (env, config, version) combinations",
+      "hard": true,
+      "name": "every trajectory header carries env_version, config_id, config_version and config_hash",
+      "status": "PASS",
+      "step": "2"
+    },
+    {
+      "detail": "found 20",
+      "hard": true,
+      "name": "holdout has 20 episodes in splits.json",
+      "status": "PASS",
+      "step": "3"
+    },
+    {
+      "detail": "20/20 valid",
+      "hard": true,
+      "name": "all holdout episodes pass validate.py (identities, rules==truth, evidence, leak, counts)",
+      "status": "PASS",
+      "step": "3"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "every holdout episode (public files, truth, provenance) conforms to schemas/*.json",
+      "status": "PASS",
+      "step": "3"
+    },
+    {
+      "detail": "found {'clean': 5, 'interaction': 5, 'mixed': 10}",
+      "hard": true,
+      "name": "holdout composition 5 clean / 5 interaction / 10 mixed",
+      "status": "PASS",
+      "step": "3"
+    },
+    {
+      "detail": "all consistent",
+      "hard": true,
+      "name": "declared splits.json category matches the category measured from truth",
+      "status": "PASS",
+      "step": "3"
+    },
+    {
+      "detail": "80 runs",
+      "hard": true,
+      "name": "every (policy, episode) run completed",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "40 runs",
+      "hard": false,
+      "name": "extra diagnostic policies completed (not one of the 4 required baselines)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "",
+      "hard": true,
+      "name": "all episodes ended with a grader report",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "",
+      "hard": true,
+      "name": "all runs within 100 steps",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "120 log files for 120 runs",
+      "hard": true,
+      "name": "the grader wrote one per-episode log file for every run (--log-dir, never sent to the agent)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "",
+      "hard": true,
+      "name": "no baseline submitted a malformed submission",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "",
+      "hard": true,
+      "name": "reconcile obeys the budget (never truncated, submits)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "all runs agree",
+      "hard": true,
+      "name": "env grader_report == independent matcher.score(recorded submission)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "mean shared +1.000",
+      "hard": true,
+      "name": "oracle: F1 = 1.0 and shared reward = +1.0 on every episode (0 inspection steps)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "-0.990",
+      "hard": true,
+      "name": "flag_all mean shared reward < 0",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "random_explorer -0.806, reconcile -0.807, flag_all -0.990, oracle +1.000, careful_auditor (extra) +0.949, careful_auditor_degraded (extra) +0.030",
+      "hard": false,
+      "name": "ordering oracle > reconcile > random_explorer, flag_all (mean shared)",
+      "status": "WARN",
+      "step": "4"
+    },
+    {
+      "detail": "degraded F1 0.531 / shared +0.030 vs careful_auditor 1.000 / +0.949",
+      "hard": false,
+      "name": "careful_auditor_degraded is a measurable near miss (0 < mean F1 < careful_auditor's; reward below it)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "mean F1 0.109",
+      "hard": false,
+      "name": "reconcile earns partial credit (0 < mean F1 < 1)",
+      "status": "PASS",
+      "step": "4"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "rename (shape-preserving ids) + permute: oracle reward identical and answer maps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "AGGRESSIVE rename (other prefix/length/charset/sort order) + permute: oracle reward identical and answer maps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "rename+permute: reconcile (a non-oracle policy) gets identical metrics, reward and steps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "aggressive rename+permute: reconcile (a non-oracle policy) gets identical metrics, reward and steps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "rename+permute: careful_auditor (a non-oracle policy) gets identical metrics, reward and steps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "aggressive rename+permute: careful_auditor (a non-oracle policy) gets identical metrics, reward and steps (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "ids changed on every episode",
+      "hard": false,
+      "name": "rename actually changed the ids the oracle cites",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "aggressive rename: every cited opaque id is numeric-only or z+hex and differs from the original (fx:* natural keys are intentionally kept)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "reconcile: 13/20 above floor, careful_auditor: 20/20 above floor",
+      "hard": true,
+      "name": "paired checks are discriminating: reconcile and careful_auditor score above the -1.0 floor on >= 4 of 20 pairs",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "replay of the same seed + actions gives an identical trajectory sha256 (20 pairs)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20 episodes",
+      "hard": true,
+      "name": "oracle submission == the one derived from the committed grader_data truth.json (open splits)",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "oracle scored against the COMMITTED truth.json + committed public ids: F1 = 1.0",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "20/20",
+      "hard": true,
+      "name": "careful_auditor env reward == independent score against the committed truth.json",
+      "status": "PASS",
+      "step": "5"
+    },
+    {
+      "detail": "scanned 240 runs for 14 tokens",
+      "hard": true,
+      "name": "no hidden-data tokens in 4225 recorded observations",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "",
+      "hard": true,
+      "name": "observation schema is exactly {episode_id, step, steps_remaining, result, error} (+task/manifest/policy at reset)",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "20 episodes",
+      "hard": true,
+      "name": "episode_id equals the content hash of the public records (carries no extra information about the seed)",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "20 episodes",
+      "hard": true,
+      "name": "episode_id is not / does not embed the decimal seed (seeds of >= 6 digits searched as substring)",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "refused=[True, True]",
+      "hard": true,
+      "name": "reset and grader_report are harness-only: refused without the control token",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "code=invalid_args, next step=2",
+      "hard": true,
+      "name": "a deeply nested action gives a bounded invalid_args error, consumes one step, keeps the run alive",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "terminated=True, grader reward -1.0",
+      "hard": true,
+      "name": "submit without args.findings: ends the episode; eval shows no error (validity is not leaked), grader log has reward -1 and the reason",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "2 logs, invalid-with-error=True, abandoned=1",
+      "hard": true,
+      "name": "grader log file written for the invalid submission and for an episode abandoned by re-reset",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "+1.000 vs -1.000 (2 issues)",
+      "hard": true,
+      "name": "complete correct answer with evidence > silence on books with issues",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "+1.000 vs -1.000",
+      "hard": true,
+      "name": "silence > false accusations on clean books",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "single +0.333, duplicated +0.000, tp=1 fp=1",
+      "hard": true,
+      "name": "duplicating a correct finding gives no gain (second copy is FP)",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "order, id order and explanation text do not change the score",
+      "hard": true,
+      "name": "score ignores explanation text and the order of findings/ids",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "0.002000 per step",
+      "hard": true,
+      "name": "step cost is tiny: <= 0.002 per inspection step",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "reward +0.9900 (expected +0.9900)",
+      "hard": true,
+      "name": "env: perfect answer after 5 inspection steps earns 1 - 5*0.002",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "evidence_unknown_id",
+      "hard": true,
+      "name": "unknown/non-existent evidence id invalidates the finding",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "reason ids_mismatch",
+      "hard": true,
+      "name": "guessed affected ids are false positives",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "currency_mismatch",
+      "hard": true,
+      "name": "wrong currency invalidates the finding",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "empty evidence: evidence_insufficient; one id missing: evidence_insufficient",
+      "hard": true,
+      "name": "missing or incomplete evidence set invalidates the finding",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "tolerance 1: +tol ok, +tol+1 rejected",
+      "hard": true,
+      "name": "amount tolerance is inclusive max(1, expected//1000)",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "15 malformed variants all score -1",
+      "hard": true,
+      "name": "malformed submissions score -1 (15 variants)",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "first +1.000, re-submit reward 0.0, code episode_over",
+      "hard": true,
+      "name": "re-submit / any step after the end -> episode_over, no state change, reward 0",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "train reward -1.0, eval error None (no validity oracle), grader reward -1.0",
+      "hard": true,
+      "name": "malformed submit: train -> reward -1 + reason; eval -> no error shown (no validity oracle), grader keeps -1 and error log",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "clean +0.800, issues -1.000 (truncated at step 100, scored as empty)",
+      "hard": true,
+      "name": "truncation by steps: 100th non-submit step -> truncated, findings treated as empty and scored",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "truncated=True, reward +0.998",
+      "hard": true,
+      "name": "truncation by wall-clock limit -> truncated and scored as empty",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "not_reset",
+      "hard": true,
+      "name": "step before reset -> not_reset",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "policy sees reward 0.0, info {}; grader keeps +1.000",
+      "hard": true,
+      "name": "eval mode: terminal reward 0.0 and empty info to the policy; grader keeps the real result",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "info keys ['inspection_steps', 'invalid_submission', 'metrics', 'reward_experimental', 'reward_shared']",
+      "hard": true,
+      "name": "train-mode terminal info has only counts/metrics (no ids)",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "codes ['unknown_action', 'unknown_id', 'invalid_args', 'invalid_args', 'invalid_cursor', 'unknown_table', 'calculator_error']",
+      "hard": true,
+      "name": "bad actions: bounded error code, message <= 120 chars, consume a step, reward 0",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "457 ledger rows over 10 pages; foreign cursor rejected",
+      "hard": true,
+      "name": "pagination: stable cursors, every row exactly once, foreign cursor rejected",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "rewards -1.00, -1.00, -1.00, -1.00, -1.00, -1.00",
+      "hard": true,
+      "name": "flag-all scores badly: reward < 0 on the first 6 episodes (train mode, env)",
+      "status": "PASS",
+      "step": "7"
+    },
+    {
+      "detail": "policies (except oracle) have no truth/generator imports",
+      "hard": true,
+      "name": "agent-side policies import neither generator nor truth",
+      "status": "PASS",
+      "step": "7"
+    }
+  ],
+  "config_file_sha256": {
+    "dev": "a8cb4142e8380a9b33d8212318446795be5c36ddf405efc5cf31d2c9e37a9739",
+    "holdout": "7fc7c4841f845cc5faea01d66a39c0af6d51b559ee77bc8d11d8f91321ed38d9",
+    "train": "254ee594c0b646bbeaa61f53060ae86e2bdb3ae1aa14144ec8af5f53d09eaa4c"
+  },
+  "config_hashes": {
+    "dev": "fb29dd57ab25e3092c3e4a2bcce29a3a052e3bc528ca1f18f2a75ca310ce2925",
+    "holdout": "3396914da9dc4621c80f29d08b9776c27d4195d56515aef3d3ada11cbf86bd12",
+    "train": "b0cdce3de8ea1a1a86d2f1830ae6c8516527ce6ca25aed7f343f7f183f2d6156"
+  },
+  "config_ids": {
+    "dev": "dev",
+    "holdout": "holdout",
+    "train": "train"
+  },
+  "config_versions": {
+    "dev": "1.3.0",
+    "holdout": "1.3.0",
+    "train": "1.3.0"
+  },
+  "counts": {
+    "FAIL": 0,
+    "PASS": 73,
+    "SKIP": 0,
+    "WARN": 1
+  },
+  "elapsed_s": 107.8,
+  "env_version": "auditgym-1.0.0",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "python": "3.11.15",
+  "quick": false,
+  "sections": {
+    "baselines": {
+      "rows": {
+        "careful_auditor": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": 0.934,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 33,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": 0.934,
+            "steps": 34,
+            "tp": 0,
+            "wall_s": 0.1014
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": 0.942,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 29,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": 0.942,
+            "steps": 30,
+            "tp": 0,
+            "wall_s": 0.0899
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": 0.952,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 24,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": 0.952,
+            "steps": 25,
+            "tp": 0,
+            "wall_s": 0.095
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": 0.952,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 24,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": 0.952,
+            "steps": 25,
+            "tp": 0,
+            "wall_s": 0.0892
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": 0.956,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 22,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": 0.956,
+            "steps": 23,
+            "tp": 0,
+            "wall_s": 0.0904
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": 0.966,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 17,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9186,
+            "shared": 0.966,
+            "steps": 18,
+            "tp": 2,
+            "wall_s": 0.0816
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": 0.954,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 23,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9223,
+            "shared": 0.954,
+            "steps": 24,
+            "tp": 2,
+            "wall_s": 0.0905
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": 0.96,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9260,
+            "shared": 0.96,
+            "steps": 21,
+            "tp": 4,
+            "wall_s": 0.0844
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": 0.946,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 27,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9297,
+            "shared": 0.946,
+            "steps": 28,
+            "tp": 7,
+            "wall_s": 0.095
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": 0.946,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 27,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9334,
+            "shared": 0.946,
+            "steps": 28,
+            "tp": 8,
+            "wall_s": 0.0978
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": 0.948,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 26,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9371,
+            "shared": 0.948,
+            "steps": 27,
+            "tp": 2,
+            "wall_s": 0.0843
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": 0.956,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 22,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9408,
+            "shared": 0.956,
+            "steps": 23,
+            "tp": 3,
+            "wall_s": 0.0859
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": 0.954,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 23,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9445,
+            "shared": 0.954,
+            "steps": 24,
+            "tp": 6,
+            "wall_s": 0.0882
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": 0.942,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 29,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9482,
+            "shared": 0.942,
+            "steps": 30,
+            "tp": 3,
+            "wall_s": 0.0935
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": 0.942,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 29,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9519,
+            "shared": 0.942,
+            "steps": 30,
+            "tp": 6,
+            "wall_s": 0.0926
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": 0.946,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 27,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9556,
+            "shared": 0.946,
+            "steps": 28,
+            "tp": 6,
+            "wall_s": 0.0944
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": 0.94,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 30,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9593,
+            "shared": 0.94,
+            "steps": 31,
+            "tp": 4,
+            "wall_s": 0.0925
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": 0.948,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 26,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9630,
+            "shared": 0.948,
+            "steps": 27,
+            "tp": 4,
+            "wall_s": 0.0912
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": 0.946,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 27,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9667,
+            "shared": 0.946,
+            "steps": 28,
+            "tp": 8,
+            "wall_s": 0.0952
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": 0.952,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 24,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9704,
+            "shared": 0.952,
+            "steps": 25,
+            "tp": 6,
+            "wall_s": 0.0869
+          }
+        ],
+        "careful_auditor_degraded": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": -1.0,
+            "steps": 21,
+            "tp": 0,
+            "wall_s": 0.0971
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": 0.96,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": 0.96,
+            "steps": 21,
+            "tp": 0,
+            "wall_s": 0.0888
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": -1.0,
+            "steps": 21,
+            "tp": 0,
+            "wall_s": 0.0942
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": -1.0,
+            "steps": 21,
+            "tp": 0,
+            "wall_s": 0.0903
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 2,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": -1.0,
+            "steps": 21,
+            "tp": 0,
+            "wall_s": 0.1007
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": 0.299333,
+            "f1": 0.666667,
+            "fn": 0,
+            "fp": 2,
+            "inspection_steps": 17,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.5,
+            "recall": 1.0,
+            "seed": 9186,
+            "shared": 0.299334,
+            "steps": 18,
+            "tp": 2,
+            "wall_s": 0.0834
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": 0.56,
+            "f1": 0.8,
+            "fn": 0,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.666667,
+            "recall": 1.0,
+            "seed": 9223,
+            "shared": 0.56,
+            "steps": 21,
+            "tp": 2,
+            "wall_s": 0.0906
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": 0.293333,
+            "f1": 0.666667,
+            "fn": 1,
+            "fp": 2,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.6,
+            "recall": 0.75,
+            "seed": 9260,
+            "shared": 0.293334,
+            "steps": 21,
+            "tp": 3,
+            "wall_s": 0.0846
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": 0.388571,
+            "f1": 0.714286,
+            "fn": 2,
+            "fp": 2,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.714286,
+            "recall": 0.714286,
+            "seed": 9297,
+            "shared": 0.388572,
+            "steps": 21,
+            "tp": 5,
+            "wall_s": 0.0938
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": -0.373333,
+            "f1": 0.333333,
+            "fn": 6,
+            "fp": 2,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.5,
+            "recall": 0.25,
+            "seed": 9334,
+            "shared": -0.373334,
+            "steps": 21,
+            "tp": 2,
+            "wall_s": 0.096
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": 0.102857,
+            "f1": 0.571429,
+            "fn": 0,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.4,
+            "recall": 1.0,
+            "seed": 9371,
+            "shared": 0.102858,
+            "steps": 21,
+            "tp": 2,
+            "wall_s": 0.0842
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": 0.674286,
+            "f1": 0.857143,
+            "fn": 0,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.75,
+            "recall": 1.0,
+            "seed": 9408,
+            "shared": 0.674286,
+            "steps": 21,
+            "tp": 3,
+            "wall_s": 0.0861
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": 0.414545,
+            "f1": 0.727273,
+            "fn": 2,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.8,
+            "recall": 0.666667,
+            "seed": 9445,
+            "shared": 0.414546,
+            "steps": 21,
+            "tp": 4,
+            "wall_s": 0.0879
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": 0.293333,
+            "f1": 0.666667,
+            "fn": 1,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.666667,
+            "recall": 0.666667,
+            "seed": 9482,
+            "shared": 0.293334,
+            "steps": 21,
+            "tp": 2,
+            "wall_s": 0.0924
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": 0.293333,
+            "f1": 0.666667,
+            "fn": 3,
+            "fp": 0,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 0.5,
+            "seed": 9519,
+            "shared": 0.293334,
+            "steps": 21,
+            "tp": 3,
+            "wall_s": 0.0914
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": 0.626667,
+            "f1": 0.833333,
+            "fn": 1,
+            "fp": 1,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.833333,
+            "recall": 0.833333,
+            "seed": 9556,
+            "shared": 0.626666,
+            "steps": 21,
+            "tp": 5,
+            "wall_s": 0.0924
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": -0.54,
+            "f1": 0.25,
+            "fn": 3,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.25,
+            "recall": 0.25,
+            "seed": 9593,
+            "shared": -0.54,
+            "steps": 21,
+            "tp": 1,
+            "wall_s": 0.0911
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": 0.16,
+            "f1": 0.6,
+            "fn": 1,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.5,
+            "recall": 0.75,
+            "seed": 9630,
+            "shared": 0.16,
+            "steps": 21,
+            "tp": 3,
+            "wall_s": 0.0909
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": 0.050909,
+            "f1": 0.545455,
+            "fn": 5,
+            "fp": 0,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 0.375,
+            "seed": 9667,
+            "shared": 0.05091,
+            "steps": 21,
+            "tp": 3,
+            "wall_s": 0.0923
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": 0.388571,
+            "f1": 0.714286,
+            "fn": 1,
+            "fp": 3,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.625,
+            "recall": 0.833333,
+            "seed": 9704,
+            "shared": 0.388572,
+            "steps": 21,
+            "tp": 5,
+            "wall_s": 0.086
+          }
+        ],
+        "flag_all": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0892
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0814
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0948
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0822
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0817
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9186,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0767
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9223,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0825
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9260,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0778
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": -0.955946,
+            "f1": 0.0,
+            "fn": 7,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9297,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0844
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 8,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9334,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0873
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": -0.97875,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9371,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0786
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 3,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9408,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.078
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9445,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0807
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 3,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9482,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0833
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": -0.898889,
+            "f1": 0.055556,
+            "fn": 5,
+            "fp": 29,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.033333,
+            "recall": 0.166667,
+            "seed": 9519,
+            "shared": -0.898888,
+            "steps": 6,
+            "tp": 1,
+            "wall_s": 0.0837
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": -0.982222,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9556,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0844
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9593,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0827
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": -0.862941,
+            "f1": 0.058824,
+            "fn": 3,
+            "fp": 29,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.033333,
+            "recall": 0.25,
+            "seed": 9630,
+            "shared": -0.892352,
+            "steps": 6,
+            "tp": 1,
+            "wall_s": 0.0839
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 8,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9667,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0851
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 30,
+            "inspection_steps": 5,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9704,
+            "shared": -1.0,
+            "steps": 6,
+            "tp": 0,
+            "wall_s": 0.0801
+          }
+        ],
+        "oracle": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 0,
+            "wall_s": 0.0857
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 0,
+            "wall_s": 0.0773
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 0,
+            "wall_s": 0.0825
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 0,
+            "wall_s": 0.077
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 0,
+            "wall_s": 0.0777
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9186,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 2,
+            "wall_s": 0.0729
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9223,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 2,
+            "wall_s": 0.0787
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9260,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 4,
+            "wall_s": 0.0747
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9297,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 7,
+            "wall_s": 0.0816
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9334,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 8,
+            "wall_s": 0.0841
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9371,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 2,
+            "wall_s": 0.0741
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9408,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 3,
+            "wall_s": 0.0752
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9445,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 6,
+            "wall_s": 0.0772
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9482,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 3,
+            "wall_s": 0.08
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9519,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 6,
+            "wall_s": 0.0793
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9556,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 6,
+            "wall_s": 0.0806
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9593,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 4,
+            "wall_s": 0.0785
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9630,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 4,
+            "wall_s": 0.0784
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9667,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 8,
+            "wall_s": 0.0809
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": 1.0,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 0,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 1.0,
+            "recall": 1.0,
+            "seed": 9704,
+            "shared": 1.0,
+            "steps": 1,
+            "tp": 6,
+            "wall_s": 0.076
+          }
+        ],
+        "random_explorer": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0946
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0827
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0882
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": 0.944,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": 0.944,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0836
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": 0.944,
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": 0.944,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0846
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9186,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0789
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9223,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0855
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9260,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0799
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 7,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9297,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0875
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 8,
+            "fp": 3,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9334,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0898
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9371,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0799
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 3,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9408,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0816
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9445,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0838
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 3,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9482,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0858
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9519,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0856
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9556,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0865
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9593,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0861
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9630,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0845
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 8,
+            "fp": 2,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9667,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0863
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 6,
+            "fp": 0,
+            "inspection_steps": 28,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9704,
+            "shared": -1.0,
+            "steps": 29,
+            "tp": 0,
+            "wall_s": 0.0831
+          }
+        ],
+        "reconcile": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 21,
+            "inspection_steps": 26,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9001,
+            "shared": -1.0,
+            "steps": 27,
+            "tp": 0,
+            "wall_s": 0.101
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 15,
+            "inspection_steps": 21,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9038,
+            "shared": -1.0,
+            "steps": 22,
+            "tp": 0,
+            "wall_s": 0.089
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 25,
+            "inspection_steps": 22,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9075,
+            "shared": -1.0,
+            "steps": 23,
+            "tp": 0,
+            "wall_s": 0.0966
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 30,
+            "inspection_steps": 16,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9112,
+            "shared": -1.0,
+            "steps": 17,
+            "tp": 0,
+            "wall_s": 0.0884
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "experimental": -1.0,
+            "f1": 0.0,
+            "fn": 0,
+            "fp": 19,
+            "inspection_steps": 19,
+            "invalid": false,
+            "kind": "clean",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9149,
+            "shared": -1.0,
+            "steps": 20,
+            "tp": 0,
+            "wall_s": 0.0897
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "experimental": -0.99875,
+            "f1": 0.0,
+            "fn": 2,
+            "fp": 30,
+            "inspection_steps": 15,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9186,
+            "shared": -1.0,
+            "steps": 16,
+            "tp": 0,
+            "wall_s": 0.0809
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "experimental": -0.593556,
+            "f1": 0.222222,
+            "fn": 0,
+            "fp": 14,
+            "inspection_steps": 19,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.125,
+            "recall": 1.0,
+            "seed": 9223,
+            "shared": -0.593556,
+            "steps": 20,
+            "tp": 2,
+            "wall_s": 0.0908
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "experimental": -0.997538,
+            "f1": 0.0,
+            "fn": 4,
+            "fp": 22,
+            "inspection_steps": 18,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.0,
+            "recall": 0.0,
+            "seed": 9260,
+            "shared": -1.0,
+            "steps": 19,
+            "tp": 0,
+            "wall_s": 0.0851
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "experimental": -0.8525,
+            "f1": 0.0625,
+            "fn": 6,
+            "fp": 24,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.04,
+            "recall": 0.142857,
+            "seed": 9297,
+            "shared": -0.915,
+            "steps": 21,
+            "tp": 1,
+            "wall_s": 0.0938
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "experimental": -0.912421,
+            "f1": 0.052632,
+            "fn": 7,
+            "fp": 29,
+            "inspection_steps": 22,
+            "invalid": false,
+            "kind": "interaction",
+            "precision": 0.033333,
+            "recall": 0.125,
+            "seed": 9334,
+            "shared": -0.938736,
+            "steps": 23,
+            "tp": 1,
+            "wall_s": 0.0974
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "experimental": -0.756138,
+            "f1": 0.137931,
+            "fn": 0,
+            "fp": 25,
+            "inspection_steps": 16,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.074074,
+            "recall": 1.0,
+            "seed": 9371,
+            "shared": -0.756138,
+            "steps": 17,
+            "tp": 2,
+            "wall_s": 0.0836
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "experimental": -0.723655,
+            "f1": 0.137931,
+            "fn": 1,
+            "fp": 24,
+            "inspection_steps": 17,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.076923,
+            "recall": 0.666667,
+            "seed": 9408,
+            "shared": -0.758138,
+            "steps": 18,
+            "tp": 2,
+            "wall_s": 0.0851
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "experimental": -0.589556,
+            "f1": 0.222222,
+            "fn": 2,
+            "fp": 26,
+            "inspection_steps": 17,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.133333,
+            "recall": 0.666667,
+            "seed": 9445,
+            "shared": -0.589556,
+            "steps": 18,
+            "tp": 4,
+            "wall_s": 0.0905
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "experimental": -0.628207,
+            "f1": 0.206897,
+            "fn": 0,
+            "fp": 23,
+            "inspection_steps": 21,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.115385,
+            "recall": 1.0,
+            "seed": 9482,
+            "shared": -0.628206,
+            "steps": 22,
+            "tp": 3,
+            "wall_s": 0.0929
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "experimental": -0.312727,
+            "f1": 0.363636,
+            "fn": 0,
+            "fp": 21,
+            "inspection_steps": 20,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.222222,
+            "recall": 1.0,
+            "seed": 9519,
+            "shared": -0.312728,
+            "steps": 21,
+            "tp": 6,
+            "wall_s": 0.0917
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "experimental": -0.877333,
+            "f1": 0.055556,
+            "fn": 5,
+            "fp": 29,
+            "inspection_steps": 22,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.033333,
+            "recall": 0.166667,
+            "seed": 9556,
+            "shared": -0.932888,
+            "steps": 23,
+            "tp": 1,
+            "wall_s": 0.095
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "experimental": -0.642,
+            "f1": 0.2,
+            "fn": 1,
+            "fp": 23,
+            "inspection_steps": 21,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.115385,
+            "recall": 0.75,
+            "seed": 9593,
+            "shared": -0.642,
+            "steps": 22,
+            "tp": 3,
+            "wall_s": 0.0916
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "experimental": -0.743882,
+            "f1": 0.117647,
+            "fn": 2,
+            "fp": 28,
+            "inspection_steps": 19,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.066667,
+            "recall": 0.5,
+            "seed": 9630,
+            "shared": -0.802706,
+            "steps": 20,
+            "tp": 2,
+            "wall_s": 0.09
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "experimental": -0.673579,
+            "f1": 0.157895,
+            "fn": 5,
+            "fp": 27,
+            "inspection_steps": 21,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.1,
+            "recall": 0.375,
+            "seed": 9667,
+            "shared": -0.72621,
+            "steps": 22,
+            "tp": 3,
+            "wall_s": 0.0936
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "experimental": -0.514848,
+            "f1": 0.242424,
+            "fn": 2,
+            "fp": 23,
+            "inspection_steps": 15,
+            "invalid": false,
+            "kind": "mixed",
+            "precision": 0.148148,
+            "recall": 0.666667,
+            "seed": 9704,
+            "shared": -0.545152,
+            "steps": 16,
+            "tp": 4,
+            "wall_s": 0.0857
+          }
+        ]
+      },
+      "table": [
+        {
+          "experimental": -0.8056000000000001,
+          "f1": [
+            0.1,
+            0.0,
+            0.25
+          ],
+          "n": 20,
+          "policy": "random_explorer",
+          "precision": 0.0,
+          "recall": 0.0,
+          "shared": [
+            -0.8056000000000001,
+            -1.0,
+            -0.514
+          ],
+          "steps": 29.0,
+          "wall_s": 0.084925
+        },
+        {
+          "experimental": -0.7908345000000001,
+          "f1": [
+            0.10897465000000002,
+            0.06346125,
+            0.15487275000000003
+          ],
+          "n": 20,
+          "policy": "reconcile",
+          "precision": 0.06640625,
+          "recall": 0.4788732394366197,
+          "shared": [
+            -0.8070507000000001,
+            -0.8909663,
+            -0.721345
+          ],
+          "steps": 20.35,
+          "wall_s": 0.09061999999999999
+        },
+        {
+          "experimental": -0.9839374,
+          "f1": [
+            0.005719,
+            0.0,
+            0.0142158
+          ],
+          "n": 20,
+          "policy": "flag_all",
+          "precision": 0.0033333333333333335,
+          "recall": 0.028169014084507043,
+          "shared": [
+            -0.9895619999999999,
+            -1.0,
+            -0.9740684
+          ],
+          "steps": 6.0,
+          "wall_s": 0.082925
+        },
+        {
+          "experimental": 1.0,
+          "f1": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "n": 20,
+          "policy": "oracle",
+          "precision": 1.0,
+          "recall": 1.0,
+          "shared": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "steps": 1.0,
+          "wall_s": 0.07862000000000001
+        },
+        {
+          "experimental": 0.9490999999999999,
+          "f1": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "n": 20,
+          "policy": "careful_auditor (extra)",
+          "precision": 1.0,
+          "recall": 1.0,
+          "shared": [
+            0.9490999999999999,
+            0.9456000000000001,
+            0.9524999999999999
+          ],
+          "steps": 26.45,
+          "wall_s": 0.090995
+        },
+        {
+          "experimental": 0.029620250000000004,
+          "f1": [
+            0.5306603,
+            0.39020580000000005,
+            0.6629655000000001
+          ],
+          "n": 20,
+          "policy": "careful_auditor_degraded (extra)",
+          "precision": 0.569620253164557,
+          "recall": 0.6338028169014085,
+          "shared": [
+            0.02962059999999998,
+            -0.24604940000000003,
+            0.2900431
+          ],
+          "steps": 20.85,
+          "wall_s": 0.09071000000000001
+        }
+      ]
+    },
+    "configs": {
+      "dev": {
+        "config_hash": "fb29dd57ab25e3092c3e4a2bcce29a3a052e3bc528ca1f18f2a75ca310ce2925",
+        "config_id": "dev",
+        "config_version": "1.3.0",
+        "file_sha256": "a8cb4142e8380a9b33d8212318446795be5c36ddf405efc5cf31d2c9e37a9739"
+      },
+      "holdout": {
+        "config_hash": "3396914da9dc4621c80f29d08b9776c27d4195d56515aef3d3ada11cbf86bd12",
+        "config_id": "holdout",
+        "config_version": "1.3.0",
+        "file_sha256": "7fc7c4841f845cc5faea01d66a39c0af6d51b559ee77bc8d11d8f91321ed38d9"
+      },
+      "train": {
+        "config_hash": "b0cdce3de8ea1a1a86d2f1830ae6c8516527ce6ca25aed7f343f7f183f2d6156",
+        "config_id": "train",
+        "config_version": "1.3.0",
+        "file_sha256": "254ee594c0b646bbeaa61f53060ae86e2bdb3ae1aa14144ec8af5f53d09eaa4c"
+      }
+    },
+    "failure_analysis": {
+      "careful_auditor": {
+        "fp_by_distractor_kind": {},
+        "fp_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 0,
+          "payment_misallocation": 0,
+          "period_cutoff": 0
+        },
+        "fp_reasons": {},
+        "fp_total": 0,
+        "mean_inspection_steps": 25.45,
+        "mean_shared_reward": 0.9490999999999999,
+        "mean_step_cost": 0.0509,
+        "misses_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 0,
+          "payment_misallocation": 0,
+          "period_cutoff": 0
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 13,
+            "tp": 13
+          },
+          "fx_error": {
+            "findings": 26,
+            "tp": 26
+          },
+          "payment_misallocation": {
+            "findings": 15,
+            "tp": 15
+          },
+          "period_cutoff": {
+            "findings": 17,
+            "tp": 17
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 10,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 10,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 13,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 26,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 15,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 17,
+            "truth": 17
+          }
+        }
+      },
+      "careful_auditor_degraded": {
+        "fp_by_distractor_kind": {
+          "(not a distractor)": 13,
+          "split_payment": 1,
+          "timezone_boundary_ok": 20
+        },
+        "fp_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 0,
+          "payment_misallocation": 1,
+          "period_cutoff": 33
+        },
+        "fp_reasons": {
+          "ids_mismatch": 19,
+          "unmatched": 9,
+          "wrong_type": 6
+        },
+        "fp_total": 34,
+        "mean_inspection_steps": 19.85,
+        "mean_shared_reward": 0.02962059999999998,
+        "mean_step_cost": 0.039700000000000006,
+        "misses_by_type": {
+          "duplicate_invoice": 10,
+          "fx_error": 5,
+          "payment_misallocation": 1,
+          "period_cutoff": 10
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 3,
+            "tp": 3
+          },
+          "fx_error": {
+            "findings": 21,
+            "tp": 21
+          },
+          "payment_misallocation": {
+            "findings": 15,
+            "tp": 14
+          },
+          "period_cutoff": {
+            "findings": 40,
+            "tp": 7
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 4,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 8,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 3,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 21,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 14,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 7,
+            "truth": 17
+          }
+        }
+      },
+      "flag_all": {
+        "fp_by_distractor_kind": {
+          "(not a distractor)": 413,
+          "legit_recurring_amount": 12,
+          "overpayment_refund": 55,
+          "realized_fx_gain_loss": 34,
+          "split_payment": 49,
+          "timezone_boundary_ok": 19,
+          "unreferenced_prepayment": 16
+        },
+        "fp_by_type": {
+          "duplicate_invoice": 100,
+          "fx_error": 400,
+          "payment_misallocation": 0,
+          "period_cutoff": 98
+        },
+        "fp_reasons": {
+          "amount_out_of_tolerance": 5,
+          "ids_mismatch": 353,
+          "unmatched": 150,
+          "wrong_type": 90
+        },
+        "fp_total": 598,
+        "mean_inspection_steps": 5.0,
+        "mean_shared_reward": -0.9895619999999999,
+        "mean_step_cost": 0.01,
+        "misses_by_type": {
+          "duplicate_invoice": 13,
+          "fx_error": 26,
+          "payment_misallocation": 15,
+          "period_cutoff": 15
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 100,
+            "tp": 0
+          },
+          "fx_error": {
+            "findings": 400,
+            "tp": 0
+          },
+          "payment_misallocation": {
+            "findings": 0,
+            "tp": 0
+          },
+          "period_cutoff": {
+            "findings": 100,
+            "tp": 2
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 0,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 0,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 0,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 0,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 2,
+            "truth": 17
+          }
+        }
+      },
+      "oracle": {
+        "fp_by_distractor_kind": {},
+        "fp_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 0,
+          "payment_misallocation": 0,
+          "period_cutoff": 0
+        },
+        "fp_reasons": {},
+        "fp_total": 0,
+        "mean_inspection_steps": 0.0,
+        "mean_shared_reward": 1.0,
+        "mean_step_cost": 0.0,
+        "misses_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 0,
+          "payment_misallocation": 0,
+          "period_cutoff": 0
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 13,
+            "tp": 13
+          },
+          "fx_error": {
+            "findings": 26,
+            "tp": 26
+          },
+          "payment_misallocation": {
+            "findings": 15,
+            "tp": 15
+          },
+          "period_cutoff": {
+            "findings": 17,
+            "tp": 17
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 10,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 10,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 13,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 26,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 15,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 17,
+            "truth": 17
+          }
+        }
+      },
+      "random_explorer": {
+        "fp_by_distractor_kind": {
+          "(not a distractor)": 18,
+          "realized_fx_gain_loss": 2,
+          "split_payment": 3
+        },
+        "fp_by_type": {
+          "duplicate_invoice": 10,
+          "fx_error": 11,
+          "payment_misallocation": 2,
+          "period_cutoff": 0
+        },
+        "fp_reasons": {
+          "ids_mismatch": 13,
+          "unmatched": 6,
+          "wrong_type": 4
+        },
+        "fp_total": 23,
+        "mean_inspection_steps": 28.0,
+        "mean_shared_reward": -0.8056000000000001,
+        "mean_step_cost": 0.056,
+        "misses_by_type": {
+          "duplicate_invoice": 13,
+          "fx_error": 26,
+          "payment_misallocation": 15,
+          "period_cutoff": 17
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 10,
+            "tp": 0
+          },
+          "fx_error": {
+            "findings": 11,
+            "tp": 0
+          },
+          "payment_misallocation": {
+            "findings": 2,
+            "tp": 0
+          },
+          "period_cutoff": {
+            "findings": 0,
+            "tp": 0
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 0,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 0,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 0,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 0,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 0,
+            "truth": 17
+          }
+        }
+      },
+      "reconcile": {
+        "fp_by_distractor_kind": {
+          "(not a distractor)": 294,
+          "legit_recurring_amount": 58,
+          "overpayment_refund": 32,
+          "realized_fx_gain_loss": 21,
+          "split_payment": 20,
+          "timezone_boundary_ok": 27,
+          "unreferenced_prepayment": 26
+        },
+        "fp_by_type": {
+          "duplicate_invoice": 56,
+          "fx_error": 248,
+          "payment_misallocation": 147,
+          "period_cutoff": 27
+        },
+        "fp_reasons": {
+          "amount_out_of_tolerance": 12,
+          "evidence_insufficient": 1,
+          "ids_mismatch": 285,
+          "unmatched": 110,
+          "wrong_type": 70
+        },
+        "fp_total": 478,
+        "mean_inspection_steps": 19.35,
+        "mean_shared_reward": -0.8070507000000001,
+        "mean_step_cost": 0.038700000000000005,
+        "misses_by_type": {
+          "duplicate_invoice": 0,
+          "fx_error": 13,
+          "payment_misallocation": 14,
+          "period_cutoff": 10
+        },
+        "n_runs": 20,
+        "precision_by_type": {
+          "duplicate_invoice": {
+            "findings": 69,
+            "tp": 13
+          },
+          "fx_error": {
+            "findings": 261,
+            "tp": 13
+          },
+          "payment_misallocation": {
+            "findings": 148,
+            "tp": 1
+          },
+          "period_cutoff": {
+            "findings": 34,
+            "tp": 7
+          }
+        },
+        "recall_by_interaction": {
+          "cutoff_with_wrong_rate_date": {
+            "tp": 2,
+            "truth": 10
+          },
+          "fx_partial_payment_at_boundary": {
+            "tp": 0,
+            "truth": 10
+          }
+        },
+        "recall_by_type": {
+          "duplicate_invoice": {
+            "tp": 13,
+            "truth": 13
+          },
+          "fx_error": {
+            "tp": 13,
+            "truth": 26
+          },
+          "payment_misallocation": {
+            "tp": 1,
+            "truth": 15
+          },
+          "period_cutoff": {
+            "tp": 7,
+            "truth": 17
+          }
+        }
+      }
+    },
+    "golden": {
+      "episodes": 6,
+      "match": true,
+      "platform": "macOS-26.5.1-arm64-arm-64bit",
+      "python": "3.11.15"
+    },
+    "holdout": {
+      "classes": {
+        "clean": 5,
+        "interaction": 5,
+        "mixed": 10
+      },
+      "n": 20,
+      "validation_failures": []
+    },
+    "paired": {
+      "aggressive_failures": [],
+      "detail": [
+        {
+          "episode_id": "ep_3e7c620eb2d8",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_3e7c620eb2d8",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.934,
+          "shared_transformed": 0.934,
+          "steps": 33,
+          "steps_transformed": 33,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_3e7c620eb2d8",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_3e7c620eb2d8",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.934,
+          "shared_transformed": 0.934,
+          "steps": 33,
+          "steps_transformed": 33,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_5bda0c9fdabf",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_5bda0c9fdabf",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_5bda0c9fdabf",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_5bda0c9fdabf",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_836966e3c8fd",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_836966e3c8fd",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_836966e3c8fd",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_836966e3c8fd",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_f8e9936d6632",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 16,
+          "steps_transformed": 16,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_f8e9936d6632",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_f8e9936d6632",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 16,
+          "steps_transformed": 16,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_f8e9936d6632",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_c8a914bc20f6",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_c8a914bc20f6",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.956,
+          "shared_transformed": 0.956,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_c8a914bc20f6",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_c8a914bc20f6",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "clean",
+          "policy": "careful_auditor",
+          "shared": 0.956,
+          "shared_transformed": 0.956,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_f3f0d1602e9c",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 15,
+          "steps_transformed": 15,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_f3f0d1602e9c",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.966,
+          "shared_transformed": 0.966,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_f3f0d1602e9c",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 15,
+          "steps_transformed": 15,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_f3f0d1602e9c",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.966,
+          "shared_transformed": 0.966,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9388cc8497a4",
+          "f1": 0.222222,
+          "f1_transformed": 0.222222,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.593556,
+          "shared_transformed": -0.593556,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9388cc8497a4",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.954,
+          "shared_transformed": 0.954,
+          "steps": 23,
+          "steps_transformed": 23,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9388cc8497a4",
+          "f1": 0.222222,
+          "f1_transformed": 0.222222,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.593556,
+          "shared_transformed": -0.593556,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9388cc8497a4",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.954,
+          "shared_transformed": 0.954,
+          "steps": 23,
+          "steps_transformed": 23,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_8d62201e59c4",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 18,
+          "steps_transformed": 18,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_8d62201e59c4",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.96,
+          "shared_transformed": 0.96,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_8d62201e59c4",
+          "f1": 0.0,
+          "f1_transformed": 0.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -1.0,
+          "shared_transformed": -1.0,
+          "steps": 18,
+          "steps_transformed": 18,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_8d62201e59c4",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.96,
+          "shared_transformed": 0.96,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_12d26be6e808",
+          "f1": 0.0625,
+          "f1_transformed": 0.0625,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.915,
+          "shared_transformed": -0.915,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_12d26be6e808",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_12d26be6e808",
+          "f1": 0.0625,
+          "f1_transformed": 0.0625,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.915,
+          "shared_transformed": -0.915,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_12d26be6e808",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_ff97231ecfda",
+          "f1": 0.052632,
+          "f1_transformed": 0.052632,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.938736,
+          "shared_transformed": -0.938736,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_ff97231ecfda",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_ff97231ecfda",
+          "f1": 0.052632,
+          "f1_transformed": 0.052632,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "reconcile",
+          "shared": -0.938736,
+          "shared_transformed": -0.938736,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_ff97231ecfda",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "interaction",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_1b218fe35c75",
+          "f1": 0.137931,
+          "f1_transformed": 0.137931,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.756138,
+          "shared_transformed": -0.756138,
+          "steps": 16,
+          "steps_transformed": 16,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_1b218fe35c75",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.948,
+          "shared_transformed": 0.948,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_1b218fe35c75",
+          "f1": 0.137931,
+          "f1_transformed": 0.137931,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.756138,
+          "shared_transformed": -0.756138,
+          "steps": 16,
+          "steps_transformed": 16,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_1b218fe35c75",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.948,
+          "shared_transformed": 0.948,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_8e13c0d610d6",
+          "f1": 0.137931,
+          "f1_transformed": 0.137931,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.758138,
+          "shared_transformed": -0.758138,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_8e13c0d610d6",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.956,
+          "shared_transformed": 0.956,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_8e13c0d610d6",
+          "f1": 0.137931,
+          "f1_transformed": 0.137931,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.758138,
+          "shared_transformed": -0.758138,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_8e13c0d610d6",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.956,
+          "shared_transformed": 0.956,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_65698ba4889b",
+          "f1": 0.222222,
+          "f1_transformed": 0.222222,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.589556,
+          "shared_transformed": -0.589556,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_65698ba4889b",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.954,
+          "shared_transformed": 0.954,
+          "steps": 23,
+          "steps_transformed": 23,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_65698ba4889b",
+          "f1": 0.222222,
+          "f1_transformed": 0.222222,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.589556,
+          "shared_transformed": -0.589556,
+          "steps": 17,
+          "steps_transformed": 17,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_65698ba4889b",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.954,
+          "shared_transformed": 0.954,
+          "steps": 23,
+          "steps_transformed": 23,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_7af49413069f",
+          "f1": 0.206897,
+          "f1_transformed": 0.206897,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.628206,
+          "shared_transformed": -0.628206,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_7af49413069f",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_7af49413069f",
+          "f1": 0.206897,
+          "f1_transformed": 0.206897,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.628206,
+          "shared_transformed": -0.628206,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_7af49413069f",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_77b9cefad61c",
+          "f1": 0.363636,
+          "f1_transformed": 0.363636,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.312728,
+          "shared_transformed": -0.312728,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_77b9cefad61c",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_77b9cefad61c",
+          "f1": 0.363636,
+          "f1_transformed": 0.363636,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.312728,
+          "shared_transformed": -0.312728,
+          "steps": 20,
+          "steps_transformed": 20,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_77b9cefad61c",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.942,
+          "shared_transformed": 0.942,
+          "steps": 29,
+          "steps_transformed": 29,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9b2e6bcf00e2",
+          "f1": 0.055556,
+          "f1_transformed": 0.055556,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.932888,
+          "shared_transformed": -0.932888,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9b2e6bcf00e2",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9b2e6bcf00e2",
+          "f1": 0.055556,
+          "f1_transformed": 0.055556,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.932888,
+          "shared_transformed": -0.932888,
+          "steps": 22,
+          "steps_transformed": 22,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9b2e6bcf00e2",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_72362a47cf1d",
+          "f1": 0.2,
+          "f1_transformed": 0.2,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.642,
+          "shared_transformed": -0.642,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_72362a47cf1d",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.94,
+          "shared_transformed": 0.94,
+          "steps": 30,
+          "steps_transformed": 30,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_72362a47cf1d",
+          "f1": 0.2,
+          "f1_transformed": 0.2,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.642,
+          "shared_transformed": -0.642,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_72362a47cf1d",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.94,
+          "shared_transformed": 0.94,
+          "steps": 30,
+          "steps_transformed": 30,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_6b4715864a64",
+          "f1": 0.117647,
+          "f1_transformed": 0.117647,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.802706,
+          "shared_transformed": -0.802706,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_6b4715864a64",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.948,
+          "shared_transformed": 0.948,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_6b4715864a64",
+          "f1": 0.117647,
+          "f1_transformed": 0.117647,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.802706,
+          "shared_transformed": -0.802706,
+          "steps": 19,
+          "steps_transformed": 19,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_6b4715864a64",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.948,
+          "shared_transformed": 0.948,
+          "steps": 26,
+          "steps_transformed": 26,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9b7521b3a14e",
+          "f1": 0.157895,
+          "f1_transformed": 0.157895,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.72621,
+          "shared_transformed": -0.72621,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9b7521b3a14e",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_9b7521b3a14e",
+          "f1": 0.157895,
+          "f1_transformed": 0.157895,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.72621,
+          "shared_transformed": -0.72621,
+          "steps": 21,
+          "steps_transformed": 21,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_9b7521b3a14e",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.946,
+          "shared_transformed": 0.946,
+          "steps": 27,
+          "steps_transformed": 27,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_e380e37ff0ea",
+          "f1": 0.242424,
+          "f1_transformed": 0.242424,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.545152,
+          "shared_transformed": -0.545152,
+          "steps": 15,
+          "steps_transformed": 15,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_e380e37ff0ea",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "shape"
+        },
+        {
+          "episode_id": "ep_e380e37ff0ea",
+          "f1": 0.242424,
+          "f1_transformed": 0.242424,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "reconcile",
+          "shared": -0.545152,
+          "shared_transformed": -0.545152,
+          "steps": 15,
+          "steps_transformed": 15,
+          "variant": "aggressive"
+        },
+        {
+          "episode_id": "ep_e380e37ff0ea",
+          "f1": 1.0,
+          "f1_transformed": 1.0,
+          "identical": true,
+          "kind": "mixed",
+          "policy": "careful_auditor",
+          "shared": 0.952,
+          "shared_transformed": 0.952,
+          "steps": 24,
+          "steps_transformed": 24,
+          "variant": "aggressive"
+        }
+      ],
+      "discriminating_pairs": {
+        "careful_auditor": 20,
+        "reconcile": 13
+      },
+      "note": "random_explorer / flag_all are excluded: trivially invariant at the -1.0 floor",
+      "pairs": 20,
+      "per_pair_f1": {
+        "careful_auditor": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "f1": 1.0,
+            "kind": "clean",
+            "shared": 0.934,
+            "steps": 33
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "f1": 1.0,
+            "kind": "clean",
+            "shared": 0.942,
+            "steps": 29
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "f1": 1.0,
+            "kind": "clean",
+            "shared": 0.952,
+            "steps": 24
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "f1": 1.0,
+            "kind": "clean",
+            "shared": 0.952,
+            "steps": 24
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "f1": 1.0,
+            "kind": "clean",
+            "shared": 0.956,
+            "steps": 22
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "f1": 1.0,
+            "kind": "interaction",
+            "shared": 0.966,
+            "steps": 17
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "f1": 1.0,
+            "kind": "interaction",
+            "shared": 0.954,
+            "steps": 23
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "f1": 1.0,
+            "kind": "interaction",
+            "shared": 0.96,
+            "steps": 20
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "f1": 1.0,
+            "kind": "interaction",
+            "shared": 0.946,
+            "steps": 27
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "f1": 1.0,
+            "kind": "interaction",
+            "shared": 0.946,
+            "steps": 27
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.948,
+            "steps": 26
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.956,
+            "steps": 22
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.954,
+            "steps": 23
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.942,
+            "steps": 29
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.942,
+            "steps": 29
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.946,
+            "steps": 27
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.94,
+            "steps": 30
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.948,
+            "steps": 26
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.946,
+            "steps": 27
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "f1": 1.0,
+            "kind": "mixed",
+            "shared": 0.952,
+            "steps": 24
+          }
+        ],
+        "reconcile": [
+          {
+            "episode_id": "ep_3e7c620eb2d8",
+            "f1": 0.0,
+            "kind": "clean",
+            "shared": -1.0,
+            "steps": 26
+          },
+          {
+            "episode_id": "ep_5bda0c9fdabf",
+            "f1": 0.0,
+            "kind": "clean",
+            "shared": -1.0,
+            "steps": 21
+          },
+          {
+            "episode_id": "ep_836966e3c8fd",
+            "f1": 0.0,
+            "kind": "clean",
+            "shared": -1.0,
+            "steps": 22
+          },
+          {
+            "episode_id": "ep_f8e9936d6632",
+            "f1": 0.0,
+            "kind": "clean",
+            "shared": -1.0,
+            "steps": 16
+          },
+          {
+            "episode_id": "ep_c8a914bc20f6",
+            "f1": 0.0,
+            "kind": "clean",
+            "shared": -1.0,
+            "steps": 19
+          },
+          {
+            "episode_id": "ep_f3f0d1602e9c",
+            "f1": 0.0,
+            "kind": "interaction",
+            "shared": -1.0,
+            "steps": 15
+          },
+          {
+            "episode_id": "ep_9388cc8497a4",
+            "f1": 0.222222,
+            "kind": "interaction",
+            "shared": -0.593556,
+            "steps": 19
+          },
+          {
+            "episode_id": "ep_8d62201e59c4",
+            "f1": 0.0,
+            "kind": "interaction",
+            "shared": -1.0,
+            "steps": 18
+          },
+          {
+            "episode_id": "ep_12d26be6e808",
+            "f1": 0.0625,
+            "kind": "interaction",
+            "shared": -0.915,
+            "steps": 20
+          },
+          {
+            "episode_id": "ep_ff97231ecfda",
+            "f1": 0.052632,
+            "kind": "interaction",
+            "shared": -0.938736,
+            "steps": 22
+          },
+          {
+            "episode_id": "ep_1b218fe35c75",
+            "f1": 0.137931,
+            "kind": "mixed",
+            "shared": -0.756138,
+            "steps": 16
+          },
+          {
+            "episode_id": "ep_8e13c0d610d6",
+            "f1": 0.137931,
+            "kind": "mixed",
+            "shared": -0.758138,
+            "steps": 17
+          },
+          {
+            "episode_id": "ep_65698ba4889b",
+            "f1": 0.222222,
+            "kind": "mixed",
+            "shared": -0.589556,
+            "steps": 17
+          },
+          {
+            "episode_id": "ep_7af49413069f",
+            "f1": 0.206897,
+            "kind": "mixed",
+            "shared": -0.628206,
+            "steps": 21
+          },
+          {
+            "episode_id": "ep_77b9cefad61c",
+            "f1": 0.363636,
+            "kind": "mixed",
+            "shared": -0.312728,
+            "steps": 20
+          },
+          {
+            "episode_id": "ep_9b2e6bcf00e2",
+            "f1": 0.055556,
+            "kind": "mixed",
+            "shared": -0.932888,
+            "steps": 22
+          },
+          {
+            "episode_id": "ep_72362a47cf1d",
+            "f1": 0.2,
+            "kind": "mixed",
+            "shared": -0.642,
+            "steps": 21
+          },
+          {
+            "episode_id": "ep_6b4715864a64",
+            "f1": 0.117647,
+            "kind": "mixed",
+            "shared": -0.802706,
+            "steps": 19
+          },
+          {
+            "episode_id": "ep_9b7521b3a14e",
+            "f1": 0.157895,
+            "kind": "mixed",
+            "shared": -0.72621,
+            "steps": 21
+          },
+          {
+            "episode_id": "ep_e380e37ff0ea",
+            "f1": 0.242424,
+            "kind": "mixed",
+            "shared": -0.545152,
+            "steps": 15
+          }
+        ]
+      },
+      "rename_permute_failures": [],
+      "replay_failures": []
+    },
+    "pytest": {
+      "returncode": 0,
+      "tail": [
+        "........................................................................ [ 13%]",
+        "........................................................................ [ 20%]",
+        "........................................................................ [ 27%]",
+        "........................................................................ [ 34%]",
+        "........................................................................ [ 41%]",
+        "........................................................................ [ 48%]",
+        "........................................................................ [ 55%]",
+        "........................................................................ [ 62%]",
+        "........................................................................ [ 69%]",
+        "........................................................................ [ 75%]",
+        "........................................................................ [ 82%]",
+        "........................................................................ [ 89%]",
+        "........................................................................ [ 96%]",
+        "...................................                                      [100%]",
+        "1043 passed in 64.89s (0:01:04)"
+      ]
+    },
+    "reproducibility": {
+      "checked": 20,
+      "committed_compared": 20
+    }
+  }
+}

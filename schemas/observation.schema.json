@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "observation returned by reset / step",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "episode_id",
+    "step",
+    "steps_remaining",
+    "result",
+    "error"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "step": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "steps_remaining": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "result": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "unknown_action",
+            "invalid_args",
+            "unknown_table",
+            "unknown_id",
+            "invalid_cursor",
+            "calculator_error",
+            "episode_over",
+            "not_reset"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 120
+        }
+      }
+    },
+    "task": {
+      "type": "string",
+      "description": "first observation only"
+    },
+    "manifest": {
+      "$ref": "manifest.schema.json"
+    },
+    "policy": {
+      "$ref": "policy.schema.json"
+    }
+  }
+}

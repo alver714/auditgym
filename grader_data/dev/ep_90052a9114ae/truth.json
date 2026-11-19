@@ -1,0 +1,118 @@
+{
+  "base_currency": "USD",
+  "episode_id": "ep_90052a9114ae",
+  "issues": [
+    {
+      "affected_ids": [
+        "BNKHA23PBP9"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-480433ef6c",
+          "R-42bafb59",
+          "R-a444aff4",
+          "R-e755b6f8"
+        ],
+        [
+          "D-480433ef6c",
+          "R-a444aff4"
+        ]
+      ],
+      "expected_amount_minor": 72706,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 72,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "F-3F84UT"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-dc5a817e9b",
+          "R-6604e5b2",
+          "fx:2025-04-29:CHF:USD"
+        ]
+      ],
+      "expected_amount_minor": 8614,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 8,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "F-A9Z6L9"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-591189f71f",
+          "R-22474688"
+        ]
+      ],
+      "expected_amount_minor": 152302,
+      "issue_id": "iss_03",
+      "scenario": "cutoff_with_wrong_rate_date",
+      "tolerance_minor": 152,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "BNKVGHZK56Q"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-8fd68e836e",
+          "R-0e83d635",
+          "fx:2025-04-30:CHF:USD"
+        ]
+      ],
+      "expected_amount_minor": 18034,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 18,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "F-LSL5J3"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-c0bec13dab",
+          "R-4b5613ba"
+        ]
+      ],
+      "expected_amount_minor": 4125747,
+      "issue_id": "iss_05",
+      "scenario": null,
+      "tolerance_minor": 4125,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "F-A9Z6L9"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-591189f71f",
+          "R-22474688",
+          "fx:2025-05-01:CHF:USD"
+        ]
+      ],
+      "expected_amount_minor": 1538,
+      "issue_id": "iss_06",
+      "scenario": "cutoff_with_wrong_rate_date",
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

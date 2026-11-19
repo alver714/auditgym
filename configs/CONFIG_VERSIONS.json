@@ -1,0 +1,8 @@
+{
+  "_comment": "Maps config_id@config_version to the sha256 of the resolved config. Bump config_version whenever a config's content changes, then regenerate this file (python -m auditgym lock --write).",
+  "versions": {
+    "dev@1.3.0": "fb29dd57ab25e3092c3e4a2bcce29a3a052e3bc528ca1f18f2a75ca310ce2925",
+    "holdout@1.3.0": "3396914da9dc4621c80f29d08b9776c27d4195d56515aef3d3ada11cbf86bd12",
+    "train@1.3.0": "b0cdce3de8ea1a1a86d2f1830ae6c8516527ce6ca25aed7f343f7f183f2d6156"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "manifest.json (public)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "env_version",
+    "episode_id",
+    "company_name",
+    "base_currency",
+    "timezone",
+    "utc_offset",
+    "period_start",
+    "period_end",
+    "counts",
+    "rounding",
+    "money"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "env_version": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string",
+      "pattern": "^ep_[0-9a-f]{12}$",
+      "description": "content hash of the public records (episode_id field excluded); adds no information about the seed"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "base_currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "utc_offset": {
+      "type": "string",
+      "pattern": "^[+-]\\d{2}:\\d{2}$"
+    },
+    "period_start": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+      "description": "ISO-8601 timestamp WITH utc offset"
+    },
+    "period_end": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+      "description": "ISO-8601 timestamp WITH utc offset"
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ledger_rows",
+        "invoices",
+        "payments",
+        "documents",
+        "fx_rates"
+      ],
+      "properties": {
+        "ledger_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "invoices": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "documents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fx_rates": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "rounding": {
+      "type": "object",
+      "required": [
+        "mode",
+        "unit",
+        "fx_rate_places"
+      ],
+      "properties": {
+        "mode": {
+          "const": "half_even"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "fx_rate_places": {
+          "const": 6
+        }
+      }
+    },
+    "money": {
+      "type": "object",
+      "required": [
+        "amounts",
+        "exponents"
+      ],
+      "properties": {
+        "amounts": {
+          "type": "string"
+        },
+        "exponents": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    }
+  }
+}

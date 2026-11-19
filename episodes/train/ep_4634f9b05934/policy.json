@@ -1,0 +1,44 @@
+{
+  "amount_tolerance": "|claimed - expected| <= max(1, expected // 1000) minor units",
+  "duplicate_rule": "two invoices of the same entity with identical currency and identical line_items (description, quantity, unit_price_minor, vat_rate, service_period, po_ref) are duplicates; the later one (by issued_at instant; ties broken by due_at, then first posting time, then invoice_id) is the duplicate. Same amount with a different service_period is NOT a duplicate.",
+  "evidence": "evidence_ids are ledger row_id, document doc_id or fx ids 'fx:<date>:<source>:<target>'; every cited id must exist; a finding needs a full sufficient evidence set (see task text)",
+  "finding_affected_ids": {
+    "duplicate_invoice": "[duplicate invoice_id]",
+    "fx_error": "[invoice_id] or [payment_id]",
+    "payment_misallocation": "[payment_id]",
+    "period_cutoff": "[invoice_id]"
+  },
+  "finding_amounts": {
+    "duplicate_invoice": "AR debit posted for the duplicate invoice (base minor)",
+    "fx_error": "abs(posted - correct) on the AR debit row (invoice) or the cash debit row (payment), base minor",
+    "payment_misallocation": "sum over invoice_refs of conv(ref.amount_minor, invoice rate) minus AR credits actually posted with this payment_id (base minor)",
+    "period_cutoff": "AR debit posted inside the period for an invoice issued outside it (base minor)"
+  },
+  "finding_currency": "always base_currency",
+  "fx": {
+    "conversion": "base_minor = round_half_even(amount_minor / 10**exp_src * rate * 10**exp_base)",
+    "direction": "rate converts 1 unit of source_currency into target_currency (=base)",
+    "fallback": "if no rate for that date, use the most recent earlier date present in fx.csv",
+    "invoice_rate_date": "calendar date of issued_at expressed in company utc_offset",
+    "payment_rate_date": "calendar date of payment timestamp expressed in company utc_offset"
+  },
+  "ledger": {
+    "currency": "all ledger rows are in base_currency",
+    "double_entry": "each posting group (same timestamp + same invoice_id/payment_id) balances"
+  },
+  "period_boundaries": {
+    "inclusive": true,
+    "period_end": "2025-08-31T23:59:59+05:00",
+    "period_start": "2025-08-01T00:00:00+05:00",
+    "timezone": "Asia/Almaty",
+    "utc_offset": "+05:00"
+  },
+  "postings": {
+    "invoice": "Dr 1200_accounts_receivable = conv(total); Cr 2200_vat_payable = conv(vat); Cr 4000_revenue = conv(total)-conv(vat)",
+    "payment": "Dr 1000_cash = conv(amount, payment date rate); for each invoice_refs entry Cr 1200_accounts_receivable = conv(ref.amount_minor, that invoice's rate); amount not covered by invoice_refs -> Cr 2300_unapplied_cash (converted at payment rate); remaining difference -> 7900_fx_gain_loss (Cr if gain, Dr if loss)",
+    "refund": "negative amount_minor; Dr 2300_unapplied_cash, Cr 1000_cash, both at conv(|amount|, refund-date rate). For a foreign-currency refund the unapplied balance (booked at the payment-date rate) can therefore keep a small base-currency residual; no 7900_fx_gain_loss row is posted for it and this is NOT an error"
+  },
+  "revenue_recognition": {
+    "rule": "AR and revenue are recognised at invoice issued_at. An invoice belongs to the period iff period_start <= issued_at (as an instant) <= period_end. Compare instants, not date strings."
+  }
+}

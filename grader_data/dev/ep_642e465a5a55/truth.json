@@ -1,0 +1,47 @@
+{
+  "base_currency": "USD",
+  "episode_id": "ep_642e465a5a55",
+  "issues": [
+    {
+      "affected_ids": [
+        "SI/4538-S"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-21c2233626",
+          "R-d00ac8e7"
+        ]
+      ],
+      "expected_amount_minor": 714175,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 714,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "PAY-649381"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-cd0ba39ac6",
+          "R-05f44bb8",
+          "R-4a3645f8",
+          "R-6bbbc5c0"
+        ],
+        [
+          "D-cd0ba39ac6",
+          "R-4a3645f8"
+        ]
+      ],
+      "expected_amount_minor": 16200,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 16,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

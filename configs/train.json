@@ -1,0 +1,115 @@
+{
+  "config_id": "train",
+  "config_version": "1.3.0",
+  "company": {
+    "n_customers": [
+      6,
+      18
+    ],
+    "n_invoices": [
+      30,
+      90
+    ],
+    "n_noise_postings": [
+      60,
+      250
+    ],
+    "foreign_invoice_share": 0.35,
+    "base_currencies": [
+      "KZT",
+      "USD",
+      "EUR"
+    ],
+    "foreign_currencies": [
+      "EUR",
+      "USD",
+      "GBP",
+      "JPY",
+      "CHF",
+      "AED"
+    ],
+    "timezones": [
+      [
+        "Asia/Almaty",
+        "+05:00"
+      ],
+      [
+        "UTC",
+        "+00:00"
+      ]
+    ],
+    "customer_offsets": [
+      "+05:00",
+      "+00:00",
+      "-03:00",
+      "+08:00",
+      "-05:00",
+      "+09:00"
+    ],
+    "years": [
+      2025,
+      2026
+    ],
+    "vat_rates": [
+      "0",
+      "0.12",
+      "0.20"
+    ]
+  },
+  "issues": {
+    "duplicate_invoice": [
+      0,
+      2
+    ],
+    "payment_misallocation": [
+      0,
+      2
+    ],
+    "fx_error": [
+      0,
+      2
+    ],
+    "period_cutoff": [
+      0,
+      2
+    ]
+  },
+  "interactions": {
+    "fx_partial_payment_at_boundary": [
+      0,
+      1
+    ],
+    "cutoff_with_wrong_rate_date": [
+      0,
+      1
+    ]
+  },
+  "distractors": {
+    "split_payment": [
+      1,
+      3
+    ],
+    "overpayment_refund": [
+      0,
+      2
+    ],
+    "legit_recurring_amount": [
+      1,
+      3
+    ],
+    "timezone_boundary_ok": [
+      1,
+      2
+    ],
+    "realized_fx_gain_loss": [
+      1,
+      4
+    ],
+    "unreferenced_prepayment": [
+      0,
+      2
+    ]
+  },
+  "clean_probability": 0.2,
+  "force": {}
+}

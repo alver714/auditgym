@@ -1,0 +1,75 @@
+{
+  "base_currency": "USD",
+  "episode_id": "ep_34921e20f6ca",
+  "issues": [
+    {
+      "affected_ids": [
+        "SI/1385-V"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-5ab74025fa",
+          "R-0b39b276",
+          "fx:2025-11-18:AED:USD"
+        ]
+      ],
+      "expected_amount_minor": 554,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "PAY-146905"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-c75ac264a4",
+          "R-13a1c70d",
+          "fx:2025-11-14:AED:USD"
+        ]
+      ],
+      "expected_amount_minor": 3808,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 3,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "PAY-319463"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-28cf607ca9",
+          "R-297df8dc",
+          "R-46afc0ce",
+          "R-79bfe134",
+          "R-8529dc17",
+          "D-58bc41c7e7",
+          "D-ac6924c165",
+          "fx:2025-11-24:AED:USD",
+          "fx:2025-11-27:AED:USD"
+        ],
+        [
+          "D-28cf607ca9",
+          "R-79bfe134",
+          "D-58bc41c7e7",
+          "D-ac6924c165",
+          "fx:2025-11-24:AED:USD",
+          "fx:2025-11-27:AED:USD"
+        ]
+      ],
+      "expected_amount_minor": 19189,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 19,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

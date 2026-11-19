@@ -1,0 +1,129 @@
+{
+  "base_currency": "EUR",
+  "episode_id": "ep_fd1ea5307b38",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-2026-0682"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-f7a1cad554",
+          "R-4bc65403",
+          "fx:2026-08-28:CHF:EUR"
+        ]
+      ],
+      "expected_amount_minor": 129,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 1,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "INV-2026-5508"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-ab162a2d72",
+          "R-64c86238"
+        ]
+      ],
+      "expected_amount_minor": 231658,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 231,
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "BNKBHQLE3BA"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-febb53c5e7",
+          "R-85a79afe",
+          "fx:2026-08-31:JPY:EUR"
+        ]
+      ],
+      "expected_amount_minor": 4325,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 4,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "BNK6P55V4SL"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-a99f3d8513",
+          "R-0f494b14",
+          "R-82ce6a14"
+        ],
+        [
+          "D-a99f3d8513",
+          "R-0f494b14"
+        ],
+        [
+          "D-a99f3d8513",
+          "R-82ce6a14"
+        ]
+      ],
+      "expected_amount_minor": 138240,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 138,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "BNKNZNNEXLD"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-e14fa6a90e",
+          "R-322e48f9",
+          "R-49a8a497",
+          "R-87a1902a",
+          "R-95d9f854"
+        ],
+        [
+          "D-e14fa6a90e",
+          "R-322e48f9",
+          "R-49a8a497"
+        ]
+      ],
+      "expected_amount_minor": 151872,
+      "issue_id": "iss_05",
+      "scenario": null,
+      "tolerance_minor": 151,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "INV-2026-3459"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-d72aac40a4",
+          "R-045236d9",
+          "fx:2026-08-07:GBP:EUR"
+        ]
+      ],
+      "expected_amount_minor": 4564,
+      "issue_id": "iss_06",
+      "scenario": null,
+      "tolerance_minor": 4,
+      "type": "fx_error"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

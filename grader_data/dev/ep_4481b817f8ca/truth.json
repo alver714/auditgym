@@ -1,0 +1,144 @@
+{
+  "base_currency": "USD",
+  "episode_id": "ep_4481b817f8ca",
+  "issues": [
+    {
+      "affected_ids": [
+        "RCPT-05234"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-813846db27",
+          "R-ba6e9229",
+          "fx:2026-09-15:GBP:USD"
+        ]
+      ],
+      "expected_amount_minor": 3415,
+      "issue_id": "iss_01",
+      "scenario": "fx_partial_payment_at_boundary",
+      "tolerance_minor": 3,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "RCPT-05234"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-813846db27",
+          "R-2a865c21",
+          "R-506c6628",
+          "R-5284e725",
+          "R-ba6e9229",
+          "D-84d4716942",
+          "fx:2026-09-01:GBP:USD"
+        ],
+        [
+          "D-813846db27",
+          "R-506c6628",
+          "D-84d4716942",
+          "fx:2026-09-01:GBP:USD"
+        ]
+      ],
+      "expected_amount_minor": 130775,
+      "issue_id": "iss_02",
+      "scenario": "fx_partial_payment_at_boundary",
+      "tolerance_minor": 130,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "F-YMUVKV"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-78d8d131c4",
+          "R-7f882886",
+          "fx:2026-09-14:GBP:USD"
+        ]
+      ],
+      "expected_amount_minor": 4701,
+      "issue_id": "iss_03",
+      "scenario": null,
+      "tolerance_minor": 4,
+      "type": "fx_error"
+    },
+    {
+      "affected_ids": [
+        "F-FDG2RL"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-6ec20be96f",
+          "D-c23ca3d8dd",
+          "R-ba2115d3"
+        ]
+      ],
+      "expected_amount_minor": 397313,
+      "issue_id": "iss_04",
+      "scenario": null,
+      "tolerance_minor": 397,
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "RCPT-01101"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-f44a22f69d",
+          "R-36a034cb",
+          "R-a6f1a904",
+          "R-ffc5c62e"
+        ],
+        [
+          "D-f44a22f69d",
+          "R-ffc5c62e"
+        ]
+      ],
+      "expected_amount_minor": 20034,
+      "issue_id": "iss_05",
+      "scenario": null,
+      "tolerance_minor": 20,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "RCPT-71869"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "D-252b0d7a46",
+          "R-104ceb8d",
+          "R-5693a8c0",
+          "D-768db100bf",
+          "fx:2026-09-17:GBP:USD"
+        ],
+        [
+          "D-252b0d7a46",
+          "R-104ceb8d",
+          "D-768db100bf",
+          "fx:2026-09-17:GBP:USD"
+        ],
+        [
+          "D-252b0d7a46",
+          "R-5693a8c0",
+          "D-768db100bf",
+          "fx:2026-09-17:GBP:USD"
+        ]
+      ],
+      "expected_amount_minor": 766713,
+      "issue_id": "iss_06",
+      "scenario": null,
+      "tolerance_minor": 766,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "policy.json (public, shown in the first observation)",
+  "type": "object",
+  "required": [
+    "revenue_recognition",
+    "period_boundaries",
+    "fx",
+    "ledger",
+    "postings",
+    "duplicate_rule",
+    "finding_amounts",
+    "finding_affected_ids",
+    "finding_currency",
+    "amount_tolerance",
+    "evidence"
+  ],
+  "properties": {
+    "revenue_recognition": {
+      "type": "object",
+      "required": [
+        "rule"
+      ]
+    },
+    "period_boundaries": {
+      "type": "object",
+      "required": [
+        "period_start",
+        "period_end",
+        "inclusive",
+        "timezone",
+        "utc_offset"
+      ],
+      "properties": {
+        "period_start": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+          "description": "ISO-8601 timestamp WITH utc offset"
+        },
+        "period_end": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+          "description": "ISO-8601 timestamp WITH utc offset"
+        },
+        "inclusive": {
+          "const": true
+        }
+      }
+    },
+    "fx": {
+      "type": "object",
+      "required": [
+        "direction",
+        "invoice_rate_date",
+        "payment_rate_date",
+        "fallback",
+        "conversion"
+      ]
+    },
+    "ledger": {
+      "type": "object",
+      "required": [
+        "currency",
+        "double_entry"
+      ]
+    },
+    "postings": {
+      "type": "object",
+      "required": [
+        "invoice",
+        "payment",
+        "refund"
+      ]
+    },
+    "duplicate_rule": {
+      "type": "string"
+    },
+    "finding_amounts": {
+      "type": "object",
+      "required": [
+        "duplicate_invoice",
+        "payment_misallocation",
+        "fx_error",
+        "period_cutoff"
+      ]
+    },
+    "finding_affected_ids": {
+      "type": "object",
+      "required": [
+        "duplicate_invoice",
+        "payment_misallocation",
+        "fx_error",
+        "period_cutoff"
+      ]
+    },
+    "finding_currency": {
+      "type": "string"
+    },
+    "amount_tolerance": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "string"
+    }
+  }
+}

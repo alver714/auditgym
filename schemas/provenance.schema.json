@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "provenance.json (PRIVATE, grader only)",
+  "type": "object",
+  "required": [
+    "episode_id",
+    "env_version",
+    "config_id",
+    "config_version",
+    "config_hash",
+    "seed",
+    "spec",
+    "clean_records",
+    "changes",
+    "distractors"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string"
+    },
+    "env_version": {
+      "type": "string"
+    },
+    "config_id": {
+      "type": "string"
+    },
+    "config_version": {
+      "type": "string"
+    },
+    "config_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "n_invoices",
+        "n_noise_postings",
+        "n_noise_effective",
+        "issues",
+        "interactions",
+        "distractors"
+      ]
+    },
+    "clean_records": {
+      "type": "object",
+      "required": [
+        "ledger",
+        "invoices",
+        "payments"
+      ]
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "issue_ids",
+          "injector",
+          "root_cause",
+          "description",
+          "records_added",
+          "records_removed",
+          "records_modified"
+        ],
+        "properties": {
+          "issue_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "injector": {
+            "type": "string"
+          },
+          "root_cause": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "records_added": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "records_removed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "records_modified": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "field",
+                "before",
+                "after"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "distractors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "record_ids"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "record_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

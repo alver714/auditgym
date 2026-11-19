@@ -1,0 +1,253 @@
+{
+  "train": {
+    "config": "train",
+    "seeds": [
+      4101,
+      4117,
+      4129,
+      4153,
+      4177,
+      4201,
+      4219,
+      4243,
+      4261,
+      4297
+    ]
+  },
+  "dev": {
+    "config": "dev",
+    "seeds": [
+      5303,
+      5311,
+      5333,
+      5351,
+      5381,
+      5399,
+      5417,
+      5441,
+      5459,
+      5483
+    ]
+  },
+  "holdout": [
+    {
+      "seed": 9001,
+      "config": "holdout",
+      "force": {
+        "clean": true
+      },
+      "category": "clean"
+    },
+    {
+      "seed": 9038,
+      "config": "holdout",
+      "force": {
+        "clean": true
+      },
+      "category": "clean"
+    },
+    {
+      "seed": 9075,
+      "config": "holdout",
+      "force": {
+        "clean": true
+      },
+      "category": "clean"
+    },
+    {
+      "seed": 9112,
+      "config": "holdout",
+      "force": {
+        "clean": true
+      },
+      "category": "clean"
+    },
+    {
+      "seed": 9149,
+      "config": "holdout",
+      "force": {
+        "clean": true
+      },
+      "category": "clean"
+    },
+    {
+      "seed": 9186,
+      "config": "holdout",
+      "force": {
+        "interactions": {
+          "fx_partial_payment_at_boundary": 1
+        }
+      },
+      "category": "interaction"
+    },
+    {
+      "seed": 9223,
+      "config": "holdout",
+      "force": {
+        "interactions": {
+          "cutoff_with_wrong_rate_date": 1
+        }
+      },
+      "category": "interaction"
+    },
+    {
+      "seed": 9260,
+      "config": "holdout",
+      "force": {
+        "interactions": {
+          "fx_partial_payment_at_boundary": 1,
+          "cutoff_with_wrong_rate_date": 1
+        }
+      },
+      "category": "interaction"
+    },
+    {
+      "seed": 9297,
+      "config": "holdout",
+      "force": {
+        "interactions": {
+          "fx_partial_payment_at_boundary": 2,
+          "cutoff_with_wrong_rate_date": 1
+        },
+        "issues": {
+          "duplicate_invoice": 1
+        }
+      },
+      "category": "interaction"
+    },
+    {
+      "seed": 9334,
+      "config": "holdout",
+      "force": {
+        "interactions": {
+          "cutoff_with_wrong_rate_date": 2,
+          "fx_partial_payment_at_boundary": 1
+        },
+        "issues": {
+          "fx_error": 1,
+          "period_cutoff": 1
+        }
+      },
+      "category": "interaction"
+    },
+    {
+      "seed": 9371,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "duplicate_invoice": 1,
+          "fx_error": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9408,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "payment_misallocation": 2,
+          "period_cutoff": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9445,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "duplicate_invoice": 2,
+          "payment_misallocation": 1,
+          "fx_error": 2,
+          "period_cutoff": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9482,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "fx_error": 2,
+          "duplicate_invoice": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9519,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "duplicate_invoice": 3,
+          "period_cutoff": 2,
+          "fx_error": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9556,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "payment_misallocation": 3,
+          "fx_error": 3
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9593,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "period_cutoff": 3,
+          "duplicate_invoice": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9630,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "duplicate_invoice": 1,
+          "payment_misallocation": 1,
+          "fx_error": 1,
+          "period_cutoff": 1
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9667,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "fx_error": 2,
+          "payment_misallocation": 2,
+          "duplicate_invoice": 2,
+          "period_cutoff": 2
+        }
+      },
+      "category": "mixed"
+    },
+    {
+      "seed": 9704,
+      "config": "holdout",
+      "force": {
+        "issues": {
+          "duplicate_invoice": 1,
+          "fx_error": 3,
+          "period_cutoff": 1,
+          "payment_misallocation": 1
+        }
+      },
+      "category": "mixed"
+    }
+  ]
+}

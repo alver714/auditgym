@@ -1,0 +1,10 @@
+.venv/
+.git/
+.scratch/
+__pycache__/
+*.pyc
+.pytest_cache/
+reports/
+*.egg-info/
+# NOT ignored on purpose: grader_data/{train,dev} (truth of the OPEN splits; the official check reads it),
+# episodes/, trajectories/, configs/, tests/, schemas/, docs/.

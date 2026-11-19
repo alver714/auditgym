@@ -1,0 +1,59 @@
+{
+  "base_currency": "EUR",
+  "episode_id": "ep_36d8c2bf2f10",
+  "issues": [
+    {
+      "affected_ids": [
+        "RCPT-73613"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-0c25f52710",
+          "R-125385aa",
+          "R-d7af12be"
+        ],
+        [
+          "D-0c25f52710",
+          "R-125385aa"
+        ],
+        [
+          "D-0c25f52710",
+          "R-d7af12be"
+        ]
+      ],
+      "expected_amount_minor": 2506080,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 2506,
+      "type": "payment_misallocation"
+    },
+    {
+      "affected_ids": [
+        "RCPT-68564"
+      ],
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "D-37e23f0d1e",
+          "R-2b4b410d",
+          "R-b0c0c739"
+        ],
+        [
+          "D-37e23f0d1e",
+          "R-2b4b410d"
+        ],
+        [
+          "D-37e23f0d1e",
+          "R-b0c0c739"
+        ]
+      ],
+      "expected_amount_minor": 8726,
+      "issue_id": "iss_02",
+      "scenario": null,
+      "tolerance_minor": 8,
+      "type": "payment_misallocation"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "base_currency": "KZT",
+  "episode_id": "ep_11f69916a46a",
+  "issues": [
+    {
+      "affected_ids": [
+        "F-GC74BQ"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "D-dc5bdfaa2b",
+          "D-8debbdc87a",
+          "R-40c2abad"
+        ]
+      ],
+      "expected_amount_minor": 94200000,
+      "issue_id": "iss_01",
+      "scenario": null,
+      "tolerance_minor": 94200,
+      "type": "duplicate_invoice"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

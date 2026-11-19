@@ -1,0 +1,6621 @@
+{
+  "changes": [
+    {
+      "description": "Invoice SI/1385-V converted with a wrong rate (wrong_rate: stale_rate); AR, VAT and revenue rows all use it.",
+      "injector": "fx_error",
+      "issue_ids": [
+        "iss_01"
+      ],
+      "records_added": [],
+      "records_modified": [
+        {
+          "after": 30056,
+          "before": 30610,
+          "field": "debit_minor",
+          "id": "R-0b39b276"
+        },
+        {
+          "after": 3220,
+          "before": 3280,
+          "field": "credit_minor",
+          "id": "R-eda2c50e"
+        },
+        {
+          "after": 26836,
+          "before": 27330,
+          "field": "credit_minor",
+          "id": "R-0eb16144"
+        }
+      ],
+      "records_removed": [],
+      "root_cause": "fx_wrong_rate:stale_rate"
+    },
+    {
+      "description": "Cash row of payment PAY-146905 converted with a wrong rate (wrong_date: next_business_day); the fx gain/loss row absorbs the difference.",
+      "injector": "fx_error",
+      "issue_ids": [
+        "iss_02"
+      ],
+      "records_added": [],
+      "records_modified": [
+        {
+          "after": 273894,
+          "before": 270086,
+          "field": "debit_minor",
+          "id": "R-13a1c70d"
+        },
+        {
+          "after": 6309,
+          "before": 2501,
+          "field": "credit_minor",
+          "id": "R-a5eaa433"
+        }
+      ],
+      "records_removed": [],
+      "root_cause": "fx_wrong_date:next_business_day"
+    },
+    {
+      "description": "AR credit for invoice SI/4390-L from payment PAY-319463 was posted not at all; the uncredited part went to unapplied cash.",
+      "injector": "payment_misallocation",
+      "issue_ids": [
+        "iss_03"
+      ],
+      "records_added": [
+        "R-46afc0ce"
+      ],
+      "records_modified": [
+        {
+          "after": 186,
+          "before": 428,
+          "field": "credit_minor",
+          "id": "R-297df8dc"
+        }
+      ],
+      "records_removed": [
+        "R-fa0b5d78"
+      ],
+      "root_cause": "payment_allocation_missing"
+    }
+  ],
+  "clean_records": {
+    "invoices": [
+      {
+        "currency": "USD",
+        "doc_id": "D-0d532493a7",
+        "due_at": "2025-12-13T18:28:00+05:00",
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/9341-A",
+        "issued_at": "2025-10-29T18:28:00+05:00",
+        "line_items": [
+          {
+            "description": "Durum flour 25kg",
+            "line": 1,
+            "po_ref": "PO-50692",
+            "quantity": 50,
+            "service_period": "2025-11",
+            "unit_price_minor": 2400,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 2,
+            "po_ref": "PO-50692",
+            "quantity": 3,
+            "service_period": "2025-11",
+            "unit_price_minor": 90600,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 391800
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-ae2b2d2416",
+        "due_at": "2025-11-28T11:55:38-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1183-K",
+        "issued_at": "2025-10-29T11:55:38-05:00",
+        "line_items": [
+          {
+            "description": "Packaging and labelling",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 50,
+            "service_period": "2025-11",
+            "unit_price_minor": 55000,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 3080000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-ea4fb45c5d",
+        "due_at": "2025-11-16T00:10:47+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/5993-A",
+        "issued_at": "2025-11-01T00:10:47+08:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-30308",
+            "quantity": 8,
+            "service_period": "2025-10",
+            "unit_price_minor": 16100,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 144256
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-d8d0460d96",
+        "due_at": "2025-11-15T23:59:59+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/5752-X",
+        "issued_at": "2025-10-31T23:59:59+05:00",
+        "line_items": [
+          {
+            "description": "Rice basmati 25kg",
+            "line": 1,
+            "po_ref": "PO-26247",
+            "quantity": 15,
+            "service_period": "2025-11",
+            "unit_price_minor": 700,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 2,
+            "po_ref": "PO-26247",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 15400,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 29008
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-c2b82373e5",
+        "due_at": "2025-11-15T16:00:00-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2632-U",
+        "issued_at": "2025-10-31T16:00:00-03:00",
+        "line_items": [
+          {
+            "description": "Packaging and labelling",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 6,
+            "service_period": "2025-10",
+            "unit_price_minor": 90400,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Canned tomatoes carton",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 3,
+            "service_period": "2025-10",
+            "unit_price_minor": 60400,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 60,
+            "service_period": "2025-10",
+            "unit_price_minor": 8300,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 1368192
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-053660b72a",
+        "due_at": "2025-11-16T15:51:02+09:00",
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/7079-Z",
+        "issued_at": "2025-11-01T15:51:02+09:00",
+        "line_items": [
+          {
+            "description": "Packaging and labelling",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 4,
+            "service_period": "2025-11",
+            "unit_price_minor": 2175,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Canned tomatoes carton",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 925,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 11550
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-af6412d294",
+        "due_at": "2025-11-18T07:32:20+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/4434-L",
+        "issued_at": "2025-11-03T07:32:20+05:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-45358",
+            "quantity": 50,
+            "service_period": "2025-11",
+            "unit_price_minor": 90600,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 2,
+            "po_ref": "PO-45358",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 1399,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 3,
+            "po_ref": "PO-45358",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 15000,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 5091967
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-069daad0f9",
+        "due_at": "2025-12-04T20:51:04+08:00",
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/6481-R",
+        "issued_at": "2025-11-04T20:51:04+08:00",
+        "line_items": [
+          {
+            "description": "Spice assortment box",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 20,
+            "service_period": "2025-10",
+            "unit_price_minor": 39200,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Durum flour 25kg",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 100,
+            "service_period": "2025-10",
+            "unit_price_minor": 20100,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 2794000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-bd47d9c85d",
+        "due_at": "2025-11-20T02:03:25+00:00",
+        "entity_id": "CUST-MK78",
+        "invoice_id": "SI/4530-B",
+        "issued_at": "2025-11-05T02:03:25+00:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-40170",
+            "quantity": 48,
+            "service_period": "2025-10",
+            "unit_price_minor": 7900,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 424704
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-39ec530ebf",
+        "due_at": "2025-12-06T04:31:57-03:00",
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/1388-S",
+        "issued_at": "2025-11-06T04:31:57-03:00",
+        "line_items": [
+          {
+            "description": "Durum flour 25kg",
+            "line": 1,
+            "po_ref": "PO-29281",
+            "quantity": 2,
+            "service_period": "2025-11",
+            "unit_price_minor": 15000,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Canned tomatoes carton",
+            "line": 2,
+            "po_ref": "PO-29281",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 20200,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 50200
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-5f6d73bddb",
+        "due_at": "2025-12-21T23:59:17-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9960-F",
+        "issued_at": "2025-11-06T23:59:17-03:00",
+        "line_items": [
+          {
+            "description": "Dried apricots 10kg",
+            "line": 1,
+            "po_ref": "PO-48417",
+            "quantity": 12,
+            "service_period": "2025-11",
+            "unit_price_minor": 1850,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Packaging and labelling",
+            "line": 2,
+            "po_ref": "PO-48417",
+            "quantity": 2,
+            "service_period": "2025-11",
+            "unit_price_minor": 90500,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 227584
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-6ff24326d6",
+        "due_at": "2025-12-07T01:10:25-03:00",
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6030-Y",
+        "issued_at": "2025-11-07T01:10:25-03:00",
+        "line_items": [
+          {
+            "description": "Rice basmati 25kg",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 100,
+            "service_period": "2025-11",
+            "unit_price_minor": 60300,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 6030000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-f7c5c126f5",
+        "due_at": "2025-12-22T12:50:10+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/7122-H",
+        "issued_at": "2025-11-07T12:50:10+08:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 4,
+            "service_period": "2025-10",
+            "unit_price_minor": 221000,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 1060800
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-ed503e983e",
+        "due_at": "2025-11-22T01:09:05-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/5368-D",
+        "issued_at": "2025-11-07T01:09:05-05:00",
+        "line_items": [
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 6,
+            "service_period": "2025-11",
+            "unit_price_minor": 5500,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Sunflower oil 20L",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 5,
+            "service_period": "2025-11",
+            "unit_price_minor": 57200,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 319000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-4708cbc62a",
+        "due_at": "2025-12-22T11:15:10+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/3134-G",
+        "issued_at": "2025-11-07T11:15:10+05:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-55688",
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 45800,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Durum flour 25kg",
+            "line": 2,
+            "po_ref": "PO-55688",
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 3300,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 3,
+            "po_ref": "PO-55688",
+            "quantity": 20,
+            "service_period": "2025-11",
+            "unit_price_minor": 45700,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 2563760
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-9b41d2c8b1",
+        "due_at": "2025-12-09T06:59:02-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9106-B",
+        "issued_at": "2025-11-09T06:59:02-03:00",
+        "line_items": [
+          {
+            "description": "Durum flour 25kg",
+            "line": 1,
+            "po_ref": "PO-15183",
+            "quantity": 36,
+            "service_period": "2025-W45",
+            "unit_price_minor": 3875,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 156240
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-c5c7551bf7",
+        "due_at": "2025-11-26T00:22:14-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3784-Y",
+        "issued_at": "2025-11-11T00:22:14-05:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-64542",
+            "quantity": 60,
+            "service_period": "2025-10",
+            "unit_price_minor": 112000,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 6720000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-711c551f6e",
+        "due_at": "2025-12-11T02:47:08-03:00",
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/8998-D",
+        "issued_at": "2025-11-11T02:47:08-03:00",
+        "line_items": [
+          {
+            "description": "Honey jars crate",
+            "line": 1,
+            "po_ref": "PO-29990",
+            "quantity": 15,
+            "service_period": "2025-11",
+            "unit_price_minor": 15800,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Packaging and labelling",
+            "line": 2,
+            "po_ref": "PO-29990",
+            "quantity": 15,
+            "service_period": "2025-11",
+            "unit_price_minor": 8300,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 361500
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-69b3ce6d4d",
+        "due_at": "2025-12-11T09:58:18-03:00",
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/2891-F",
+        "issued_at": "2025-11-11T09:58:18-03:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": "PO-87335",
+            "quantity": 10,
+            "service_period": "2025-11",
+            "unit_price_minor": 1200,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 2,
+            "po_ref": "PO-87335",
+            "quantity": 24,
+            "service_period": "2025-11",
+            "unit_price_minor": 1625,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Packaging and labelling",
+            "line": 3,
+            "po_ref": "PO-87335",
+            "quantity": 6,
+            "service_period": "2025-11",
+            "unit_price_minor": 7700,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 97200
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-3d26a1fa64",
+        "due_at": "2025-11-27T11:36:35+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1057-E",
+        "issued_at": "2025-11-12T11:36:35+05:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": "PO-96779",
+            "quantity": 100,
+            "service_period": "2025-11",
+            "unit_price_minor": 60100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Durum flour 25kg",
+            "line": 2,
+            "po_ref": "PO-96779",
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 10900,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 3,
+            "po_ref": "PO-96779",
+            "quantity": 15,
+            "service_period": "2025-11",
+            "unit_price_minor": 5300,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Rice basmati 25kg",
+            "line": 4,
+            "po_ref": "PO-96779",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 2900,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 7262976
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-91b64d7c87",
+        "due_at": "2025-11-27T07:24:14-03:00",
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/5021-F",
+        "issued_at": "2025-11-12T07:24:14-03:00",
+        "line_items": [
+          {
+            "description": "Spice assortment box",
+            "line": 1,
+            "po_ref": "PO-99109",
+            "quantity": 5,
+            "service_period": "2025-10",
+            "unit_price_minor": 1400,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 7000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-786f35b318",
+        "due_at": "2025-11-27T07:44:50-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/8127-X",
+        "issued_at": "2025-11-12T07:44:50-05:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 5,
+            "service_period": "2025-11",
+            "unit_price_minor": 165000,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 5100,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 1008600
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-f3b894a97a",
+        "due_at": "2025-12-12T20:15:06+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/7348-E",
+        "issued_at": "2025-11-12T20:15:06+05:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-77894",
+            "quantity": 15,
+            "service_period": "2025-W46",
+            "unit_price_minor": 1100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 2,
+            "po_ref": "PO-77894",
+            "quantity": 30,
+            "service_period": "2025-W46",
+            "unit_price_minor": 10100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 3,
+            "po_ref": "PO-77894",
+            "quantity": 3,
+            "service_period": "2025-W46",
+            "unit_price_minor": 5600,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 378000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-12a61d60aa",
+        "due_at": "2025-12-29T11:26:42+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/9319-D",
+        "issued_at": "2025-11-14T11:26:42+08:00",
+        "line_items": [
+          {
+            "description": "Dried apricots 10kg",
+            "line": 1,
+            "po_ref": "PO-83744",
+            "quantity": 100,
+            "service_period": "2025-10",
+            "unit_price_minor": 220000,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 26400000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-2ac560421c",
+        "due_at": "2025-11-28T23:44:49-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3832-E",
+        "issued_at": "2025-11-13T23:44:49-05:00",
+        "line_items": [
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 12,
+            "service_period": "2025-11",
+            "unit_price_minor": 36700,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 440400
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-70f06a0849",
+        "due_at": "2025-12-14T17:48:01+09:00",
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/5714-T",
+        "issued_at": "2025-11-14T17:48:01+09:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": "PO-26195",
+            "quantity": 4,
+            "service_period": "2025-10",
+            "unit_price_minor": 2675,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 2,
+            "po_ref": "PO-26195",
+            "quantity": 60,
+            "service_period": "2025-10",
+            "unit_price_minor": 1275,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 3,
+            "po_ref": "PO-26195",
+            "quantity": 50,
+            "service_period": "2025-10",
+            "unit_price_minor": 20200,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 1316640
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-a21dc50d3d",
+        "due_at": "2025-11-29T20:33:51+09:00",
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1195-P",
+        "issued_at": "2025-11-14T20:33:51+09:00",
+        "line_items": [
+          {
+            "description": "Sunflower oil 20L",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 2900,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Packaging and labelling",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 10,
+            "service_period": "2025-11",
+            "unit_price_minor": 7800,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Rice basmati 25kg",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 10000,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 692640
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-ad130ab705",
+        "due_at": "2025-12-29T18:09:45+05:00",
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/9373-N",
+        "issued_at": "2025-11-14T18:09:45+05:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-21806",
+            "quantity": 50,
+            "service_period": "2025-10",
+            "unit_price_minor": 15000,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 750000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-eb0a3634b4",
+        "due_at": "2025-12-15T11:42:28+09:00",
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/1793-H",
+        "issued_at": "2025-11-15T11:42:28+09:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-81929",
+            "quantity": 8,
+            "service_period": "2025-10",
+            "unit_price_minor": 4899,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 47030
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-a7bfe3f485",
+        "due_at": "2025-12-15T14:42:33+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/6388-M",
+        "issued_at": "2025-11-15T14:42:33+05:00",
+        "line_items": [
+          {
+            "description": "Honey jars crate",
+            "line": 1,
+            "po_ref": "PO-28174",
+            "quantity": 100,
+            "service_period": "2025-W46",
+            "unit_price_minor": 15500,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 2,
+            "po_ref": "PO-28174",
+            "quantity": 60,
+            "service_period": "2025-W46",
+            "unit_price_minor": 30300,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 3772160
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-24a0777d88",
+        "due_at": "2025-12-01T18:38:29+09:00",
+        "entity_id": "CUST-AC32",
+        "invoice_id": "SI/9756-H",
+        "issued_at": "2025-11-16T18:38:29+09:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 60,
+            "service_period": "2025-11",
+            "unit_price_minor": 3600,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Sunflower oil 20L",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 100,
+            "service_period": "2025-11",
+            "unit_price_minor": 5500,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 167000,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 6888000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-54ad42f05b",
+        "due_at": "2025-12-31T07:27:46-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2569-X",
+        "issued_at": "2025-11-16T07:27:46-03:00",
+        "line_items": [
+          {
+            "description": "Durum flour 25kg",
+            "line": 1,
+            "po_ref": "PO-15183",
+            "quantity": 36,
+            "service_period": "2025-W46",
+            "unit_price_minor": 3875,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 156240
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-cc4ebd8788",
+        "due_at": "2026-01-01T23:02:23-03:00",
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/1607-Z",
+        "issued_at": "2025-11-17T23:02:23-03:00",
+        "line_items": [
+          {
+            "description": "Sunflower oil 20L",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 15,
+            "service_period": "2025-10",
+            "unit_price_minor": 60900,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Spice assortment box",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 3,
+            "service_period": "2025-10",
+            "unit_price_minor": 1125,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 20,
+            "service_period": "2025-10",
+            "unit_price_minor": 3250,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 982550
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-5ab74025fa",
+        "due_at": "2026-01-01T23:46:12-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1385-V",
+        "issued_at": "2025-11-17T23:46:12-05:00",
+        "line_items": [
+          {
+            "description": "Packaging and labelling",
+            "line": 1,
+            "po_ref": "PO-34959",
+            "quantity": 10,
+            "service_period": "2025-11",
+            "unit_price_minor": 10200,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 114240
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-1472f7ea06",
+        "due_at": "2026-01-02T13:50:22+09:00",
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/3484-C",
+        "issued_at": "2025-11-18T13:50:22+09:00",
+        "line_items": [
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 60200,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 20600,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Sunflower oil 20L",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 24,
+            "service_period": "2025-11",
+            "unit_price_minor": 45500,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 4,
+            "po_ref": null,
+            "quantity": 6,
+            "service_period": "2025-11",
+            "unit_price_minor": 10700,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 5744880
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-668de671a9",
+        "due_at": "2025-12-18T14:58:17+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/3160-R",
+        "issued_at": "2025-11-18T14:58:17+08:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 29000,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Durum flour 25kg",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 5,
+            "service_period": "2025-11",
+            "unit_price_minor": 20100,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 1373400
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-f9e4a07483",
+        "due_at": "2025-12-18T22:40:36-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/7548-P",
+        "issued_at": "2025-11-18T22:40:36-05:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": "PO-59977",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 331000,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Spice assortment box",
+            "line": 2,
+            "po_ref": "PO-59977",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 7700,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 3,
+            "po_ref": "PO-59977",
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 330000,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 10238700
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-840e126af1",
+        "due_at": "2025-12-19T10:58:24-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/3854-M",
+        "issued_at": "2025-11-19T10:58:24-03:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-64273",
+            "quantity": 60,
+            "service_period": "2025-11",
+            "unit_price_minor": 90200,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 2,
+            "po_ref": "PO-64273",
+            "quantity": 1,
+            "service_period": "2025-11",
+            "unit_price_minor": 20900,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 3,
+            "po_ref": "PO-64273",
+            "quantity": 10,
+            "service_period": "2025-11",
+            "unit_price_minor": 2700,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 6109340
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-5e26ffe7b4",
+        "due_at": "2026-01-03T21:42:11+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1871-T",
+        "issued_at": "2025-11-19T21:42:11+05:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-77894",
+            "quantity": 15,
+            "service_period": "2025-W47",
+            "unit_price_minor": 1100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 2,
+            "po_ref": "PO-77894",
+            "quantity": 30,
+            "service_period": "2025-W47",
+            "unit_price_minor": 10100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 3,
+            "po_ref": "PO-77894",
+            "quantity": 3,
+            "service_period": "2025-W47",
+            "unit_price_minor": 5600,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 378000
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-8691360952",
+        "due_at": "2026-01-03T21:16:29-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/9494-F",
+        "issued_at": "2025-11-19T21:16:29-05:00",
+        "line_items": [
+          {
+            "description": "Packaging and labelling",
+            "line": 1,
+            "po_ref": "PO-51338",
+            "quantity": 60,
+            "service_period": "2025-11",
+            "unit_price_minor": 75600,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 4536000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-a86673c1a3",
+        "due_at": "2025-12-20T11:46:13+05:00",
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/7943-Z",
+        "issued_at": "2025-11-20T11:46:13+05:00",
+        "line_items": [
+          {
+            "description": "Honey jars crate",
+            "line": 1,
+            "po_ref": "PO-53812",
+            "quantity": 48,
+            "service_period": "2025-10",
+            "unit_price_minor": 10800,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 518400
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-1c909aed0f",
+        "due_at": "2025-12-20T16:01:01+08:00",
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/8998-B",
+        "issued_at": "2025-11-20T16:01:01+08:00",
+        "line_items": [
+          {
+            "description": "Canned tomatoes carton",
+            "line": 1,
+            "po_ref": "PO-72516",
+            "quantity": 36,
+            "service_period": "2025-10",
+            "unit_price_minor": 6600,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 2,
+            "po_ref": "PO-72516",
+            "quantity": 15,
+            "service_period": "2025-10",
+            "unit_price_minor": 12400,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Packaging and labelling",
+            "line": 3,
+            "po_ref": "PO-72516",
+            "quantity": 60,
+            "service_period": "2025-10",
+            "unit_price_minor": 56900,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 3837600
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-e4466b0283",
+        "due_at": "2026-01-06T14:54:01+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2961-Y",
+        "issued_at": "2025-11-22T14:54:01+05:00",
+        "line_items": [
+          {
+            "description": "Honey jars crate",
+            "line": 1,
+            "po_ref": "PO-28174",
+            "quantity": 100,
+            "service_period": "2025-W47",
+            "unit_price_minor": 15500,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 2,
+            "po_ref": "PO-28174",
+            "quantity": 60,
+            "service_period": "2025-W47",
+            "unit_price_minor": 30300,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 3772160
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-fc993f26f3",
+        "due_at": "2025-12-24T17:54:46+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/1166-C",
+        "issued_at": "2025-11-24T17:54:46+08:00",
+        "line_items": [
+          {
+            "description": "Black tea 1kg tin",
+            "line": 1,
+            "po_ref": "PO-53209",
+            "quantity": 3,
+            "service_period": "2025-10",
+            "unit_price_minor": 331000,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 1112160
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-58bc41c7e7",
+        "due_at": "2025-12-24T19:44:03+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4723-S",
+        "issued_at": "2025-11-24T19:44:03+08:00",
+        "line_items": [
+          {
+            "description": "Rice basmati 25kg",
+            "line": 1,
+            "po_ref": "PO-18844",
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 2925,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 168480
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-1feb9e4b6d",
+        "due_at": "2025-12-09T22:12:37+09:00",
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1406-R",
+        "issued_at": "2025-11-24T22:12:37+09:00",
+        "line_items": [
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 1,
+            "po_ref": "PO-84141",
+            "quantity": 10,
+            "service_period": "2025-11",
+            "unit_price_minor": 2099,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Rice basmati 25kg",
+            "line": 2,
+            "po_ref": "PO-84141",
+            "quantity": 60,
+            "service_period": "2025-11",
+            "unit_price_minor": 5800,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 3,
+            "po_ref": "PO-84141",
+            "quantity": 20,
+            "service_period": "2025-11",
+            "unit_price_minor": 10500,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 690590
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-43a5f43f28",
+        "due_at": "2026-01-10T07:58:54-05:00",
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3842-G",
+        "issued_at": "2025-11-26T07:58:54-05:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 4,
+            "service_period": "2025-10",
+            "unit_price_minor": 12100,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 20,
+            "service_period": "2025-10",
+            "unit_price_minor": 15000,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 348400
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-dfe3782450",
+        "due_at": "2025-12-11T18:46:34+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2551-U",
+        "issued_at": "2025-11-26T18:46:34+05:00",
+        "line_items": [
+          {
+            "description": "Olive oil 5L",
+            "line": 1,
+            "po_ref": "PO-77894",
+            "quantity": 15,
+            "service_period": "2025-W48",
+            "unit_price_minor": 1100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 2,
+            "po_ref": "PO-77894",
+            "quantity": 30,
+            "service_period": "2025-W48",
+            "unit_price_minor": 10100,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 3,
+            "po_ref": "PO-77894",
+            "quantity": 3,
+            "service_period": "2025-W48",
+            "unit_price_minor": 5600,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 378000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-de66bfc37a",
+        "due_at": "2026-01-11T01:47:18-03:00",
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6158-E",
+        "issued_at": "2025-11-27T01:47:18-03:00",
+        "line_items": [
+          {
+            "description": "Canned tomatoes carton",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 48,
+            "service_period": "2025-10",
+            "unit_price_minor": 60000,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Dried apricots 10kg",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 6,
+            "service_period": "2025-10",
+            "unit_price_minor": 10000,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Cold storage fee",
+            "line": 3,
+            "po_ref": null,
+            "quantity": 2,
+            "service_period": "2025-10",
+            "unit_price_minor": 45300,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 3030600
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-ac6924c165",
+        "due_at": "2026-01-12T02:44:05+08:00",
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4390-L",
+        "issued_at": "2025-11-28T02:44:05+08:00",
+        "line_items": [
+          {
+            "description": "Sunflower oil 20L",
+            "line": 1,
+            "po_ref": "PO-59004",
+            "quantity": 10,
+            "service_period": "2025-10",
+            "unit_price_minor": 5800,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 69600
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-0d89f8fa92",
+        "due_at": "2026-01-12T01:24:05-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/8648-D",
+        "issued_at": "2025-11-28T01:24:05-05:00",
+        "line_items": [
+          {
+            "description": "Cold storage fee",
+            "line": 1,
+            "po_ref": "PO-50256",
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 17900,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Sunflower oil 20L",
+            "line": 2,
+            "po_ref": "PO-50256",
+            "quantity": 30,
+            "service_period": "2025-11",
+            "unit_price_minor": 1850,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 3,
+            "po_ref": "PO-50256",
+            "quantity": 20,
+            "service_period": "2025-11",
+            "unit_price_minor": 10600,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 901040
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-2939517ef4",
+        "due_at": "2025-12-13T19:17:06+09:00",
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/7268-H",
+        "issued_at": "2025-11-28T19:17:06+09:00",
+        "line_items": [
+          {
+            "description": "Sunflower oil 20L",
+            "line": 1,
+            "po_ref": null,
+            "quantity": 36,
+            "service_period": "2025-11",
+            "unit_price_minor": 5900,
+            "vat_rate": "0.20"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 2,
+            "po_ref": null,
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 20100,
+            "vat_rate": "0.20"
+          }
+        ],
+        "total_minor": 1412640
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-4a901b939b",
+        "due_at": "2025-12-28T18:25:23+05:00",
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/3213-K",
+        "issued_at": "2025-11-28T18:25:23+05:00",
+        "line_items": [
+          {
+            "description": "Rice basmati 25kg",
+            "line": 1,
+            "po_ref": "PO-93100",
+            "quantity": 4,
+            "service_period": "2025-11",
+            "unit_price_minor": 7900,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Roasted nuts mix 5kg",
+            "line": 2,
+            "po_ref": "PO-93100",
+            "quantity": 15,
+            "service_period": "2025-11",
+            "unit_price_minor": 4500,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Sunflower oil 20L",
+            "line": 3,
+            "po_ref": "PO-93100",
+            "quantity": 12,
+            "service_period": "2025-11",
+            "unit_price_minor": 3000,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 135100
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-0ab7574855",
+        "due_at": "2025-12-29T03:38:17-03:00",
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/7548-X",
+        "issued_at": "2025-11-29T03:38:17-03:00",
+        "line_items": [
+          {
+            "description": "Durum flour 25kg",
+            "line": 1,
+            "po_ref": "PO-10733",
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 20100,
+            "vat_rate": "0"
+          },
+          {
+            "description": "Black tea 1kg tin",
+            "line": 2,
+            "po_ref": "PO-10733",
+            "quantity": 24,
+            "service_period": "2025-11",
+            "unit_price_minor": 90400,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 3134400
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-213ce31ed6",
+        "due_at": "2025-12-30T08:11:28-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1594-V",
+        "issued_at": "2025-11-30T08:11:28-05:00",
+        "line_items": [
+          {
+            "description": "Spice assortment box",
+            "line": 1,
+            "po_ref": "PO-76688",
+            "quantity": 48,
+            "service_period": "2025-11",
+            "unit_price_minor": 20500,
+            "vat_rate": "0"
+          }
+        ],
+        "total_minor": 984000
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-715f052820",
+        "due_at": "2025-12-31T00:00:00+05:00",
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/6656-W",
+        "issued_at": "2025-12-01T00:00:00+05:00",
+        "line_items": [
+          {
+            "description": "Spice assortment box",
+            "line": 1,
+            "po_ref": "PO-12380",
+            "quantity": 50,
+            "service_period": "2025-10",
+            "unit_price_minor": 60300,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Olive oil 5L",
+            "line": 2,
+            "po_ref": "PO-12380",
+            "quantity": 10,
+            "service_period": "2025-10",
+            "unit_price_minor": 60300,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 4052160
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-28946d761f",
+        "due_at": "2025-12-15T14:18:51-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/6430-M",
+        "issued_at": "2025-11-30T14:18:51-05:00",
+        "line_items": [
+          {
+            "description": "Sunflower oil 20L",
+            "line": 1,
+            "po_ref": "PO-97164",
+            "quantity": 20,
+            "service_period": "2025-10",
+            "unit_price_minor": 36700,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 822080
+      },
+      {
+        "currency": "AED",
+        "doc_id": "D-20b74d449b",
+        "due_at": "2026-01-14T15:32:13-05:00",
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/7887-R",
+        "issued_at": "2025-11-30T15:32:13-05:00",
+        "line_items": [
+          {
+            "description": "Dried apricots 10kg",
+            "line": 1,
+            "po_ref": "PO-49501",
+            "quantity": 24,
+            "service_period": "2025-10",
+            "unit_price_minor": 168000,
+            "vat_rate": "0.12"
+          },
+          {
+            "description": "Honey jars crate",
+            "line": 2,
+            "po_ref": "PO-49501",
+            "quantity": 10,
+            "service_period": "2025-10",
+            "unit_price_minor": 6200,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 4585280
+      },
+      {
+        "currency": "USD",
+        "doc_id": "D-d1d23159da",
+        "due_at": "2025-12-15T23:29:35-03:00",
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/5227-W",
+        "issued_at": "2025-11-30T23:29:35-03:00",
+        "line_items": [
+          {
+            "description": "Honey jars crate",
+            "line": 1,
+            "po_ref": "PO-15572",
+            "quantity": 4,
+            "service_period": "2025-11",
+            "unit_price_minor": 10800,
+            "vat_rate": "0.12"
+          }
+        ],
+        "total_minor": 48384
+      }
+    ],
+    "ledger": [
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1368192,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2632-U",
+        "payment_id": null,
+        "row_id": "R-883c1c60",
+        "timestamp": "2025-11-01T00:00:00+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 146592,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2632-U",
+        "payment_id": null,
+        "row_id": "R-a3bfa028",
+        "timestamp": "2025-11-01T00:00:00+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1221600,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2632-U",
+        "payment_id": null,
+        "row_id": "R-bba375c0",
+        "timestamp": "2025-11-01T00:00:00+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 709072,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9d326761",
+        "timestamp": "2025-11-01T10:27:40+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 709072,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d0e10b3e",
+        "timestamp": "2025-11-01T10:27:40+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 9625,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/7079-Z",
+        "payment_id": null,
+        "row_id": "R-9f46840b",
+        "timestamp": "2025-11-01T11:51:02+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 11550,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/7079-Z",
+        "payment_id": null,
+        "row_id": "R-f8e104da",
+        "timestamp": "2025-11-01T11:51:02+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 1925,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/7079-Z",
+        "payment_id": null,
+        "row_id": "R-feb96ba1",
+        "timestamp": "2025-11-01T11:51:02+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 46298,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-66c86cbb",
+        "timestamp": "2025-11-01T13:58:56+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 46298,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-68aa91fc",
+        "timestamp": "2025-11-01T13:58:56+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 70716,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0c8db457",
+        "timestamp": "2025-11-01T18:36:07+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 70716,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-29061517",
+        "timestamp": "2025-11-01T18:36:07+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 69812,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-36087b02",
+        "timestamp": "2025-11-01T22:57:55+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 69812,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ad37c098",
+        "timestamp": "2025-11-01T22:57:55+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 525001,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a55bb5a3",
+        "timestamp": "2025-11-02T02:37:45+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 525001,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-cc017ea4",
+        "timestamp": "2025-11-02T02:37:45+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 50307,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-527aac76",
+        "timestamp": "2025-11-02T05:58:09+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 50307,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ed9421a8",
+        "timestamp": "2025-11-02T05:58:09+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 712079,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-12764971",
+        "timestamp": "2025-11-02T11:56:10+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 712079,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-82c1a399",
+        "timestamp": "2025-11-02T11:56:10+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 13871,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-96f6732e",
+        "timestamp": "2025-11-03T06:11:26+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 13871,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-dfa5eafa",
+        "timestamp": "2025-11-03T06:11:26+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 545568,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/4434-L",
+        "payment_id": null,
+        "row_id": "R-08a96aa3",
+        "timestamp": "2025-11-03T07:32:20+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 5091967,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/4434-L",
+        "payment_id": null,
+        "row_id": "R-41272491",
+        "timestamp": "2025-11-03T07:32:20+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 4546399,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/4434-L",
+        "payment_id": null,
+        "row_id": "R-63119a9e",
+        "timestamp": "2025-11-03T07:32:20+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 23101,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7a8137ea",
+        "timestamp": "2025-11-03T18:25:40+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 23101,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-80e55928",
+        "timestamp": "2025-11-03T18:25:40+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 897034,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5ef7dbf8",
+        "timestamp": "2025-11-03T21:34:05+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 897034,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9e8885cc",
+        "timestamp": "2025-11-03T21:34:05+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 201014,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-57b62c6e",
+        "timestamp": "2025-11-04T01:49:01+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 201014,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5cbf6653",
+        "timestamp": "2025-11-04T01:49:01+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 18693,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-37265738",
+        "timestamp": "2025-11-04T10:54:27+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 18693,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9c4939ef",
+        "timestamp": "2025-11-04T10:54:27+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 20107,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0d31d8ed",
+        "timestamp": "2025-11-04T15:36:17+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 20107,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1e2360d2",
+        "timestamp": "2025-11-04T15:36:17+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 738845,
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/6481-R",
+        "payment_id": null,
+        "row_id": "R-3e16eaa5",
+        "timestamp": "2025-11-04T17:51:04+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 738845,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/6481-R",
+        "payment_id": null,
+        "row_id": "R-7667aeb2",
+        "timestamp": "2025-11-04T17:51:04+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 424704,
+        "entity_id": "CUST-MK78",
+        "invoice_id": "SI/4530-B",
+        "payment_id": null,
+        "row_id": "R-65cd821e",
+        "timestamp": "2025-11-05T07:03:25+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 45504,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MK78",
+        "invoice_id": "SI/4530-B",
+        "payment_id": null,
+        "row_id": "R-743d9de1",
+        "timestamp": "2025-11-05T07:03:25+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 379200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MK78",
+        "invoice_id": "SI/4530-B",
+        "payment_id": null,
+        "row_id": "R-a66dff7e",
+        "timestamp": "2025-11-05T07:03:25+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 225072,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-101e4930",
+        "timestamp": "2025-11-05T10:17:15+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 225072,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-541af73c",
+        "timestamp": "2025-11-05T10:17:15+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 57329,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9431be88",
+        "timestamp": "2025-11-06T01:16:59+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 57329,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d83abe7b",
+        "timestamp": "2025-11-06T01:16:59+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 50200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/1388-S",
+        "payment_id": null,
+        "row_id": "R-199768c9",
+        "timestamp": "2025-11-06T12:31:57+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 50200,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/1388-S",
+        "payment_id": null,
+        "row_id": "R-6b5c40cc",
+        "timestamp": "2025-11-06T12:31:57+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 38874,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-145c2e36",
+        "timestamp": "2025-11-06T17:15:58+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 38874,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7e71238c",
+        "timestamp": "2025-11-06T17:15:58+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 171009,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-94887114",
+        "timestamp": "2025-11-07T03:23:39+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 171009,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b0be7d8a",
+        "timestamp": "2025-11-07T03:23:39+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 24384,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9960-F",
+        "payment_id": null,
+        "row_id": "R-74cd9148",
+        "timestamp": "2025-11-07T07:59:17+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 227584,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9960-F",
+        "payment_id": null,
+        "row_id": "R-9043803e",
+        "timestamp": "2025-11-07T07:59:17+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 203200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9960-F",
+        "payment_id": null,
+        "row_id": "R-e34ecf38",
+        "timestamp": "2025-11-07T07:59:17+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 6030000,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6030-Y",
+        "payment_id": null,
+        "row_id": "R-425452a7",
+        "timestamp": "2025-11-07T09:10:25+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 6030000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6030-Y",
+        "payment_id": null,
+        "row_id": "R-f356d0b5",
+        "timestamp": "2025-11-07T09:10:25+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 835007,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-100f06c0",
+        "timestamp": "2025-11-07T09:23:31+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 835007,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7d8b239f",
+        "timestamp": "2025-11-07T09:23:31+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 46613,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/7122-H",
+        "payment_id": null,
+        "row_id": "R-4938319e",
+        "timestamp": "2025-11-07T09:50:10+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 279678,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/7122-H",
+        "payment_id": null,
+        "row_id": "R-84c1b81a",
+        "timestamp": "2025-11-07T09:50:10+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 233065,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/7122-H",
+        "payment_id": null,
+        "row_id": "R-8903e69c",
+        "timestamp": "2025-11-07T09:50:10+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 84104,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/5368-D",
+        "payment_id": null,
+        "row_id": "R-cc104681",
+        "timestamp": "2025-11-07T11:09:05+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 84104,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/5368-D",
+        "payment_id": null,
+        "row_id": "R-ce9c183a",
+        "timestamp": "2025-11-07T11:09:05+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 176760,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/3134-G",
+        "payment_id": null,
+        "row_id": "R-a51fbdbb",
+        "timestamp": "2025-11-07T11:15:10+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 2563760,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/3134-G",
+        "payment_id": null,
+        "row_id": "R-a800cf55",
+        "timestamp": "2025-11-07T11:15:10+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 2387000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/3134-G",
+        "payment_id": null,
+        "row_id": "R-ad9fd79b",
+        "timestamp": "2025-11-07T11:15:10+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 221074,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-09d1e438",
+        "timestamp": "2025-11-07T16:19:55+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 221074,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-24161618",
+        "timestamp": "2025-11-07T16:19:55+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 535060,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-072250b5",
+        "timestamp": "2025-11-07T17:33:56+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 535060,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-e652a485",
+        "timestamp": "2025-11-07T17:33:56+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 264063,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a720b93d",
+        "timestamp": "2025-11-08T01:10:57+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 264063,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f8fa5fa5",
+        "timestamp": "2025-11-08T01:10:57+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 710076,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-02ab98a2",
+        "timestamp": "2025-11-08T05:28:19+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 710076,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-954c3225",
+        "timestamp": "2025-11-08T05:28:19+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 289072,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a44c615d",
+        "timestamp": "2025-11-08T06:04:25+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 289072,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d35efa7a",
+        "timestamp": "2025-11-08T06:04:25+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 235096,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9c0dd70d",
+        "timestamp": "2025-11-08T07:29:20+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 235096,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-bdfb102f",
+        "timestamp": "2025-11-08T07:29:20+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 676071,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-61596717",
+        "timestamp": "2025-11-08T12:36:35+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 676071,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-6c407a27",
+        "timestamp": "2025-11-08T12:36:35+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 36402,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-24f1fd82",
+        "timestamp": "2025-11-08T13:42:12+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 36402,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d0bd7b88",
+        "timestamp": "2025-11-08T13:42:12+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 744060,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ac25f4fb",
+        "timestamp": "2025-11-08T17:46:17+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 744060,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d625f302",
+        "timestamp": "2025-11-08T17:46:17+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 46904,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-65a94062",
+        "timestamp": "2025-11-08T20:27:31+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 46904,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-dce9410f",
+        "timestamp": "2025-11-08T20:27:31+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 16740,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9106-B",
+        "payment_id": null,
+        "row_id": "R-77b6e826",
+        "timestamp": "2025-11-09T14:59:02+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 156240,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9106-B",
+        "payment_id": null,
+        "row_id": "R-83ac5628",
+        "timestamp": "2025-11-09T14:59:02+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 139500,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/9106-B",
+        "payment_id": null,
+        "row_id": "R-a9dbd1d8",
+        "timestamp": "2025-11-09T14:59:02+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 33577,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2b538120",
+        "timestamp": "2025-11-09T19:23:40+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 33577,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-77ba70ce",
+        "timestamp": "2025-11-09T19:23:40+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 785079,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-825b544f",
+        "timestamp": "2025-11-09T22:39:19+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 785079,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b97c151b",
+        "timestamp": "2025-11-09T22:39:19+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 34883,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-10c49f66",
+        "timestamp": "2025-11-10T01:54:07+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 34883,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1da2e869",
+        "timestamp": "2025-11-10T01:54:07+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 730034,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-69a5f9a5",
+        "timestamp": "2025-11-10T05:59:04+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 730034,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ba278775",
+        "timestamp": "2025-11-10T05:59:04+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 227087,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-45cd7993",
+        "timestamp": "2025-11-10T10:45:35+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 227087,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d99b75ee",
+        "timestamp": "2025-11-10T10:45:35+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 228052,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-033f2acb",
+        "timestamp": "2025-11-10T14:33:39+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 228052,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5957ad4e",
+        "timestamp": "2025-11-10T14:33:39+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 659014,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-00246f17",
+        "timestamp": "2025-11-10T15:17:57+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 659014,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d14d5d6f",
+        "timestamp": "2025-11-10T15:17:57+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 82499,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-70b8d999",
+        "timestamp": "2025-11-10T23:42:15+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 82499,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a361b71b",
+        "timestamp": "2025-11-10T23:42:15+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1767985,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3784-Y",
+        "payment_id": null,
+        "row_id": "R-2ba2efe1",
+        "timestamp": "2025-11-11T10:22:14+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1767985,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3784-Y",
+        "payment_id": null,
+        "row_id": "R-a293a2a6",
+        "timestamp": "2025-11-11T10:22:14+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 361500,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/8998-D",
+        "payment_id": null,
+        "row_id": "R-120e2b61",
+        "timestamp": "2025-11-11T10:47:08+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 361500,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/8998-D",
+        "payment_id": null,
+        "row_id": "R-e1d97d6b",
+        "timestamp": "2025-11-11T10:47:08+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 900017,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ac12c465",
+        "timestamp": "2025-11-11T11:37:32+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 900017,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-e20fdcf2",
+        "timestamp": "2025-11-11T11:37:32+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 527747,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-474258",
+        "row_id": "R-1f128c2c",
+        "timestamp": "2025-11-11T17:07:03+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 2689,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-474258",
+        "row_id": "R-22eeb312",
+        "timestamp": "2025-11-11T17:07:03+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 525058,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-474258",
+        "row_id": "R-3598c58b",
+        "timestamp": "2025-11-11T17:07:03+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 97200,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/2891-F",
+        "payment_id": null,
+        "row_id": "R-2156c11a",
+        "timestamp": "2025-11-11T17:58:18+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 97200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/2891-F",
+        "payment_id": null,
+        "row_id": "R-e4088eb8",
+        "timestamp": "2025-11-11T17:58:18+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 361092,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-30147ccc",
+        "timestamp": "2025-11-11T21:44:03+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 361092,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-661278fd",
+        "timestamp": "2025-11-11T21:44:03+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 177,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-585088",
+        "row_id": "R-0b50e385",
+        "timestamp": "2025-11-11T22:40:08+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 83927,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-585088",
+        "row_id": "R-4db4fbe5",
+        "timestamp": "2025-11-11T22:40:08+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 84104,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-585088",
+        "row_id": "R-841731a5",
+        "timestamp": "2025-11-11T22:40:08+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 363009,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-efe5b31a",
+        "timestamp": "2025-11-12T03:00:39+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 363009,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f79179e8",
+        "timestamp": "2025-11-12T03:00:39+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 73934,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-3a2ab2ea",
+        "timestamp": "2025-11-12T07:18:59+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 73934,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4e1b457b",
+        "timestamp": "2025-11-12T07:18:59+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 778176,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1057-E",
+        "payment_id": null,
+        "row_id": "R-7bd322c1",
+        "timestamp": "2025-11-12T11:36:35+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 7262976,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1057-E",
+        "payment_id": null,
+        "row_id": "R-94c07b3f",
+        "timestamp": "2025-11-12T11:36:35+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 6484800,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1057-E",
+        "payment_id": null,
+        "row_id": "R-e94402fe",
+        "timestamp": "2025-11-12T11:36:35+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 89616,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-60333654",
+        "timestamp": "2025-11-12T14:06:52+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 89616,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9c85b315",
+        "timestamp": "2025-11-12T14:06:52+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 7000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/5021-F",
+        "payment_id": null,
+        "row_id": "R-abdcbad0",
+        "timestamp": "2025-11-12T15:24:14+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 7000,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/5021-F",
+        "payment_id": null,
+        "row_id": "R-fa209701",
+        "timestamp": "2025-11-12T15:24:14+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 267585,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/8127-X",
+        "payment_id": null,
+        "row_id": "R-42eb5aec",
+        "timestamp": "2025-11-12T17:44:50+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 267585,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/8127-X",
+        "payment_id": null,
+        "row_id": "R-ca27035b",
+        "timestamp": "2025-11-12T17:44:50+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 336300,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/7348-E",
+        "payment_id": null,
+        "row_id": "R-15ea94f6",
+        "timestamp": "2025-11-12T20:15:06+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 378000,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/7348-E",
+        "payment_id": null,
+        "row_id": "R-2d8ca391",
+        "timestamp": "2025-11-12T20:15:06+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 41700,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/7348-E",
+        "payment_id": null,
+        "row_id": "R-63720009",
+        "timestamp": "2025-11-12T20:15:06+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 638028,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-932d67b6",
+        "timestamp": "2025-11-12T21:45:02+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 638028,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ccac278b",
+        "timestamp": "2025-11-12T21:45:02+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 8417,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-94b60a97",
+        "timestamp": "2025-11-12T22:58:01+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 8417,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ec11136a",
+        "timestamp": "2025-11-12T22:58:01+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 297037,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1b3ddb6a",
+        "timestamp": "2025-11-13T01:50:03+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 297037,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-620cf5d7",
+        "timestamp": "2025-11-13T01:50:03+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 72690,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9163e819",
+        "timestamp": "2025-11-13T02:43:52+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 72690,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d6ce154c",
+        "timestamp": "2025-11-13T02:43:52+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 41332,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-17cff8ed",
+        "timestamp": "2025-11-13T05:33:08+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 41332,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f43f5b68",
+        "timestamp": "2025-11-13T05:33:08+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 883992,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-925051",
+        "row_id": "R-13598348",
+        "timestamp": "2025-11-13T09:51:43+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 903363,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-925051",
+        "row_id": "R-362e729f",
+        "timestamp": "2025-11-13T09:51:43+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 19371,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-925051",
+        "row_id": "R-f060eb2e",
+        "timestamp": "2025-11-13T09:51:43+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 84793,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-14892c47",
+        "timestamp": "2025-11-13T18:06:04+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 84793,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a180d117",
+        "timestamp": "2025-11-13T18:06:04+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 853022,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7c5409b4",
+        "timestamp": "2025-11-14T03:24:12+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 853022,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9c03642b",
+        "timestamp": "2025-11-14T03:24:12+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 7069471,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/9319-D",
+        "payment_id": null,
+        "row_id": "R-01aadb5f",
+        "timestamp": "2025-11-14T08:26:42+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 5891226,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/9319-D",
+        "payment_id": null,
+        "row_id": "R-47b9500a",
+        "timestamp": "2025-11-14T08:26:42+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 1178245,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/9319-D",
+        "payment_id": null,
+        "row_id": "R-c9772b71",
+        "timestamp": "2025-11-14T08:26:42+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 117932,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3832-E",
+        "payment_id": null,
+        "row_id": "R-0fe35849",
+        "timestamp": "2025-11-14T09:44:49+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 117932,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3832-E",
+        "payment_id": null,
+        "row_id": "R-7a8716fc",
+        "timestamp": "2025-11-14T09:44:49+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1316640,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/5714-T",
+        "payment_id": null,
+        "row_id": "R-6fd3b409",
+        "timestamp": "2025-11-14T13:48:01+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1097200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/5714-T",
+        "payment_id": null,
+        "row_id": "R-82dbe8fb",
+        "timestamp": "2025-11-14T13:48:01+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 219440,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/5714-T",
+        "payment_id": null,
+        "row_id": "R-97e609b4",
+        "timestamp": "2025-11-14T13:48:01+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 692640,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1195-P",
+        "payment_id": null,
+        "row_id": "R-2fc42ed4",
+        "timestamp": "2025-11-14T16:33:51+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 115440,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1195-P",
+        "payment_id": null,
+        "row_id": "R-c1b9bc78",
+        "timestamp": "2025-11-14T16:33:51+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 577200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1195-P",
+        "payment_id": null,
+        "row_id": "R-e806aa79",
+        "timestamp": "2025-11-14T16:33:51+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 573000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ea9ed5b0",
+        "timestamp": "2025-11-14T16:57:53+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 573000,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-fbd70dfc",
+        "timestamp": "2025-11-14T16:57:53+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 361067,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-88a512ff",
+        "timestamp": "2025-11-14T18:03:40+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 361067,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-e36b9699",
+        "timestamp": "2025-11-14T18:03:40+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 750000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/9373-N",
+        "payment_id": null,
+        "row_id": "R-b1d416f0",
+        "timestamp": "2025-11-14T18:09:45+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 750000,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/9373-N",
+        "payment_id": null,
+        "row_id": "R-e70afce2",
+        "timestamp": "2025-11-14T18:09:45+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 60611,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-14ec19aa",
+        "timestamp": "2025-11-14T20:03:44+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 60611,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-af60e18e",
+        "timestamp": "2025-11-14T20:03:44+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 710035,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4fafb5bc",
+        "timestamp": "2025-11-14T22:51:00+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 710035,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8e12efab",
+        "timestamp": "2025-11-14T22:51:00+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 37775,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4c88d708",
+        "timestamp": "2025-11-15T01:20:49+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 37775,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-abe16670",
+        "timestamp": "2025-11-15T01:20:49+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 65596,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-98ebb81e",
+        "timestamp": "2025-11-15T01:50:24+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 65596,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d5e7569a",
+        "timestamp": "2025-11-15T01:50:24+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 512033,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-58aab13f",
+        "timestamp": "2025-11-15T02:16:57+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 512033,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d6627c77",
+        "timestamp": "2025-11-15T02:16:57+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 89560,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0c4a689b",
+        "timestamp": "2025-11-15T02:48:51+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 89560,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8d1a1291",
+        "timestamp": "2025-11-15T02:48:51+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 39192,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/1793-H",
+        "payment_id": null,
+        "row_id": "R-1a76d264",
+        "timestamp": "2025-11-15T07:42:28+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 7838,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/1793-H",
+        "payment_id": null,
+        "row_id": "R-1b5cee42",
+        "timestamp": "2025-11-15T07:42:28+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 47030,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/1793-H",
+        "payment_id": null,
+        "row_id": "R-92609aca",
+        "timestamp": "2025-11-15T07:42:28+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 33857,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0b9eb76e",
+        "timestamp": "2025-11-15T12:55:08+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 33857,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-50f2f68a",
+        "timestamp": "2025-11-15T12:55:08+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 3368000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/6388-M",
+        "payment_id": null,
+        "row_id": "R-1a546dce",
+        "timestamp": "2025-11-15T14:42:33+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 3772160,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/6388-M",
+        "payment_id": null,
+        "row_id": "R-4fbac805",
+        "timestamp": "2025-11-15T14:42:33+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 404160,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/6388-M",
+        "payment_id": null,
+        "row_id": "R-98892daf",
+        "timestamp": "2025-11-15T14:42:33+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 13034,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7ddb6561",
+        "timestamp": "2025-11-15T14:59:09+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 13034,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8b577f83",
+        "timestamp": "2025-11-15T14:59:09+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 715085,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2d2b8dcf",
+        "timestamp": "2025-11-15T17:25:14+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 715085,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b6a44c2b",
+        "timestamp": "2025-11-15T17:25:14+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 9192,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-243bbd1a",
+        "timestamp": "2025-11-15T21:06:50+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 9192,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8d77b419",
+        "timestamp": "2025-11-15T21:06:50+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 55667,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8b0c25d5",
+        "timestamp": "2025-11-15T21:31:21+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 55667,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9784efa0",
+        "timestamp": "2025-11-15T21:31:21+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 6844,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-326df8b0",
+        "timestamp": "2025-11-15T22:24:12+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 6844,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-af247743",
+        "timestamp": "2025-11-15T22:24:12+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 19102,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a70c29ef",
+        "timestamp": "2025-11-16T08:39:12+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 19102,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b6ff42c3",
+        "timestamp": "2025-11-16T08:39:12+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 270086,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-146905",
+        "row_id": "R-13a1c70d",
+        "timestamp": "2025-11-16T10:36:31+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 267585,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-146905",
+        "row_id": "R-5d44f6f8",
+        "timestamp": "2025-11-16T10:36:31+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 2501,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-146905",
+        "row_id": "R-a5eaa433",
+        "timestamp": "2025-11-16T10:36:31+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 850048,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1143b13d",
+        "timestamp": "2025-11-16T12:34:33+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 850048,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f9539265",
+        "timestamp": "2025-11-16T12:34:33+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1844489,
+        "entity_id": "CUST-AC32",
+        "invoice_id": "SI/9756-H",
+        "payment_id": null,
+        "row_id": "R-64e7cc46",
+        "timestamp": "2025-11-16T14:38:29+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1546714,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-AC32",
+        "invoice_id": "SI/9756-H",
+        "payment_id": null,
+        "row_id": "R-7deb4cd7",
+        "timestamp": "2025-11-16T14:38:29+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 297775,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-AC32",
+        "invoice_id": "SI/9756-H",
+        "payment_id": null,
+        "row_id": "R-95176986",
+        "timestamp": "2025-11-16T14:38:29+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 156240,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2569-X",
+        "payment_id": null,
+        "row_id": "R-6a4e546e",
+        "timestamp": "2025-11-16T15:27:46+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 139500,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2569-X",
+        "payment_id": null,
+        "row_id": "R-d0ed3b68",
+        "timestamp": "2025-11-16T15:27:46+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 16740,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/2569-X",
+        "payment_id": null,
+        "row_id": "R-f694c668",
+        "timestamp": "2025-11-16T15:27:46+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 77293,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-37131fd2",
+        "timestamp": "2025-11-16T17:13:29+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 77293,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-59887066",
+        "timestamp": "2025-11-16T17:13:29+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 672011,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-19760cb0",
+        "timestamp": "2025-11-17T03:20:10+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 672011,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-c50c21aa",
+        "timestamp": "2025-11-17T03:20:10+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 678049,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-11cc9456",
+        "timestamp": "2025-11-17T04:36:38+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 678049,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-6237758c",
+        "timestamp": "2025-11-17T04:36:38+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 406048,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-12b1b589",
+        "timestamp": "2025-11-17T17:05:45+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 406048,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f283a853",
+        "timestamp": "2025-11-17T17:05:45+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 23515,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5b185e10",
+        "timestamp": "2025-11-17T23:27:15+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 23515,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-909fe4d7",
+        "timestamp": "2025-11-17T23:27:15+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 685046,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0c39708c",
+        "timestamp": "2025-11-18T04:13:36+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 685046,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-fb90466c",
+        "timestamp": "2025-11-18T04:13:36+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 464090,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1ce7697d",
+        "timestamp": "2025-11-18T04:59:04+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 464090,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-62402c4a",
+        "timestamp": "2025-11-18T04:59:04+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 675,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/1607-Z",
+        "payment_id": null,
+        "row_id": "R-ec014459",
+        "timestamp": "2025-11-18T07:02:23+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 982550,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/1607-Z",
+        "payment_id": null,
+        "row_id": "R-f021d76a",
+        "timestamp": "2025-11-18T07:02:23+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 981875,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/1607-Z",
+        "payment_id": null,
+        "row_id": "R-fd69d706",
+        "timestamp": "2025-11-18T07:02:23+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 30610,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1385-V",
+        "payment_id": null,
+        "row_id": "R-0b39b276",
+        "timestamp": "2025-11-18T09:46:12+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 27330,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1385-V",
+        "payment_id": null,
+        "row_id": "R-0eb16144",
+        "timestamp": "2025-11-18T09:46:12+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 3280,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1385-V",
+        "payment_id": null,
+        "row_id": "R-eda2c50e",
+        "timestamp": "2025-11-18T09:46:12+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 5744880,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/3484-C",
+        "payment_id": null,
+        "row_id": "R-109338d2",
+        "timestamp": "2025-11-18T09:50:22+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 957480,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/3484-C",
+        "payment_id": null,
+        "row_id": "R-8f89e0d3",
+        "timestamp": "2025-11-18T09:50:22+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 4787400,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8C23",
+        "invoice_id": "SI/3484-C",
+        "payment_id": null,
+        "row_id": "R-d3c23e43",
+        "timestamp": "2025-11-18T09:50:22+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 306665,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/3160-R",
+        "payment_id": null,
+        "row_id": "R-1049cdce",
+        "timestamp": "2025-11-18T11:58:17+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 61333,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/3160-R",
+        "payment_id": null,
+        "row_id": "R-201a3fa9",
+        "timestamp": "2025-11-18T11:58:17+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 367998,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/3160-R",
+        "payment_id": null,
+        "row_id": "R-bb56c829",
+        "timestamp": "2025-11-18T11:58:17+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 367998,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-852949",
+        "row_id": "R-1b34a87e",
+        "timestamp": "2025-11-18T20:34:55+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 367998,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-852949",
+        "row_id": "R-c32d9b46",
+        "timestamp": "2025-11-18T20:34:55+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 30662,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-704184",
+        "row_id": "R-20479003",
+        "timestamp": "2025-11-19T00:46:13+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 30610,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-704184",
+        "row_id": "R-5f375e6b",
+        "timestamp": "2025-11-19T00:46:13+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 52,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-704184",
+        "row_id": "R-ab3c8142",
+        "timestamp": "2025-11-19T00:46:13+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 377041,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8ed08070",
+        "timestamp": "2025-11-19T02:50:30+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 377041,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-ed62dd72",
+        "timestamp": "2025-11-19T02:50:30+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 814058,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-775c316c",
+        "timestamp": "2025-11-19T04:17:44+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 814058,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9d635d1a",
+        "timestamp": "2025-11-19T04:17:44+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 2748098,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/7548-P",
+        "payment_id": null,
+        "row_id": "R-7b3eb5bd",
+        "timestamp": "2025-11-19T08:40:36+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 2748098,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/7548-P",
+        "payment_id": null,
+        "row_id": "R-a7ab9b30",
+        "timestamp": "2025-11-19T08:40:36+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 7069471,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-218588",
+        "row_id": "R-7c0279de",
+        "timestamp": "2025-11-19T12:39:38+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 7085839,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-218588",
+        "row_id": "R-af44bbd9",
+        "timestamp": "2025-11-19T12:39:38+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 16368,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-218588",
+        "row_id": "R-e2d5304d",
+        "timestamp": "2025-11-19T12:39:38+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 211099,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-338272",
+        "row_id": "R-15168930",
+        "timestamp": "2025-11-19T14:48:53+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 214262,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-338272",
+        "row_id": "R-482c652d",
+        "timestamp": "2025-11-19T14:48:53+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 3163,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-GX80",
+        "invoice_id": null,
+        "payment_id": "PAY-338272",
+        "row_id": "R-f3263a4a",
+        "timestamp": "2025-11-19T14:48:53+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 702050,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2ebf4bad",
+        "timestamp": "2025-11-19T15:25:23+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 702050,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-617f403b",
+        "timestamp": "2025-11-19T15:25:23+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 6109340,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/3854-M",
+        "payment_id": null,
+        "row_id": "R-1ff0f026",
+        "timestamp": "2025-11-19T18:58:24+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 649440,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/3854-M",
+        "payment_id": null,
+        "row_id": "R-7701b8ca",
+        "timestamp": "2025-11-19T18:58:24+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 5459900,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3R15",
+        "invoice_id": "SI/3854-M",
+        "payment_id": null,
+        "row_id": "R-d978f8ab",
+        "timestamp": "2025-11-19T18:58:24+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 336300,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1871-T",
+        "payment_id": null,
+        "row_id": "R-1f631585",
+        "timestamp": "2025-11-19T21:42:11+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 41700,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1871-T",
+        "payment_id": null,
+        "row_id": "R-66eae6bb",
+        "timestamp": "2025-11-19T21:42:11+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 378000,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/1871-T",
+        "payment_id": null,
+        "row_id": "R-aa9c6dd4",
+        "timestamp": "2025-11-19T21:42:11+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 78932,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-37f1567c",
+        "timestamp": "2025-11-19T23:58:28+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 78932,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b3edc29e",
+        "timestamp": "2025-11-19T23:58:28+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1234640,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/9494-F",
+        "payment_id": null,
+        "row_id": "R-521f8f16",
+        "timestamp": "2025-11-20T07:16:29+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1234640,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/9494-F",
+        "payment_id": null,
+        "row_id": "R-95aa123e",
+        "timestamp": "2025-11-20T07:16:29+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 69488,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b75f9fff",
+        "timestamp": "2025-11-20T10:21:27+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 69488,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-edaebb98",
+        "timestamp": "2025-11-20T10:21:27+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 518400,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/7943-Z",
+        "payment_id": null,
+        "row_id": "R-35a6f677",
+        "timestamp": "2025-11-20T11:46:13+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 518400,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/7943-Z",
+        "payment_id": null,
+        "row_id": "R-e065f127",
+        "timestamp": "2025-11-20T11:46:13+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 8878,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2dcbf06c",
+        "timestamp": "2025-11-20T12:17:43+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 8878,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-fbc02482",
+        "timestamp": "2025-11-20T12:17:43+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1044545,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/8998-B",
+        "payment_id": null,
+        "row_id": "R-09d8547f",
+        "timestamp": "2025-11-20T13:01:01+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1044545,
+        "entity_id": "CUST-GX80",
+        "invoice_id": "SI/8998-B",
+        "payment_id": null,
+        "row_id": "R-a7887b09",
+        "timestamp": "2025-11-20T13:01:01+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 40757,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2a990ffa",
+        "timestamp": "2025-11-20T16:06:01+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 40757,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-776ed100",
+        "timestamp": "2025-11-20T16:06:01+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 74033,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0c844014",
+        "timestamp": "2025-11-20T18:52:58+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 74033,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a21b8fb2",
+        "timestamp": "2025-11-20T18:52:58+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 279678,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-937823",
+        "row_id": "R-5fa42b81",
+        "timestamp": "2025-11-21T02:12:01+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 292259,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-937823",
+        "row_id": "R-74634d46",
+        "timestamp": "2025-11-21T02:12:01+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 12581,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-937823",
+        "row_id": "R-a8fae89e",
+        "timestamp": "2025-11-21T02:12:01+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 303031,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-eaa70c95",
+        "timestamp": "2025-11-21T06:39:44+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 303031,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-920",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f459b824",
+        "timestamp": "2025-11-21T06:39:44+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 709000,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-44877b11",
+        "timestamp": "2025-11-21T11:27:43+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 709000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9172b103",
+        "timestamp": "2025-11-21T11:27:43+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 33914,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-781d8ffa",
+        "timestamp": "2025-11-21T14:56:26+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 33914,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-e3963368",
+        "timestamp": "2025-11-21T14:56:26+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 110093,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-2e540efd",
+        "timestamp": "2025-11-21T16:09:54+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 110093,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-59a607e4",
+        "timestamp": "2025-11-21T16:09:54+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 79294,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-3e50441f",
+        "timestamp": "2025-11-21T18:33:14+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 79294,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4b2aecf6",
+        "timestamp": "2025-11-21T18:33:14+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 365044,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-22bdadee",
+        "timestamp": "2025-11-21T19:02:48+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 365044,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-c0cc25c2",
+        "timestamp": "2025-11-21T19:02:48+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 883992,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-691407",
+        "row_id": "R-9e312bd6",
+        "timestamp": "2025-11-22T01:56:39+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 41715,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-691407",
+        "row_id": "R-b43f330a",
+        "timestamp": "2025-11-22T01:56:39+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 925707,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-691407",
+        "row_id": "R-c2fd364b",
+        "timestamp": "2025-11-22T01:56:39+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 3772160,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2961-Y",
+        "payment_id": null,
+        "row_id": "R-96179652",
+        "timestamp": "2025-11-22T14:54:01+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 3368000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2961-Y",
+        "payment_id": null,
+        "row_id": "R-b4e0715d",
+        "timestamp": "2025-11-22T14:54:01+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 404160,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2961-Y",
+        "payment_id": null,
+        "row_id": "R-b7f9cc04",
+        "timestamp": "2025-11-22T14:54:01+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 164070,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-52f64ae6",
+        "timestamp": "2025-11-22T15:53:11+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 164070,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a7345a5f",
+        "timestamp": "2025-11-22T15:53:11+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 720057,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9c864a14",
+        "timestamp": "2025-11-22T17:51:23+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 720057,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-433",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-acf1d2d8",
+        "timestamp": "2025-11-22T17:51:23+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 15209,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b14776fe",
+        "timestamp": "2025-11-23T01:07:14+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 15209,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-d6e38950",
+        "timestamp": "2025-11-23T01:07:14+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 487073,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-7b4e1bd1",
+        "timestamp": "2025-11-23T10:56:03+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 487073,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f6f15ea8",
+        "timestamp": "2025-11-23T10:56:03+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 320003,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-97c664e8",
+        "timestamp": "2025-11-23T17:32:27+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 320003,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-a0bb4038",
+        "timestamp": "2025-11-23T17:32:27+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 750000,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-T642",
+        "invoice_id": null,
+        "payment_id": "PAY-277927",
+        "row_id": "R-2d0929bd",
+        "timestamp": "2025-11-24T11:08:54+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 750000,
+        "entity_id": "CUST-T642",
+        "invoice_id": null,
+        "payment_id": "PAY-277927",
+        "row_id": "R-96c4966d",
+        "timestamp": "2025-11-24T11:08:54+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 84514,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-37e20ce3",
+        "timestamp": "2025-11-24T13:31:48+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 84514,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4ee41af7",
+        "timestamp": "2025-11-24T13:31:48+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 33135,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/1166-C",
+        "payment_id": null,
+        "row_id": "R-428fc24e",
+        "timestamp": "2025-11-24T14:54:46+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 276123,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/1166-C",
+        "payment_id": null,
+        "row_id": "R-7eb36415",
+        "timestamp": "2025-11-24T14:54:46+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 309258,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/1166-C",
+        "payment_id": null,
+        "row_id": "R-f480188f",
+        "timestamp": "2025-11-24T14:54:46+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 585089,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5f5bb864",
+        "timestamp": "2025-11-24T15:00:40+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 585089,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-6f6ab564",
+        "timestamp": "2025-11-24T15:00:40+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 39041,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4723-S",
+        "payment_id": null,
+        "row_id": "R-5d8721c9",
+        "timestamp": "2025-11-24T16:44:03+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 7808,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4723-S",
+        "payment_id": null,
+        "row_id": "R-6e875ac5",
+        "timestamp": "2025-11-24T16:44:03+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 46849,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4723-S",
+        "payment_id": null,
+        "row_id": "R-a5c86ff2",
+        "timestamp": "2025-11-24T16:44:03+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 111600,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1406-R",
+        "payment_id": null,
+        "row_id": "R-1d1ad83a",
+        "timestamp": "2025-11-24T18:12:37+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 578990,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1406-R",
+        "payment_id": null,
+        "row_id": "R-891c72a7",
+        "timestamp": "2025-11-24T18:12:37+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 690590,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/1406-R",
+        "payment_id": null,
+        "row_id": "R-d312509a",
+        "timestamp": "2025-11-24T18:12:37+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 160060,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-730e1c68",
+        "timestamp": "2025-11-24T21:00:22+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 160060,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9a47eb61",
+        "timestamp": "2025-11-24T21:00:22+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 15003,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-92e73887",
+        "timestamp": "2025-11-25T04:31:53+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 15003,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-fd136244",
+        "timestamp": "2025-11-25T04:31:53+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 44111,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": "PAY-621626",
+        "row_id": "R-720c9ced",
+        "timestamp": "2025-11-25T07:57:37+05:00"
+      },
+      {
+        "account": "2300_unapplied_cash",
+        "credit_minor": 44111,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": "PAY-621626",
+        "row_id": "R-7f7524ca",
+        "timestamp": "2025-11-25T07:57:37+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 1056961,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-742800",
+        "row_id": "R-2a65faa6",
+        "timestamp": "2025-11-25T11:38:04+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 49456,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-742800",
+        "row_id": "R-62559f45",
+        "timestamp": "2025-11-25T11:38:04+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1106417,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-742800",
+        "row_id": "R-66eb7656",
+        "timestamp": "2025-11-25T11:38:04+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 422784,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-945115",
+        "row_id": "R-14304a58",
+        "timestamp": "2025-11-25T17:44:58+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 19783,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-945115",
+        "row_id": "R-c4f70626",
+        "timestamp": "2025-11-25T17:44:58+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 442567,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-945115",
+        "row_id": "R-fb9880e0",
+        "timestamp": "2025-11-25T17:44:58+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 67677,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-066e7cb5",
+        "timestamp": "2025-11-26T08:53:12+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 67677,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-b9fe5780",
+        "timestamp": "2025-11-26T08:53:12+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 67680,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-296bccab",
+        "timestamp": "2025-11-26T15:26:57+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 67680,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-5444e4b5",
+        "timestamp": "2025-11-26T15:26:57+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 97221,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3842-G",
+        "payment_id": null,
+        "row_id": "R-4b265bfa",
+        "timestamp": "2025-11-26T17:58:54+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 97221,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": "SI/3842-G",
+        "payment_id": null,
+        "row_id": "R-ae23c039",
+        "timestamp": "2025-11-26T17:58:54+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 41700,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2551-U",
+        "payment_id": null,
+        "row_id": "R-31952182",
+        "timestamp": "2025-11-26T18:46:34+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 336300,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2551-U",
+        "payment_id": null,
+        "row_id": "R-77138c35",
+        "timestamp": "2025-11-26T18:46:34+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 378000,
+        "entity_id": "CUST-KD84",
+        "invoice_id": "SI/2551-U",
+        "payment_id": null,
+        "row_id": "R-cef63545",
+        "timestamp": "2025-11-26T18:46:34+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 834025,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-4c586b7c",
+        "timestamp": "2025-11-26T22:50:34+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 834025,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-f7b477c6",
+        "timestamp": "2025-11-26T22:50:34+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 3030600,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6158-E",
+        "payment_id": null,
+        "row_id": "R-98db0164",
+        "timestamp": "2025-11-27T09:47:18+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 3030600,
+        "entity_id": "CUST-8530",
+        "invoice_id": "SI/6158-E",
+        "payment_id": null,
+        "row_id": "R-d06b6bfd",
+        "timestamp": "2025-11-27T09:47:18+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 97200,
+        "entity_id": "CUST-8530",
+        "invoice_id": null,
+        "payment_id": "PAY-796958",
+        "row_id": "R-9d0a0560",
+        "timestamp": "2025-11-27T20:04:33+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 97200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": null,
+        "payment_id": "PAY-796958",
+        "row_id": "R-a199f37f",
+        "timestamp": "2025-11-27T20:04:33+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 19189,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4390-L",
+        "payment_id": null,
+        "row_id": "R-430fb786",
+        "timestamp": "2025-11-27T23:44:05+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 3198,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4390-L",
+        "payment_id": null,
+        "row_id": "R-5e060b7a",
+        "timestamp": "2025-11-27T23:44:05+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 15991,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": "SI/4390-L",
+        "payment_id": null,
+        "row_id": "R-83ae97d0",
+        "timestamp": "2025-11-27T23:44:05+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 26952,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/8648-D",
+        "payment_id": null,
+        "row_id": "R-20254555",
+        "timestamp": "2025-11-28T11:24:05+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 224597,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/8648-D",
+        "payment_id": null,
+        "row_id": "R-39262c2f",
+        "timestamp": "2025-11-28T11:24:05+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 251549,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/8648-D",
+        "payment_id": null,
+        "row_id": "R-e4224eee",
+        "timestamp": "2025-11-28T11:24:05+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 68553,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-363aac14",
+        "timestamp": "2025-11-28T11:48:15+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 68553,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-56290180",
+        "timestamp": "2025-11-28T11:48:15+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 53178,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-198373eb",
+        "timestamp": "2025-11-28T15:16:53+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 53178,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-1c4ef5ef",
+        "timestamp": "2025-11-28T15:16:53+05:00"
+      },
+      {
+        "account": "2200_vat_payable",
+        "credit_minor": 235440,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/7268-H",
+        "payment_id": null,
+        "row_id": "R-05bb6c86",
+        "timestamp": "2025-11-28T15:17:06+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 1177200,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/7268-H",
+        "payment_id": null,
+        "row_id": "R-4d735aab",
+        "timestamp": "2025-11-28T15:17:06+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1412640,
+        "entity_id": "CUST-3D62",
+        "invoice_id": "SI/7268-H",
+        "payment_id": null,
+        "row_id": "R-73485f6c",
+        "timestamp": "2025-11-28T15:17:06+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 177022,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-83950eaf",
+        "timestamp": "2025-11-28T15:37:31+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 177022,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-8e146156",
+        "timestamp": "2025-11-28T15:37:31+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 135100,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/3213-K",
+        "payment_id": null,
+        "row_id": "R-31bcfa80",
+        "timestamp": "2025-11-28T18:25:23+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 135100,
+        "entity_id": "CUST-T642",
+        "invoice_id": "SI/3213-K",
+        "payment_id": null,
+        "row_id": "R-373538ac",
+        "timestamp": "2025-11-28T18:25:23+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 85010,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-845bc7fc",
+        "timestamp": "2025-11-29T05:10:17+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 85010,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-c2b7e987",
+        "timestamp": "2025-11-29T05:10:17+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 29106,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-366eef07",
+        "timestamp": "2025-11-29T06:32:32+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 29106,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-9de33f6d",
+        "timestamp": "2025-11-29T06:32:32+05:00"
+      },
+      {
+        "account": "6300_software_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 18460,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-6df80762",
+        "timestamp": "2025-11-29T07:49:42+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 18460,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-c199c463",
+        "timestamp": "2025-11-29T07:49:42+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 3134400,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/7548-X",
+        "payment_id": null,
+        "row_id": "R-7c397128",
+        "timestamp": "2025-11-29T11:38:17+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 3134400,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8K96",
+        "invoice_id": "SI/7548-X",
+        "payment_id": null,
+        "row_id": "R-944706e0",
+        "timestamp": "2025-11-29T11:38:17+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 204008,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-26e32354",
+        "timestamp": "2025-11-29T15:37:08+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 204008,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-eba75322",
+        "timestamp": "2025-11-29T15:37:08+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 50909,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-557602",
+        "row_id": "R-2c17fa84",
+        "timestamp": "2025-11-29T17:04:15+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 1268353,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-557602",
+        "row_id": "R-4cfcbdec",
+        "timestamp": "2025-11-29T17:04:15+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 1319262,
+        "entity_id": "CUST-CU12",
+        "invoice_id": null,
+        "payment_id": "PAY-557602",
+        "row_id": "R-d510b83a",
+        "timestamp": "2025-11-29T17:04:15+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 293022,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-10597bad",
+        "timestamp": "2025-11-29T22:01:58+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 293022,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-41207ece",
+        "timestamp": "2025-11-29T22:01:58+05:00"
+      },
+      {
+        "account": "7900_fx_gain_loss",
+        "credit_minor": 428,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-319463",
+        "row_id": "R-297df8dc",
+        "timestamp": "2025-11-30T02:06:21+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 46849,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-319463",
+        "row_id": "R-79bfe134",
+        "timestamp": "2025-11-30T02:06:21+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 66466,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-319463",
+        "row_id": "R-8529dc17",
+        "timestamp": "2025-11-30T02:06:21+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 19189,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-MZ13",
+        "invoice_id": null,
+        "payment_id": "PAY-319463",
+        "row_id": "R-fa0b5d78",
+        "timestamp": "2025-11-30T02:06:21+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 374018,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-857bfe39",
+        "timestamp": "2025-11-30T07:46:22+05:00"
+      },
+      {
+        "account": "6200_payroll_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 374018,
+        "entity_id": null,
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-cb69ae9c",
+        "timestamp": "2025-11-30T07:46:22+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 3134400,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8K96",
+        "invoice_id": null,
+        "payment_id": "PAY-407092",
+        "row_id": "R-36f5bef7",
+        "timestamp": "2025-11-30T16:08:23+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 3134400,
+        "entity_id": "CUST-8K96",
+        "invoice_id": null,
+        "payment_id": "PAY-407092",
+        "row_id": "R-a5522185",
+        "timestamp": "2025-11-30T16:08:23+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 274709,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1594-V",
+        "payment_id": null,
+        "row_id": "R-67472525",
+        "timestamp": "2025-11-30T18:11:28+05:00"
+      },
+      {
+        "account": "4000_revenue",
+        "credit_minor": 274709,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": "SI/1594-V",
+        "payment_id": null,
+        "row_id": "R-c46f710d",
+        "timestamp": "2025-11-30T18:11:28+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 982550,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-8530",
+        "invoice_id": null,
+        "payment_id": "PAY-145606",
+        "row_id": "R-07897389",
+        "timestamp": "2025-11-30T21:00:27+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 982550,
+        "entity_id": "CUST-8530",
+        "invoice_id": null,
+        "payment_id": "PAY-145606",
+        "row_id": "R-c7733cd5",
+        "timestamp": "2025-11-30T21:00:27+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 251549,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-856297",
+        "row_id": "R-12ca2901",
+        "timestamp": "2025-11-30T21:39:33+05:00"
+      },
+      {
+        "account": "1200_accounts_receivable",
+        "credit_minor": 274709,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-856297",
+        "row_id": "R-4fdb9138",
+        "timestamp": "2025-11-30T21:39:33+05:00"
+      },
+      {
+        "account": "1000_cash",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 526258,
+        "entity_id": "CUST-7A88",
+        "invoice_id": null,
+        "payment_id": "PAY-856297",
+        "row_id": "R-97cf183b",
+        "timestamp": "2025-11-30T21:39:33+05:00"
+      },
+      {
+        "account": "6100_rent_expense",
+        "credit_minor": 0,
+        "currency": "USD",
+        "debit_minor": 123010,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-0607ebd9",
+        "timestamp": "2025-11-30T23:49:51+05:00"
+      },
+      {
+        "account": "2000_accounts_payable",
+        "credit_minor": 123010,
+        "currency": "USD",
+        "debit_minor": 0,
+        "entity_id": "VND-524",
+        "invoice_id": null,
+        "payment_id": null,
+        "row_id": "R-c271c110",
+        "timestamp": "2025-11-30T23:49:51+05:00"
+      }
+    ],
+    "payments": [
+      {
+        "amount_minor": 1995714,
+        "currency": "AED",
+        "doc_id": "D-fe1e7bddab",
+        "invoice_refs": [
+          {
+            "amount_minor": 1995714,
+            "invoice_id": "SI/6481-R"
+          }
+        ],
+        "payment_id": "PAY-474258",
+        "timestamp": "2025-11-11T20:07:03+08:00"
+      },
+      {
+        "amount_minor": 319000,
+        "currency": "AED",
+        "doc_id": "D-85504c34ed",
+        "invoice_refs": [
+          {
+            "amount_minor": 319000,
+            "invoice_id": "SI/5368-D"
+          }
+        ],
+        "payment_id": "PAY-585088",
+        "timestamp": "2025-11-11T12:40:08-05:00"
+      },
+      {
+        "amount_minor": 3360000,
+        "currency": "AED",
+        "doc_id": "D-ff915b9de4",
+        "invoice_refs": [
+          {
+            "amount_minor": 3360000,
+            "invoice_id": "SI/3784-Y"
+          }
+        ],
+        "payment_id": "PAY-925051",
+        "timestamp": "2025-11-12T23:51:43-05:00"
+      },
+      {
+        "amount_minor": 1008600,
+        "currency": "AED",
+        "doc_id": "D-c75ac264a4",
+        "invoice_refs": [
+          {
+            "amount_minor": 1008600,
+            "invoice_id": "SI/8127-X"
+          }
+        ],
+        "payment_id": "PAY-146905",
+        "timestamp": "2025-11-16T00:36:31-05:00"
+      },
+      {
+        "amount_minor": 1373400,
+        "currency": "AED",
+        "doc_id": "D-5c81cf663e",
+        "invoice_refs": [
+          {
+            "amount_minor": 1373400,
+            "invoice_id": "SI/3160-R"
+          }
+        ],
+        "payment_id": "PAY-852949",
+        "timestamp": "2025-11-18T23:34:55+08:00"
+      },
+      {
+        "amount_minor": 114240,
+        "currency": "AED",
+        "doc_id": "D-3f97c1073e",
+        "invoice_refs": [
+          {
+            "amount_minor": 114240,
+            "invoice_id": "SI/1385-V"
+          }
+        ],
+        "payment_id": "PAY-704184",
+        "timestamp": "2025-11-18T14:46:13-05:00"
+      },
+      {
+        "amount_minor": 26400000,
+        "currency": "AED",
+        "doc_id": "D-3e025be1ae",
+        "invoice_refs": [
+          {
+            "amount_minor": 26400000,
+            "invoice_id": "SI/9319-D"
+          }
+        ],
+        "payment_id": "PAY-218588",
+        "timestamp": "2025-11-19T15:39:38+08:00"
+      },
+      {
+        "amount_minor": 798286,
+        "currency": "AED",
+        "doc_id": "D-bb7012615d",
+        "invoice_refs": [
+          {
+            "amount_minor": 798286,
+            "invoice_id": "SI/6481-R"
+          }
+        ],
+        "payment_id": "PAY-338272",
+        "timestamp": "2025-11-19T17:48:53+08:00"
+      },
+      {
+        "amount_minor": 1060800,
+        "currency": "AED",
+        "doc_id": "D-5b2b6ecdfc",
+        "invoice_refs": [
+          {
+            "amount_minor": 1060800,
+            "invoice_id": "SI/7122-H"
+          }
+        ],
+        "payment_id": "PAY-937823",
+        "timestamp": "2025-11-21T05:12:01+08:00"
+      },
+      {
+        "amount_minor": 3360000,
+        "currency": "AED",
+        "doc_id": "D-1b0bfe0dbd",
+        "invoice_refs": [
+          {
+            "amount_minor": 3360000,
+            "invoice_id": "SI/3784-Y"
+          }
+        ],
+        "payment_id": "PAY-691407",
+        "timestamp": "2025-11-21T15:56:39-05:00"
+      },
+      {
+        "amount_minor": 750000,
+        "currency": "USD",
+        "doc_id": "D-e9bdf063ce",
+        "invoice_refs": [
+          {
+            "amount_minor": 750000,
+            "invoice_id": "SI/9373-N"
+          }
+        ],
+        "payment_id": "PAY-277927",
+        "timestamp": "2025-11-24T11:08:54+05:00"
+      },
+      {
+        "amount_minor": 157000,
+        "currency": "AED",
+        "doc_id": "D-beefd286a8",
+        "invoice_refs": null,
+        "payment_id": "PAY-621626",
+        "timestamp": "2025-11-24T21:57:37-05:00"
+      },
+      {
+        "amount_minor": 3937961,
+        "currency": "AED",
+        "doc_id": "D-aa4599701a",
+        "invoice_refs": [
+          {
+            "amount_minor": 3937961,
+            "invoice_id": "SI/7548-P"
+          }
+        ],
+        "payment_id": "PAY-742800",
+        "timestamp": "2025-11-25T01:38:04-05:00"
+      },
+      {
+        "amount_minor": 1575184,
+        "currency": "AED",
+        "doc_id": "D-5deae44d3c",
+        "invoice_refs": [
+          {
+            "amount_minor": 1575184,
+            "invoice_id": "SI/7548-P"
+          }
+        ],
+        "payment_id": "PAY-945115",
+        "timestamp": "2025-11-25T07:44:58-05:00"
+      },
+      {
+        "amount_minor": 97200,
+        "currency": "USD",
+        "doc_id": "D-ed98ef77e7",
+        "invoice_refs": [
+          {
+            "amount_minor": 97200,
+            "invoice_id": "SI/2891-F"
+          }
+        ],
+        "payment_id": "PAY-796958",
+        "timestamp": "2025-11-27T12:04:33-03:00"
+      },
+      {
+        "amount_minor": 4725555,
+        "currency": "AED",
+        "doc_id": "D-40f016dd00",
+        "invoice_refs": [
+          {
+            "amount_minor": 4725555,
+            "invoice_id": "SI/7548-P"
+          }
+        ],
+        "payment_id": "PAY-557602",
+        "timestamp": "2025-11-29T07:04:15-05:00"
+      },
+      {
+        "amount_minor": 238080,
+        "currency": "AED",
+        "doc_id": "D-28cf607ca9",
+        "invoice_refs": [
+          {
+            "amount_minor": 168480,
+            "invoice_id": "SI/4723-S"
+          },
+          {
+            "amount_minor": 69600,
+            "invoice_id": "SI/4390-L"
+          }
+        ],
+        "payment_id": "PAY-319463",
+        "timestamp": "2025-11-30T05:06:21+08:00"
+      },
+      {
+        "amount_minor": 3134400,
+        "currency": "USD",
+        "doc_id": "D-2c89346c17",
+        "invoice_refs": [
+          {
+            "amount_minor": 3134400,
+            "invoice_id": "SI/7548-X"
+          }
+        ],
+        "payment_id": "PAY-407092",
+        "timestamp": "2025-11-30T08:08:23-03:00"
+      },
+      {
+        "amount_minor": 982550,
+        "currency": "USD",
+        "doc_id": "D-35a329c772",
+        "invoice_refs": [
+          {
+            "amount_minor": 982550,
+            "invoice_id": "SI/1607-Z"
+          }
+        ],
+        "payment_id": "PAY-145606",
+        "timestamp": "2025-11-30T13:00:27-03:00"
+      },
+      {
+        "amount_minor": 1885040,
+        "currency": "AED",
+        "doc_id": "D-29d4f031bd",
+        "invoice_refs": [
+          {
+            "amount_minor": 984000,
+            "invoice_id": "SI/1594-V"
+          },
+          {
+            "amount_minor": 901040,
+            "invoice_id": "SI/8648-D"
+          }
+        ],
+        "payment_id": "PAY-856297",
+        "timestamp": "2025-11-30T11:39:33-05:00"
+      }
+    ]
+  },
+  "config_hash": "b0cdce3de8ea1a1a86d2f1830ae6c8516527ce6ca25aed7f343f7f183f2d6156",
+  "config_id": "train",
+  "config_version": "1.3.0",
+  "distractors": [
+    {
+      "kind": "split_payment",
+      "record_ids": [
+        "SI/3784-Y",
+        "PAY-925051",
+        "PAY-691407"
+      ]
+    },
+    {
+      "kind": "split_payment",
+      "record_ids": [
+        "SI/7548-P",
+        "PAY-742800",
+        "PAY-945115",
+        "PAY-557602"
+      ]
+    },
+    {
+      "kind": "split_payment",
+      "record_ids": [
+        "SI/6481-R",
+        "PAY-474258",
+        "PAY-338272"
+      ]
+    },
+    {
+      "kind": "legit_recurring_amount",
+      "record_ids": [
+        "SI/7348-E",
+        "SI/1871-T",
+        "SI/2551-U"
+      ]
+    },
+    {
+      "kind": "legit_recurring_amount",
+      "record_ids": [
+        "SI/6388-M",
+        "SI/2961-Y"
+      ]
+    },
+    {
+      "kind": "legit_recurring_amount",
+      "record_ids": [
+        "SI/9106-B",
+        "SI/2569-X"
+      ]
+    },
+    {
+      "kind": "timezone_boundary_ok",
+      "record_ids": [
+        "SI/2632-U"
+      ],
+      "variant": "exact_start"
+    },
+    {
+      "kind": "realized_fx_gain_loss",
+      "record_ids": [
+        "SI/5368-D",
+        "PAY-585088"
+      ]
+    },
+    {
+      "kind": "realized_fx_gain_loss",
+      "record_ids": [
+        "SI/9319-D",
+        "PAY-218588"
+      ]
+    },
+    {
+      "kind": "unreferenced_prepayment",
+      "record_ids": [
+        "PAY-621626"
+      ]
+    }
+  ],
+  "env_version": "auditgym-1.0.0",
+  "episode_id": "ep_34921e20f6ca",
+  "seed": 4117,
+  "spec": {
+    "attempt": 0,
+    "base_currency": "USD",
+    "clean": false,
+    "company_name": "Fictional Tallowfield Provisions GmbH",
+    "customer_offsets": [
+      "+05:00",
+      "+00:00",
+      "-03:00",
+      "+08:00",
+      "-05:00",
+      "+09:00"
+    ],
+    "distractors": {
+      "legit_recurring_amount": 3,
+      "overpayment_refund": 0,
+      "realized_fx_gain_loss": 2,
+      "split_payment": 3,
+      "timezone_boundary_ok": 1,
+      "unreferenced_prepayment": 1
+    },
+    "foreign_currencies": [
+      "AED"
+    ],
+    "foreign_invoice_share": "0.35",
+    "id_styles": {
+      "entity": "cust_alpha",
+      "invoice": "slash",
+      "payment": "pay"
+    },
+    "industry": "Provisions",
+    "interactions": {
+      "cutoff_with_wrong_rate_date": 0,
+      "fx_partial_payment_at_boundary": 0
+    },
+    "issues": {
+      "duplicate_invoice": 0,
+      "fx_error": 2,
+      "payment_misallocation": 1,
+      "period_cutoff": 0
+    },
+    "month": 11,
+    "n_customers": 13,
+    "n_invoices": 43,
+    "n_noise_effective": 107,
+    "n_noise_postings": 107,
+    "timezone": "Asia/Almaty",
+    "utc_offset": "+05:00",
+    "vat_rates": [
+      "0",
+      "0.12",
+      "0.20"
+    ],
+    "year": 2025
+  }
+}
