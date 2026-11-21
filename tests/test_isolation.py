@@ -239,7 +239,7 @@ def test_failing_agent_is_killed_and_its_episode_scored_empty(tmp_path, code, st
     with open(agent, "w") as f:
         f.write(code)
     os.chmod(agent, 0o644)
-    p = _iso("--agent", f"{sys.executable} -I {agent}", "--seed", "1", "--config", "train",
+    p = _iso("--agent", f"{sys.executable} -I {agent}", "--seed", "1", "--config", "train", "--public-seeds",
              "--step-timeout", "2", "--log-dir", str(tmp_path / "logs"))
     assert p.returncode == 0, p.stdout + p.stderr
     s = json.load(open(tmp_path / "logs" / "isolated_summary.json"))
@@ -286,3 +286,131 @@ def test_agent_lines_can_only_ever_become_step_actions():
     assert _parse_action(b"\xff\xfe") is None
     assert _parse_action(b'{"action":1,"action":2}') is None
     assert _parse_action(b'{"action":{"action":"calculator"},"cmd":"close"}') == {"action": "calculator"}
+
+
+# ------------------------------------------------------------------ 6. second review: blocking writes, ro mounts, seeds
+def _agent_file(code: str) -> str:
+    import tempfile
+    adir = tempfile.mkdtemp(prefix="auditgym-test-agent-")       # readable by the agent uid (tmp_path is 0700)
+    os.chmod(adir, 0o755)
+    path = os.path.join(adir, "agent.py")
+    with open(path, "w") as f:
+        f.write(code)
+    os.chmod(path, 0o644)
+    return path
+
+
+# asks for many full pages at once, then never reads stdin again but stays alive: the observations fill the pipe
+NON_READER = """import json, sys, time
+for i in range(200):
+    a = {"action": "list_records", "args": {"table": "ledger", "cursor": None, "limit": 50}}
+    sys.stdout.write(json.dumps({"action": a}) + "\\n")
+sys.stdout.flush()
+time.sleep(120)
+"""
+
+
+@needs_root
+def test_agent_that_stops_reading_cannot_block_the_harness(tmp_path):
+    import time as _t
+    t0 = _t.monotonic()
+    p = _iso("--agent", f"{sys.executable} -I {_agent_file(NON_READER)}", "--seed", "1", "--config", "train",
+             "--public-seeds", "--step-timeout", "2", "--log-dir", str(tmp_path / "logs"), timeout=90)
+    assert p.returncode == 0, p.stdout + p.stderr
+    e = json.load(open(tmp_path / "logs" / "isolated_summary.json"))["episodes"][0]
+    assert e["agent_status"] == "send_timeout" and e["ended_by"] == "agent_failed"
+    assert 0 < e["agent_steps"] < 100                     # it got stuck on a write, not on the step budget
+    assert _t.monotonic() - t0 < 60
+
+
+SLOW = """import json, sys, time
+for line in sys.stdin:
+    time.sleep(1.0)
+    a = {"action": "calculator", "args": {"expression": "1"}}
+    sys.stdout.write(json.dumps({"action": a}) + "\\n"); sys.stdout.flush()
+"""
+
+
+@needs_root
+def test_episode_deadline_caps_an_agent_that_is_slow_but_never_silent(tmp_path):
+    p = _iso("--agent", f"{sys.executable} -I {_agent_file(SLOW)}", "--seed", "1", "--config", "train",
+             "--public-seeds", "--step-timeout", "5", "--episode-timeout", "3", "--log-dir", str(tmp_path / "logs"))
+    assert p.returncode == 0, p.stdout + p.stderr
+    e = json.load(open(tmp_path / "logs" / "isolated_summary.json"))["episodes"][0]
+    assert e["agent_status"] == "episode_timeout" and e["ended_by"] == "agent_failed" and e["agent_steps"] <= 3
+
+
+def test_seed_on_the_command_line_is_refused_without_public_seeds(tmp_path):
+    p = _iso("--policy", "careful_auditor", "--seed", "1", "--config", "train", "--log-dir", str(tmp_path / "l"))
+    assert p.returncode == 2 and "/proc/<pid>/cmdline" in p.stderr
+
+
+@needs_root
+def test_escape_probe_reports_a_seed_passed_on_the_command_line(tmp_path):
+    from auditgym.isolate import PROBE_SCRIPT, probe_findings
+    p = _iso("--agent", f"{sys.executable} -I -S {PROBE_SCRIPT}", "--seed", "4242", "--config", "train",
+             "--public-seeds", "--log-dir", str(tmp_path / "logs"))
+    assert p.returncode == 0, p.stdout + p.stderr
+    checks = {c["check"]: c for r in probe_findings(str(tmp_path / "logs")) for c in r["checks"]}
+    seed_check = checks["episode seed on a process command line (/proc/<pid>/cmdline)"]
+    assert seed_check["leak"] and "4242" in seed_check["detail"]
+    s = json.load(open(tmp_path / "logs" / "isolated_summary.json"))
+    assert s["seeds_private"] is False
+
+
+@needs_root
+def test_private_seeds_from_stdin_never_reach_argv_or_disk(tmp_path):
+    from auditgym.isolate import PROBE_SCRIPT, probe_findings
+    env = dict(os.environ, PYTHONPATH=ROOT, PYTHONDONTWRITEBYTECODE="1")
+    p = subprocess.run([sys.executable, "-m", "auditgym", "isolate", "--agent", f"{sys.executable} -I -S {PROBE_SCRIPT}",
+                        "--episodes", "-", "--log-dir", str(tmp_path / "logs")], cwd=ROOT, env=env,
+                       input='[{"seed": 4243, "config": "train"}]', capture_output=True, text=True, timeout=300)
+    assert p.returncode == 0, p.stdout + p.stderr
+    leaks = [c for r in probe_findings(str(tmp_path / "logs")) for c in r["checks"] if c["leak"]]
+    assert not leaks, leaks
+    s = json.load(open(tmp_path / "logs" / "isolated_summary.json"))
+    assert s["seeds_private"] is True and s["episodes"][0]["seed"] == 4243
+
+
+@needs_root
+def test_protect_refuses_an_unchangeable_readable_path_and_restores_earlier_changes(tmp_path, monkeypatch):
+    import errno
+    import tempfile
+
+    from auditgym import isolate
+    base = tempfile.mkdtemp(prefix="auditgym-test-protect-")
+    os.chmod(base, 0o755)
+    first, ro = os.path.join(base, "a_dir"), os.path.join(base, "b_seeds.json")
+    os.mkdir(first)
+    os.chmod(first, 0o755)
+    with open(ro, "w") as f:
+        f.write("[]")
+    os.chmod(ro, 0o644)
+    real_chmod = os.chmod
+
+    def chmod(path, mode, *a, **kw):                    # the seeds file sits on a read-only mount
+        if os.path.abspath(path) == ro:
+            raise OSError(errno.EROFS, "Read-only file system")
+        return real_chmod(path, mode, *a, **kw)
+    monkeypatch.setattr(isolate.os, "chmod", chmod)
+    sb = isolate.Sandbox("uid")
+    with pytest.raises(isolate.IsolationError, match="Read-only file system"):
+        sb.protect([first, ro])
+    assert oct(os.stat(first).st_mode & 0o777) == oct(0o755)    # the change made before the failure was undone
+
+
+@needs_root
+def test_protect_leaves_already_private_paths_alone(tmp_path, monkeypatch):
+    import tempfile
+
+    from auditgym import isolate
+    base = tempfile.mkdtemp(prefix="auditgym-test-protect-")
+    os.chmod(base, 0o700)                               # like `chmod 700 secrets` before a read-only mount
+    seeds = os.path.join(base, "hidden_seeds.json")
+    with open(seeds, "w") as f:
+        f.write("[]")
+    os.chmod(seeds, 0o644)
+    calls = []
+    monkeypatch.setattr(isolate.os, "chmod", lambda *a, **k: calls.append(a))
+    isolate.Sandbox("uid").protect([seeds])
+    assert [c for c in calls if c[0] in (seeds, base)] == []          # only the probe's own workdirs were chmod-ed

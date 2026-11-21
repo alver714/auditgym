@@ -31,6 +31,13 @@ Nothing below alters generated data, the matcher, the reward or the action inter
 * `rules.check_evidence` (the independent verifier used by `validate` and the tests, not by the scorer) requires
   every ledger row the posted amount is summed from; a citation that omits one is rejected instead of yielding a
   different amount. All generated evidence sets already satisfy this.
+* `isolate`, second review: writes to the agent are non-blocking with a deadline (an agent that stops reading can no
+  longer block the harness) and every episode has a hard wall-clock cap (`--episode-timeout`); `protect` leaves
+  already-private paths untouched, refuses a readable path it cannot chmod (read-only mount) with a hint, and always
+  restores modes it changed; `--seed` (visible in `/proc/<pid>/cmdline`) needs `--public-seeds`, private seeds go
+  through `--episodes FILE` or `--episodes -`; the escape probe flags seeds on process command lines. New CI job
+  `isolation-docker` runs `scripts/docker_isolation_check.sh` (isolation tests, self-test and the README commands)
+  as root inside the Python 3.11 image with `--network none`.
 * README / DESIGN: the closed-run recipe is now the `isolate` command; removed the outdated statements that duplicate
   JSON keys are accepted (the server rejects them) and that every issue has exactly one evidence set.
 

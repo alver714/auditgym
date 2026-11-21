@@ -131,20 +131,34 @@ grader server  <-- JSON lines + control token -->  harness  <-- observations / a
 ```
 
 ```bash
-# inside the image (runs as root, so the agent can get its own uid); --network none keeps everything offline
+# 1. make the seeds private BEFORE mounting them read-only: inside the container the harness can only check them
+chmod 700 secrets && chmod 600 secrets/hidden_seeds.json     # [{"seed": 123, "config": "holdout"}, ...]
+# 2. inside the image (runs as root, so the agent can get its own uid); --network none keeps everything offline
 docker run --rm --network none -v "$PWD/secrets:/secrets:ro" -v "$PWD/my_agent:/agent:ro" auditgym \
   python -m auditgym isolate --agent "python3 /agent/agent.py" --episodes /secrets/hidden_seeds.json \
                              --log-dir /app/reports/isolated_logs
+# or pass the seeds through stdin, so they are neither in a file nor on a command line
+docker run --rm -i --network none -v "$PWD/my_agent:/agent:ro" auditgym \
+  python -m auditgym isolate --agent "python3 /agent/agent.py" --episodes - < secrets/hidden_seeds.json
 python -m auditgym isolate --policy careful_auditor --split dev      # a built-in policy as the isolated agent
 python -m auditgym isolate --self-test                               # hostile probe agent; exit 1 on any leak
 ```
 
+If a protected path is readable by the agent uid and cannot be chmod-ed (a `0644` file under a `0755` directory on a
+read-only mount, as without step 1), `isolate` refuses to start with exit code 2 and says which path; nothing is left
+half-changed. **Seeds of a closed run go only through `--episodes FILE` or `--episodes -`.** `--seed N` would put the
+seed on the harness command line, which every local user (the agent included) can read in `/proc/<pid>/cmdline`, and
+anyone with the generator can rebuild the episode and its truth from it; `--seed` is therefore refused unless
+`--public-seeds` marks the run as a demo (the summary then records `seeds_private: false`).
+
 * **Agent protocol.** The agent reads `{"type":"observation","obs":..,"reward":..,"terminated":..,"truncated":..,
   "info":..}` lines on stdin and answers each with one `{"action": {...}}` line on stdout. The harness builds every
   server message itself, so a line can only ever become the `action` of a `step`: `{"cmd":"close"}`, a forged
-  token or invalid bytes from the agent are answered as an invalid action of the same episode. An agent that exits,
-  stays silent longer than `--step-timeout` or sends a line longer than 1 MB is killed; its episode is scored empty
-  (`ended_by=agent_failed`) and logged.
+  token or invalid bytes from the agent are answered as an invalid action of the same episode. Writes to the agent
+  are non-blocking with the same deadline as reads, so an agent that stops reading its stdin cannot block the
+  harness. An agent that exits, stays silent or stops reading longer than `--step-timeout`, exceeds the per-episode
+  wall-clock cap `--episode-timeout` (default: the env time limit + 30 s) or sends a line longer than 1 MB is
+  killed; its episode is scored empty (`ended_by=agent_failed`) and logged.
 * **Sandbox `uid` (default; needs root, e.g. the Docker image).** A fresh agent process per episode runs under a
   separate unprivileged uid/gid (default 65534, use a dedicated one) with no supplementary groups and
   `no_new_privs`, in its own session, in an empty temporary working directory, with an environment rebuilt from
@@ -161,9 +175,11 @@ python -m auditgym isolate --self-test                               # hostile p
 * **Self-test.** `isolate --self-test` runs `auditgym/agents/escape_probe.py`, an agent that hunts for the token (own
   environment, every `/proc/<pid>/environ`), opens the grader's `/proc/<pid>/mem`, reads and writes the grader paths
   it finds in the (world-readable) process command lines and next to its own script, looks for inherited file
-  descriptors and for a seed in the observations, and sends server commands, invalid UTF-8 and duplicate keys over
+  descriptors and for a seed in the observations or on any process command line, and sends server commands, invalid UTF-8 and duplicate keys over
   the action channel. It passes only if nothing leaks, the episode survives every hostile line and ends with the
-  probe's own `submit`. `check` runs it as a hard check when it runs as root (otherwise it is a SKIP).
+  probe's own `submit`. `check` runs it as a hard check when it runs as root (otherwise it is a SKIP). Since the
+  default CI runner is not root, a separate CI job (`isolation-docker`) builds the Python 3.11 image and runs the
+  isolation tests, the self-test and the commands above inside it with `--network none`.
 * Holdout truth is **never written to disk**: the server generates each episode from `(seed, config)` in memory, so
   the files worth protecting are the jury's episodes file and the grader logs. Results land in
   `<log-dir>/isolated_summary.json`, grader reports in `<log-dir>/report_*.json`, agent stderr in
@@ -299,7 +315,7 @@ mode, remote grader. The `careful_auditor` row is an extra diagnostic policy, no
 
 <!-- RESULTS:BEGIN (generated by `python -m auditgym check --update-docs`; do not edit) -->
 
-Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1070 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
+Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1077 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
 
 
 #### Baseline policies (eval mode, holdout, remote env)
@@ -310,8 +326,8 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 |---|---|---|---|---|---|---|---|---|
 | random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
 | reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.10 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.09 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.11 |
 | careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
 | careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.12 |
 

@@ -25,3 +25,12 @@ jobs:
         with:
           name: check-report
           path: reports/check_report.*
+
+  isolation-docker:
+    # the job above runs unprivileged, so the uid-sandbox tests skip there; this one runs them as root in the image
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t auditgym .
+      - run: scripts/docker_isolation_check.sh auditgym

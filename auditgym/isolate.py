@@ -56,7 +56,7 @@ import tempfile
 import time
 from typing import Any
 
-from .constants import MODE_EVAL, MODE_TRAIN
+from .constants import EPISODE_TIME_LIMIT_S, MODE_EVAL, MODE_TRAIN
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AGENTS_DIR = os.path.join(ROOT, "auditgym", "agents")
@@ -187,21 +187,35 @@ class Sandbox:
 
     # ---- protected paths
     def protect(self, paths: list[str]) -> None:
-        """Make every path unreachable for the agent uid and prove it with a probe running AS the agent."""
+        """Make every path unreachable for the agent uid and prove it with a probe running AS the agent.
+
+        Paths the agent already cannot read (e.g. a 0600 file or anything inside a 0700 directory) are left
+        untouched, so a read-only mount prepared that way works. A path the agent CAN read is chmod-ed to 0700/0600
+        for the run; if that is impossible (read-only mount, foreign owner) the run is refused with a hint. Any
+        failure restores the modes changed so far before the error propagates."""
         paths = [os.path.abspath(p) for p in paths if p and os.path.exists(p)]
         if self.kind != "uid":
             return
-        for p in paths:
-            st = os.stat(p)
-            if st.st_uid == self.uid:
-                raise IsolationError(f"protected path {p} is owned by the agent uid {self.uid}")
-            if st.st_mode & 0o077:
-                self._restored.append((p, stat.S_IMODE(st.st_mode)))
-                os.chmod(p, stat.S_IMODE(st.st_mode) & 0o700)
-        leaks = self.readable_by_agent(paths)
-        if leaks:
+        try:
+            for p in paths:
+                if os.stat(p).st_uid == self.uid:
+                    raise IsolationError(f"protected path {p} is owned by the agent uid {self.uid}")
+            for p in self.readable_by_agent(paths):
+                mode = stat.S_IMODE(os.stat(p).st_mode)
+                try:
+                    os.chmod(p, mode & 0o700)
+                except OSError as e:
+                    raise IsolationError(
+                        f"{p} is readable by the agent uid and cannot be made private here ({e.strerror}); "
+                        f"make it private before mounting it (e.g. `chmod 700` on its directory or "
+                        f"`chmod 600` on the file)") from None
+                self._restored.append((p, mode))
+            leaks = self.readable_by_agent(paths)
+            if leaks:
+                raise IsolationError("the agent uid can still read protected paths: " + ", ".join(leaks))
+        except BaseException:
             self.restore()
-            raise IsolationError("the agent uid can still read protected paths: " + ", ".join(leaks))
+            raise
 
     def restore(self) -> None:
         while self._restored:
@@ -285,21 +299,47 @@ def _parse_action(line: bytes) -> Any:
     return msg["action"]
 
 
-def _send(proc: subprocess.Popen, payload: dict) -> bool:
-    try:
-        proc.stdin.write((json.dumps(payload, ensure_ascii=True) + "\n").encode())
-        proc.stdin.flush()
-        return True
-    except (BrokenPipeError, OSError, ValueError):
-        return False
+class _LineWriter:
+    """Non-blocking writes to the agent's stdin with a deadline: an agent that stops reading (its pipe buffer fills)
+    can never block the harness; the send fails with 'timeout' instead."""
+
+    def __init__(self, fd: int):
+        self.fd = fd
+        os.set_blocking(fd, False)
+
+    def send(self, payload: dict, timeout_s: float) -> str:
+        """'ok' | 'timeout' | 'exited'."""
+        data = memoryview((json.dumps(payload, ensure_ascii=True) + "\n").encode())
+        deadline = time.monotonic() + max(0.0, timeout_s)
+        while data:
+            left = deadline - time.monotonic()
+            if left <= 0:
+                return "timeout"
+            try:
+                _, w, _ = select.select([], [self.fd], [], left)
+            except (OSError, ValueError):
+                return "exited"
+            if not w:
+                return "timeout"
+            try:
+                n = os.write(self.fd, data)
+            except BlockingIOError:
+                continue
+            except (BrokenPipeError, OSError):
+                return "exited"
+            data = data[n:]
+        return "ok"
 
 
 # ------------------------------------------------------------------ episodes
 def load_episodes(path: str | None, split: str | None, seeds: list[int] | None, config: str | None) -> list[dict]:
     from .runner import load_splits, resolve_config
-    if path:
+    if path == "-":                                   # private channel: nothing in argv, nothing on disk
+        raw = json.load(sys.stdin)
+    elif path:
         with open(path, encoding="utf-8") as f:
             raw = json.load(f)
+    if path:
         items = raw.get("episodes", raw) if isinstance(raw, dict) else raw
         out = []
         for it in items:
@@ -315,22 +355,31 @@ def load_episodes(path: str | None, split: str | None, seeds: list[int] | None, 
 
 
 def _run_one(env, sandbox: Sandbox, agent_argv: list[str], ep: dict, stderr_path: str,
-             step_timeout_s: float, max_line: int) -> dict:
+             step_timeout_s: float, max_line: int, episode_timeout_s: float) -> dict:
+    """One agent process for one episode. Every read AND write is bounded by min(step timeout, what is left of the
+    episode deadline), so a hostile agent (silent, not reading, flooding) costs at most `episode_timeout_s`."""
     obs, info = env.reset(seed=ep["seed"], config=ep["config"])
     workdir = sandbox.make_workdir()
     status, steps = "ok", 0
+    deadline = time.monotonic() + episode_timeout_s
+
+    def budget() -> float:
+        return max(0.0, min(step_timeout_s, deadline - time.monotonic()))
+
     with open(stderr_path, "ab") as errf:
         proc = sandbox.popen(agent_argv, workdir, errf)
         try:
             reader = _LineReader(proc.stdout.fileno(), max_line)
+            writer = _LineWriter(proc.stdin.fileno())
             payload = {"type": "observation", "obs": obs, "reward": 0.0, "terminated": False,
                        "truncated": False, "info": info}
             done = False
             while not done:
-                if not _send(proc, payload):
-                    status = "exited"
+                st = writer.send(payload, budget())
+                if st != "ok":
+                    status = "send_timeout" if st == "timeout" else "exited"
                     break
-                st, line = reader.readline(step_timeout_s)
+                st, line = reader.readline(budget())
                 if st != "ok":
                     status = "exited" if st == "eof" else st
                     break
@@ -340,14 +389,16 @@ def _run_one(env, sandbox: Sandbox, agent_argv: list[str], ep: dict, stderr_path
                 payload = {"type": "observation", "obs": obs, "reward": reward, "terminated": term,
                            "truncated": trunc, "info": info}
             if done:
-                _send(proc, payload)              # the terminal observation, then EOF
+                writer.send(payload, min(2.0, budget()))   # the terminal observation (best effort), then EOF
+            if status == "timeout" and time.monotonic() >= deadline:
+                status = "episode_timeout"
         finally:
             try:
                 proc.stdin.close()
             except OSError:
                 pass
             try:
-                proc.wait(timeout=2)
+                proc.wait(timeout=1)
             except subprocess.TimeoutExpired:
                 pass
             sandbox.kill(proc)
@@ -367,7 +418,8 @@ def _run_one(env, sandbox: Sandbox, agent_argv: list[str], ep: dict, stderr_path
 def run_isolated(agent_argv: list[str], episodes: list[dict], *, log_dir: str = DEFAULT_LOG_DIR,
                  mode: str = MODE_EVAL, sandbox: str = "auto", agent_uid: int = DEFAULT_UID,
                  protect: list[str] | None = None, step_timeout_s: float = 60.0, max_line: int = MAX_LINE,
-                 no_network: bool = False) -> dict:
+                 no_network: bool = False, episode_timeout_s: float | None = None,
+                 seeds_private: bool = True) -> dict:
     from .client import RemoteAuditEnv
     sb = Sandbox(sandbox, agent_uid, no_network=no_network)
     os.makedirs(log_dir, exist_ok=True)
@@ -376,14 +428,16 @@ def run_isolated(agent_argv: list[str], episodes: list[dict], *, log_dir: str = 
     os.makedirs(stderr_dir, exist_ok=True)
     protected = [log_dir, os.path.join(ROOT, "grader_data")] + list(protect or [])
     results: list[dict] = []
-    sb.protect(protected)
+    if episode_timeout_s is None:
+        episode_timeout_s = EPISODE_TIME_LIMIT_S + 30.0     # the server truncates at its own limit before this
     try:
+        sb.protect(protected)                                # restores what it changed if it fails
         env = RemoteAuditEnv(mode=mode, log_dir=log_dir, allow_grader_report=True)
         try:
             for i, ep in enumerate(episodes):
                 results.append(_run_one(env, sb, agent_argv, ep,
                                         os.path.join(stderr_dir, f"episode_{i + 1:04d}.log"),
-                                        step_timeout_s, max_line))
+                                        step_timeout_s, max_line, episode_timeout_s))
         finally:
             env.close()
     finally:
@@ -391,7 +445,7 @@ def run_isolated(agent_argv: list[str], episodes: list[dict], *, log_dir: str = 
             sb.sweep()
         sb.restore()
     summary = {"sandbox": sb.kind, "isolation_boundary": sb.is_boundary, "agent_uid": sb.uid if sb.is_boundary else None,
-               "no_network": no_network, "mode": mode, "agent": agent_argv, "log_dir": log_dir,
+               "no_network": no_network, "seeds_private": seeds_private, "mode": mode, "agent": agent_argv, "log_dir": log_dir,
                "protected": [os.path.abspath(p) for p in protected], "episodes": results}
     with open(os.path.join(log_dir, "isolated_summary.json"), "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, sort_keys=True)
@@ -441,9 +495,12 @@ def build_parser(ap: argparse.ArgumentParser | None = None) -> argparse.Argument
     who.add_argument("--self-test", action="store_true",
                      help="run the escape-probe agent; exit 1 if it reads anything private or breaks the protocol")
     src = ap.add_mutually_exclusive_group()
-    src.add_argument("--episodes", help="JSON file: [{seed, config}, ...] or [seed, ...] (protected from the agent)")
+    src.add_argument("--episodes", help="JSON file: [{seed, config}, ...] or [seed, ...] (protected from the agent); "
+                                        "'-' reads it from stdin. The ways to pass PRIVATE seeds")
     src.add_argument("--split", choices=("train", "dev", "holdout"), help="episodes from configs/splits.json (default dev)")
-    src.add_argument("--seed", type=int, action="append", help="one episode seed (repeatable), with --config")
+    src.add_argument("--seed", type=int, action="append",
+                     help="one episode seed (repeatable), with --config. Command lines are readable by every local "
+                          "user via /proc, so this needs --public-seeds and is for demos only")
     ap.add_argument("--config", default=None, help="config name for --seed / bare seeds in --episodes (default holdout)")
     ap.add_argument("--mode", choices=(MODE_EVAL, MODE_TRAIN), default=MODE_EVAL)
     ap.add_argument("--log-dir", default=DEFAULT_LOG_DIR, help="grader-only directory: reports, agent stderr, summary")
@@ -452,13 +509,18 @@ def build_parser(ap: argparse.ArgumentParser | None = None) -> argparse.Argument
     ap.add_argument("--agent-uid", type=int, default=DEFAULT_UID, help="dedicated uid (and gid) for the agent")
     ap.add_argument("--protect", action="append", default=[], help="extra path the agent must not read (repeatable)")
     ap.add_argument("--step-timeout", type=float, default=60.0, help="seconds the agent may take per action")
+    ap.add_argument("--public-seeds", action="store_true",
+                    help="acknowledge that --seed values are visible to the agent (demo mode, not a closed run)")
+    ap.add_argument("--episode-timeout", type=float, default=None,
+                    help="hard wall-clock cap per episode for the agent (default: env time limit + 30 s)")
     ap.add_argument("--no-network", action="store_true", help="agent in an empty network namespace (needs CAP_SYS_ADMIN)")
     return ap
 
 
 def _print_summary(summary: dict) -> None:
     print(f"sandbox: {summary['sandbox']}  isolation boundary: {'yes' if summary['isolation_boundary'] else 'NO'}"
-          f"  agent uid: {summary['agent_uid']}  mode: {summary['mode']}  no_network: {summary['no_network']}")
+          f"  agent uid: {summary['agent_uid']}  mode: {summary['mode']}  no_network: {summary['no_network']}"
+          f"  seeds private: {summary.get('seeds_private')}")
     print(f"{'#':>3}  {'episode':<16} {'agent':<9} {'steps':>5}  {'ended_by':<13} {'reward':>8} {'f1':>6}")
     for i, r in enumerate(summary["episodes"]):
         rew = r["reward_shared"]
@@ -483,11 +545,16 @@ def main_args(a) -> int:
             argv = [sys.executable, "-I", POLICY_AGENT_SCRIPT, a.policy]
         else:
             argv = shlex.split(a.agent)
+        if a.seed and not a.public_seeds:
+            raise IsolationError("--seed puts the seed on the harness command line, which the agent can read in "
+                                 "/proc/<pid>/cmdline; use --episodes FILE or --episodes - (stdin) for private seeds, "
+                                 "or add --public-seeds for a demo")
         eps = load_episodes(a.episodes, a.split, a.seed, a.config)
-        protect = list(a.protect) + ([a.episodes] if a.episodes else [])
+        protect = list(a.protect) + ([a.episodes] if a.episodes and a.episodes != "-" else [])
         summary = run_isolated(argv, eps, log_dir=a.log_dir, mode=a.mode, sandbox=a.sandbox,
                                agent_uid=a.agent_uid, protect=protect, step_timeout_s=a.step_timeout,
-                               no_network=a.no_network)
+                               no_network=a.no_network, episode_timeout_s=a.episode_timeout,
+                               seeds_private=not a.seed)
     except IsolationError as e:
         print(f"isolate: refused: {e}", file=sys.stderr)
         return 2

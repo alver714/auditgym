@@ -8,7 +8,8 @@ It plays by the agent protocol only as far as needed to stay alive, and otherwis
   * open /proc/<pid>/mem of the grader; look for inherited file descriptors besides stdin/stdout/stderr;
   * send server commands (close, reset with a malformed token, grader_report), invalid UTF-8, duplicate keys and
     a non-object over the action channel, and check the episode is still the same one afterwards;
-  * look for a seed anywhere in the observations.
+  * look for a seed anywhere in the observations and on any process command line (`--seed N` is world-readable
+    through /proc/<pid>/cmdline);
 
 Every attempt is recorded as {"check", "leak", "detail"}; the summary goes to stderr as one `PROBE_RESULT {json}` line
 (the harness keeps agent stderr in the grader-only log directory). Finally it submits an empty answer, so a passing
@@ -90,6 +91,15 @@ def static_probes():
         except OSError:
             pass
     record("grader /proc/<pid>/mem openable", mem, mem or "denied")
+
+    seeds = []
+    for pid, a in cmd.items():
+        for i, x in enumerate(a):
+            if x in ("--seed", "--seeds") and i + 1 < len(a):
+                seeds.append(f"pid {pid}: {x} {a[i + 1]}")
+            elif x.startswith("--seed=") or x.startswith("--seeds="):
+                seeds.append(f"pid {pid}: {x}")
+    record("episode seed on a process command line (/proc/<pid>/cmdline)", seeds, seeds or "none")
 
     targets = {os.path.join(REPO, "grader_data"), os.path.join(REPO, "grader_data", "dev"),
                os.path.join(REPO, "grader_data", "train")}
