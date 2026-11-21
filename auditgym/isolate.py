@@ -188,6 +188,7 @@ class Sandbox:
     # ---- protected paths
     def protect(self, paths: list[str]) -> None:
         """Make every path unreachable for the agent uid and prove it with a probe running AS the agent.
+        "Unreachable" means: a file cannot be opened, a directory can be neither listed nor traversed (x bit).
 
         Paths the agent already cannot read (e.g. a 0600 file or anything inside a 0700 directory) are left
         untouched, so a read-only mount prepared that way works. A path the agent CAN read is chmod-ed to 0700/0600
@@ -228,10 +229,16 @@ class Sandbox:
     def readable_by_agent(self, paths: list[str]) -> list[str]:
         if not paths:
             return []
+        # A directory is reachable if the agent can list it OR traverse it: with mode 0711 listdir() fails, but a
+        # file with a known name inside can still be opened. access() checks the REAL uid, i.e. the agent's.
         code = ("import os,sys,json\nbad=[]\n"
                 "for p in json.loads(sys.argv[1]):\n"
+                "    if os.path.isdir(p):\n"
+                "        if os.access(p, os.X_OK) or os.access(p, os.R_OK):\n"
+                "            bad.append(p)\n"
+                "        continue\n"
                 "    try:\n"
-                "        (os.listdir(p) if os.path.isdir(p) else open(p,'rb').read(1)); bad.append(p)\n"
+                "        open(p,'rb').read(1); bad.append(p)\n"
                 "    except OSError:\n"
                 "        pass\n"
                 "print(json.dumps(bad))\n")

@@ -414,3 +414,31 @@ def test_protect_leaves_already_private_paths_alone(tmp_path, monkeypatch):
     monkeypatch.setattr(isolate.os, "chmod", lambda *a, **k: calls.append(a))
     isolate.Sandbox("uid").protect([seeds])
     assert [c for c in calls if c[0] in (seeds, base)] == []          # only the probe's own workdirs were chmod-ed
+
+
+@needs_root
+def test_protect_closes_a_traversable_but_unlistable_directory():
+    """mode 0711: listdir() is denied, yet a 0644 file with a known name inside is readable. That directory is NOT
+    private: the preflight must report it and protect() must remove the x bit for the agent."""
+    import tempfile
+
+    from auditgym import isolate
+    base = tempfile.mkdtemp(prefix="auditgym-test-protect-")
+    os.chmod(base, 0o755)
+    d = os.path.join(base, "grader_logs")
+    os.mkdir(d)
+    known = os.path.join(d, "report_0001.json")
+    with open(known, "w") as f:
+        f.write("{}")
+    os.chmod(known, 0o644)
+    os.chmod(d, 0o711)
+    sb = isolate.Sandbox("uid")
+    assert sb.readable_by_agent([known]) == [known]          # the hole is real
+    assert sb.readable_by_agent([d]) == [d]                  # and the preflight now sees it
+    try:
+        sb.protect([d])
+        assert sb.readable_by_agent([d, known]) == []
+        assert os.stat(d).st_mode & 0o777 == 0o700
+    finally:
+        sb.restore()
+    assert os.stat(d).st_mode & 0o777 == 0o711

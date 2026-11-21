@@ -31,6 +31,8 @@ def record(name, leak, detail=""):
 def readable(path):
     try:
         if os.path.isdir(path):
+            if os.access(path, os.X_OK):      # traversable: files with known names inside can be opened
+                return True
             os.listdir(path)
         else:
             with open(path, "rb") as f:

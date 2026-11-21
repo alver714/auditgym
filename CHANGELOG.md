@@ -35,7 +35,9 @@ Nothing below alters generated data, the matcher, the reward or the action inter
   longer block the harness) and every episode has a hard wall-clock cap (`--episode-timeout`); `protect` leaves
   already-private paths untouched, refuses a readable path it cannot chmod (read-only mount) with a hint, and always
   restores modes it changed; `--seed` (visible in `/proc/<pid>/cmdline`) needs `--public-seeds`, private seeds go
-  through `--episodes FILE` or `--episodes -`; the escape probe flags seeds on process command lines. New CI job
+  through `--episodes FILE` or `--episodes -`; the escape probe flags seeds on process command lines. The preflight
+  treats a directory as reachable if the agent can list it OR traverse it (a `0711` directory hides its listing but
+  not a known file inside), so `protect` closes such directories too. New CI job
   `isolation-docker` runs `scripts/docker_isolation_check.sh` (isolation tests, self-test and the README commands)
   as root inside the Python 3.11 image with `--network none`.
 * README / DESIGN: the closed-run recipe is now the `isolate` command; removed the outdated statements that duplicate
