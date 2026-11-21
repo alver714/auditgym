@@ -7,15 +7,20 @@ Commands (one JSON object per line):
   {"cmd":"reset","seed":..,"config":..,"options":..,"token":..}  -> {"ok":true,"obs":..,"info":..}
   {"cmd":"step","action":{..}}                          -> {"ok":true,"obs":..,"reward":..,"terminated":..,"truncated":..,"info":..}
   {"cmd":"grader_report","token":..}   (only after the episode ended and only with --allow-grader-report)
-  {"cmd":"close"}
+  {"cmd":"abandon","token":..}        (harness: the agent failed; the running episode is scored empty and logged)
+  {"cmd":"close","token":..}          (harness command; an unfinished episode is scored empty and logged)
 Failures reply {"ok":false,"error":"<short message>"}; the loop keeps running. Truth lives only in
 this process; per-episode grader reports are written to --log-dir, never sent to the agent.
 
-Trust boundary: `step` is the only agent-facing command. `reset` (which chooses seed / config) and
-`grader_report` are HARNESS commands and FAIL CLOSED: they are refused unless the message carries the
+Trust boundary: `step` is the only agent-facing command. `reset` (which chooses seed / config),
+`grader_report`, `abandon` and `close` are HARNESS commands and FAIL CLOSED: they are refused unless the message carries the
 token from the environment variable AUDITGYM_CONTROL_TOKEN. With no token configured they are refused
 outright, unless the operator explicitly passes --insecure-open (local experiments only: any stdin
-peer may then reset with any seed/config and read grader reports). client.RemoteAuditEnv creates a
+peer may then reset with any seed/config, read grader reports and close the server). A token that is not
+a short string of encodable characters is refused like a wrong one; no request can stop the loop except an
+authorised close or end of input. When the server stops (close, EOF, broken pipe) with an episode still
+running, that episode is scored as truncated with an empty answer and its report is logged
+(ended_by=closed / disconnected; agent_failed after `abandon`). client.RemoteAuditEnv creates a
 fresh random token per server process and keeps it; the `AgentHandle` it hands to policies carries only
 a `step` function, so a policy that does not introspect private attributes can neither re-reset an
 episode (adaptive truth oracle) nor read the grader report. (In-process Python cannot be sandboxed:
@@ -45,7 +50,8 @@ from .env import AuditEnv
 
 MAX_LINE = 4_000_000
 TOKEN_ENV = "AUDITGYM_CONTROL_TOKEN"
-HARNESS_CMDS = ("reset", "grader_report")
+HARNESS_CMDS = ("reset", "grader_report", "close", "abandon")
+MAX_TOKEN_LEN = 256
 MAX_SEED = 2 ** 63
 _CONFIG_NAME = re.compile(r"[A-Za-z0-9_-]{1,64}")
 _CONFIG_KEYS = frozenset({"config_id", "config_version", "company", "issues", "interactions",
@@ -90,6 +96,18 @@ def _reset_args_ok(msg: dict) -> bool:
         if t is not None and (not isinstance(t, dict) or not set(t) <= _TRANSFORM_KEYS):
             return False
     return True
+
+
+def _token_matches(tok: object, expected: str) -> bool:
+    """Constant-time token check that never raises: non-strings, over-long strings and strings that are
+    not encodable as UTF-8 (lone surrogates such as "\\ud800" decoded from JSON) are simply wrong."""
+    if not isinstance(tok, str) or len(tok) > MAX_TOKEN_LEN:
+        return False
+    try:
+        got = tok.encode("utf-8")
+    except UnicodeError:
+        return False
+    return hmac.compare_digest(got, expected.encode("utf-8"))
 
 
 def _short(s: object, n: int = 120) -> str:
@@ -170,9 +188,23 @@ class Server:
             except Exception:
                 self._log_exc()
 
+    def _finish_open_episode(self, why: str) -> None:
+        """The server is stopping with an episode still running: score it empty and log it."""
+        with self._lock:
+            try:
+                if self.env.in_progress():
+                    self.env.abandon(ended_by=why)
+                    self._log_report_if_done()
+            except Exception:
+                self._log_exc()
+
     def handle(self, msg: object) -> tuple[dict, bool]:
         with self._lock:
-            reply, stop = self._handle(msg)
+            try:
+                reply, stop = self._handle(msg)
+            except Exception:                         # last line of defence: a request never kills the loop
+                self._log_exc()
+                reply, stop = {"ok": False, "error": "request failed"}, False
             if stop:
                 self._disarm()
             elif isinstance(msg, dict) and msg.get("cmd") in ("reset", "step"):
@@ -186,8 +218,7 @@ class Server:
         cmd = msg.get("cmd")
         if cmd in HARNESS_CMDS:
             if self._token is not None:
-                tok = msg.get("token")
-                if not isinstance(tok, str) or not hmac.compare_digest(tok.encode(), self._token.encode()):
+                if not _token_matches(msg.get("token"), self._token):
                     return {"ok": False, "error": f"{_short(cmd, 20)} is a harness command"}, False
             elif not self.insecure_open:             # fail closed: no token configured, no --insecure-open
                 return {"ok": False, "error": f"{_short(cmd, 20)} is a harness command"}, False
@@ -217,7 +248,13 @@ class Server:
                 if not self.env.ended():
                     return {"ok": False, "error": "episode not finished"}, False
                 return {"ok": True, "report": self.env.grader_report()}, False
+            if cmd == "abandon":
+                if not self.env.in_progress():
+                    return {"ok": False, "error": "no episode in progress"}, False
+                self._finish_open_episode("agent_failed")
+                return {"ok": True}, False
             if cmd == "close":
+                self._finish_open_episode("closed")
                 return {"ok": True}, True
             return {"ok": False, "error": "unknown cmd"}, False
         except Exception as e:  # never die on a bad request; never leak a traceback to the agent
@@ -227,13 +264,24 @@ class Server:
     # -------------------------------------------------------------- loop
     def serve(self, fin, fout) -> None:
         while True:
-            line = fin.readline(MAX_LINE + 1)
-            if not line:
+            try:
+                line = fin.readline(MAX_LINE + 1)
+            except UnicodeDecodeError:              # a stream not reconfigured by main(): answer, keep going
+                self._log_exc()
+                line, reply, stop = None, {"ok": False, "error": "bad encoding"}, False
+            except (OSError, ValueError):            # input closed under us: same as EOF
                 break
-            if len(line) > MAX_LINE and not line.endswith("\n"):
+            if line is None:
+                pass
+            elif not line:
+                break
+            elif len(line) > MAX_LINE and not line.endswith("\n"):
                 # drain the rest of an oversized line
                 while True:
-                    rest = fin.readline(MAX_LINE)
+                    try:
+                        rest = fin.readline(MAX_LINE)
+                    except UnicodeDecodeError:
+                        break
                     if not rest or rest.endswith("\n"):
                         break
                 reply, stop = {"ok": False, "error": "line too long"}, False
@@ -256,11 +304,12 @@ class Server:
             try:
                 fout.write(out + "\n")
                 fout.flush()
-            except BrokenPipeError:
+            except (BrokenPipeError, OSError, ValueError):
                 break
             if stop:
                 break
         self._disarm()
+        self._finish_open_episode("disconnected")     # no-op after an authorised close
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -274,9 +323,11 @@ def main(argv: list[str] | None = None) -> int:
                     help="accept reset/grader_report from any stdin peer when no control token is set "
                          "(local experiments only)")
     a = ap.parse_args(argv)
-    for stream in (sys.stdin, sys.stdout):
+    # invalid UTF-8 on stdin must not kill the loop: undecodable bytes become U+FFFD and the line is then
+    # answered as bad json / an invalid request like any other garbage
+    for stream, errors in ((sys.stdin, "replace"), (sys.stdout, "strict")):
         try:
-            stream.reconfigure(encoding="utf-8")
+            stream.reconfigure(encoding="utf-8", errors=errors)
         except Exception:
             pass
     srv = Server(a.mode, a.log_dir, a.allow_grader_report, a.max_steps, a.time_limit,

@@ -604,15 +604,16 @@ class AuditEnv:
         return obs, out_reward, self._terminated, self._truncated, info
 
     # -------------------------------------------------------------- grader / trajectory
-    def abandon(self) -> None:
-        """Grader side: the harness re-reset an unfinished episode. It is scored as truncated with an
-        empty answer (never silently dropped) so a grader log exists for it."""
+    def abandon(self, ended_by: str = "abandoned") -> None:
+        """Grader side: the harness re-reset an unfinished episode, closed the server or the connection
+        dropped. It is scored as truncated with an empty answer (never silently dropped) so a grader log
+        exists for it. ``ended_by`` records why ("abandoned", "closed", "disconnected")."""
         if not self._started or self._ep is None or self.ended():
             return
         empty = {"episode_id": self._ep.episode_id, "findings": []}
         res = self._score(empty, self._step_n)
         self._truncated = True
-        self._ended_by = "abandoned"
+        self._ended_by = ended_by
         self._store_result(res, self._step_n, not res.get("valid", False))
 
     def expire_if_overdue(self) -> bool:

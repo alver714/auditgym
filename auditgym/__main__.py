@@ -1,4 +1,4 @@
-"""CLI: python -m auditgym {generate | check | run | demo | golden}."""
+"""CLI: python -m auditgym {generate | check | run | demo | golden | lock | isolate}."""
 from __future__ import annotations
 
 import argparse
@@ -55,7 +55,8 @@ def cmd_generate(a) -> int:
 # ------------------------------------------------------------------ check
 def cmd_check(a) -> int:
     from .check import run_check
-    return run_check(quick=a.quick, out_dir=a.out, remote=not a.local, update_docs_flag=a.update_docs)
+    return run_check(quick=a.quick, out_dir=a.out, remote=not a.local, update_docs_flag=a.update_docs,
+                     allow_skip_tests=a.allow_skip_tests)
 
 
 # ------------------------------------------------------------------ run
@@ -257,6 +258,12 @@ def cmd_lock(a) -> int:
     return 1 if problems else 0
 
 
+# ------------------------------------------------------------------ isolate
+def cmd_isolate(a) -> int:
+    from .isolate import main_args
+    return main_args(a)
+
+
 # ------------------------------------------------------------------ parser
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="python -m auditgym", description="AuditGym RL environment")
@@ -274,6 +281,9 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--local", action="store_true")
     c.add_argument("--update-docs", action="store_true",
                    help="after a passing full run, regenerate results in README/DESIGN and docs/check_report.*")
+    c.add_argument("--allow-skip-tests", action="store_true",
+                   help="do not fail when pytest is missing or tests/ is empty (the suite is then SKIP, "
+                        "and the run is NOT a full verification)")
     c.set_defaults(fn=cmd_check)
 
     r = sub.add_parser("run", help="run one policy on one episode")
@@ -308,6 +318,12 @@ def build_parser() -> argparse.ArgumentParser:
     gd = sub.add_parser("golden", help="compare (or --write) the committed golden digests of tests/golden_hashes.json")
     gd.add_argument("--write", action="store_true")
     gd.set_defaults(fn=cmd_golden)
+
+    from .isolate import build_parser as isolate_parser
+    iso = sub.add_parser("isolate", help="run an agent in its own process and uid against the grader server "
+                                          "(--self-test: escape-probe agent)")
+    isolate_parser(iso)
+    iso.set_defaults(fn=cmd_isolate)
 
     lk = sub.add_parser("lock", help="verify (or --write) configs/CONFIG_VERSIONS.json: config_id@version -> content hash")
     lk.add_argument("--write", action="store_true")

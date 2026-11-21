@@ -158,18 +158,27 @@ def run_cmd(args: list[str], timeout: int) -> tuple[int, str]:
 
 
 # ================================================================== step 1: pytest
-def step_pytest(rep: Report) -> None:
+def step_pytest(rep: Report, allow_skip_tests: bool = False) -> None:
+    """The suite is a HARD check: a missing pytest or an empty tests/ fails `check` (a green run must mean the
+    tests ran). Only the explicit opt-out `--allow-skip-tests` downgrades that to SKIP. The one automatic skip
+    is the recursion guard: a test that itself runs `check` does not start the suite again."""
     s = "1"
     if os.environ.get("AUDITGYM_CHECK_RUNNING"):
         rep.add(s, "pytest", None, "skipped (invoked from inside check)")
         return
+    why = None
     if importlib.util.find_spec("pytest") is None:
-        rep.add(s, "pytest", None, "pytest not installed - skipped (notice: install requirements-dev.txt)")
-        return
-    tdir = os.path.join(ROOT, "tests")
-    has_tests = os.path.isdir(tdir) and any(f.startswith("test_") and f.endswith(".py") for f in os.listdir(tdir))
-    if not has_tests:
-        rep.add(s, "pytest", None, "no tests found in tests/ - skipped")
+        why = "pytest not installed (pip install -r requirements-dev.txt)"
+    else:
+        tdir = os.path.join(ROOT, "tests")
+        has_tests = os.path.isdir(tdir) and any(f.startswith("test_") and f.endswith(".py") for f in os.listdir(tdir))
+        if not has_tests:
+            why = "no tests found in tests/"
+    if why is not None:
+        if allow_skip_tests:
+            rep.add(s, "pytest", None, f"{why} - skipped on request (--allow-skip-tests)")
+        else:
+            rep.add(s, "pytest", False, f"{why}; the suite is a hard check (pass --allow-skip-tests to skip it)")
         return
     t0 = time.perf_counter()
     rc, out = run_cmd([sys.executable] + PYTEST_ARGS, 1800)
@@ -852,6 +861,29 @@ def _env(mode: str = MODE_TRAIN, **kw):
     return AuditEnv(mode=mode, **kw)
 
 
+def step_sandbox(rep: Report, out_dir: str) -> None:
+    """`isolate --self-test`: a hostile probe agent under the uid sandbox must find nothing. Needs root (the image
+    runs as root); elsewhere the sandbox cannot be built and the check is a SKIP, never a silent PASS."""
+    s = "6"
+    if os.name != "posix" or os.geteuid() != 0:
+        rep.add(s, "isolated agent run: escape probe finds no token, grader file or protocol hole", None,
+                "needs root (run in the Docker image or as root) - skipped")
+        return
+    log_dir = os.path.join(out_dir, "isolation_selftest")
+    shutil.rmtree(log_dir, ignore_errors=True)
+    rc, out = run_cmd([sys.executable, "-m", "auditgym", "isolate", "--self-test", "--log-dir", log_dir], 300)
+    leaks = [ln.strip() for ln in out.splitlines() if ln.strip().startswith("LEAK")]
+    rep.add(s, "isolated agent run: escape probe finds no token, grader file or protocol hole",
+            rc == 0 and "isolation self-test PASSED" in out,
+            "probe passed (separate uid, scrubbed env, grader paths unreadable)" if rc == 0
+            else (f"rc={rc}; " + "; ".join(leaks[:3]) if leaks else _short_tail(out)))
+
+
+def _short_tail(out: str) -> str:
+    lines = out.strip().splitlines()
+    return lines[-1][:200] if lines else "no output"
+
+
 def step_rewards(rep: Report, eps: list, cache: dict) -> None:
     s = "7"
     issue_t = next(((e, ep) for e, ep, k in eps if ep.truth["issues"]), None)
@@ -1282,7 +1314,7 @@ def update_docs(rep: Report, quick: bool) -> None:
 
 # ================================================================== entry point
 def run_check(quick: bool = False, out_dir: str | None = None, remote: bool = True,
-              update_docs_flag: bool = False) -> int:
+              update_docs_flag: bool = False, allow_skip_tests: bool = False) -> int:
     t0 = time.perf_counter()
     sys.dont_write_bytecode = True           # `check` must not litter the source tree with __pycache__
     out_dir = out_dir or os.path.join(ROOT, "reports")
@@ -1291,7 +1323,7 @@ def run_check(quick: bool = False, out_dir: str | None = None, remote: bool = Tr
     cache: dict = {}
     print(f"AuditGym check ({'quick' if quick else 'full'}) - {ENV_VERSION}\n")
 
-    guarded(rep, "1", lambda: step_pytest(rep))
+    guarded(rep, "1", lambda: step_pytest(rep, allow_skip_tests))
     try:
         splits = load_splits(ROOT)
     except Exception as e:
@@ -1323,6 +1355,7 @@ def run_check(quick: bool = False, out_dir: str | None = None, remote: bool = Tr
             rep.add("5", "paired checks", False, "baseline runs missing")
         guarded(rep, "6", lambda: step_leaks(rep, [r for v in runs.values() for r in v] + extra))
         guarded(rep, "6", lambda: step_isolation(rep, eps, out_dir))
+        guarded(rep, "6", lambda: step_sandbox(rep, out_dir))
         guarded(rep, "7", lambda: step_rewards(rep, eps, cache))
     else:
         for st in ("4", "5", "6", "7"):
@@ -1330,7 +1363,7 @@ def run_check(quick: bool = False, out_dir: str | None = None, remote: bool = Tr
 
     elapsed = time.perf_counter() - t0
     jp, mp = write_reports(rep, out_dir, quick, elapsed)
-    if update_docs_flag and not rep.failed:
+    if update_docs_flag and not rep.failed and not allow_skip_tests:
         update_docs(rep, quick)
     n_fail = len(rep.failed)
     print(f"\n{'ALL HARD CHECKS PASSED' if not n_fail else f'{n_fail} HARD CHECK(S) FAILED'}  "
@@ -1345,8 +1378,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--local", action="store_true", help="in-process env instead of the subprocess grader (debug)")
     ap.add_argument("--update-docs", action="store_true",
                     help="after a passing FULL run, regenerate the results blocks in README/DESIGN and docs/check_report.*")
+    ap.add_argument("--allow-skip-tests", action="store_true",
+                    help="do not fail when pytest is missing or tests/ is empty (NOT a full verification)")
     a = ap.parse_args(argv)
-    return run_check(quick=a.quick, out_dir=a.out, remote=not a.local, update_docs_flag=a.update_docs)
+    return run_check(quick=a.quick, out_dir=a.out, remote=not a.local, update_docs_flag=a.update_docs,
+                     allow_skip_tests=a.allow_skip_tests)
 
 
 if __name__ == "__main__":

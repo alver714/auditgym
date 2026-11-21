@@ -331,8 +331,8 @@ def check_evidence(issue: dict, evidence_ids: Iterable[str], ep) -> tuple[bool, 
     """Recompute `issue` using ONLY the cited records.
 
     Returns (ok, amount_minor).  ok is False when any id is unknown, the issue is malformed, or
-    the cited subset does not suffice to establish the finding (e.g. missing the document, the
-    posted ledger row(s), or the correct fx row).  The full fx table is consulted only to decide
+    the cited subset does not suffice to establish the finding (e.g. missing the document, ANY of the
+    posted ledger rows whose sum is the posted amount, or the correct fx row).  The full fx table is consulted only to decide
     which fx row the fallback rule selects; the rate itself is read from the cited fx record.
     """
     try:
@@ -370,6 +370,16 @@ def _check_evidence(issue, evidence_ids, ep):
         else:
             return _fail()
 
+    def cited_all(select, key: str) -> list[dict] | None:
+        """The cited rows `select` picks for `key`, or None if the citation is INCOMPLETE: the posted sum is
+        recomputed from cited rows only, so leaving one row out would change the amount the finding claims.
+        Every row of the episode ledger that `select` picks must therefore be cited."""
+        cited = select(ev_rows, key)
+        full = select(ctx.ep.ledger, key)
+        if {r["row_id"] for r in cited} != {r["row_id"] for r in full}:
+            return None
+        return cited
+
     def evidence_rate(currency: str, ts: str):
         """Rate for (currency, date of ts) that is backed by a cited fx record."""
         if currency == ctx.base:
@@ -383,7 +393,7 @@ def _check_evidence(issue, evidence_ids, ep):
         dup = ev_inv.get(target)
         if dup is None:
             return _fail()
-        rows = _ar_debits(ev_rows, target)
+        rows = cited_all(_ar_debits, target)
         if not rows:
             return _fail()
         key = (dup["entity_id"], dup["currency"], _line_key(dup.get("line_items")))
@@ -400,7 +410,7 @@ def _check_evidence(issue, evidence_ids, ep):
         inv = ev_inv.get(target)
         if inv is None or ctx.in_period(inv["issued_at"]):
             return _fail()
-        rows = _ar_debits(ev_rows, target)
+        rows = cited_all(_ar_debits, target)
         if not rows:
             return _fail()
         return True, sum(int(r["debit_minor"]) for r in rows)
@@ -410,7 +420,7 @@ def _check_evidence(issue, evidence_ids, ep):
             inv = ev_inv.get(target)
             if inv is None or inv["currency"] == ctx.base:
                 return _fail()
-            rows = _ar_debits(ev_rows, target)
+            rows = cited_all(_ar_debits, target)
             rate = evidence_rate(inv["currency"], inv["issued_at"])
             if not rows or rate is None:
                 return _fail()
@@ -421,7 +431,7 @@ def _check_evidence(issue, evidence_ids, ep):
             pay = ev_pay.get(target)
             if pay is None or pay["currency"] == ctx.base or int(pay["amount_minor"]) <= 0:
                 return _fail()
-            rows = _cash_debits(ev_rows, target)
+            rows = cited_all(_cash_debits, target)
             rate = evidence_rate(pay["currency"], pay["timestamp"])
             if not rows or rate is None:
                 return _fail()
@@ -449,6 +459,9 @@ def _check_evidence(issue, evidence_ids, ep):
         if rate is None:
             return _fail()
         expected += ctx.conv(ref["amount_minor"], cur, rate)
-    posted = sum(int(r["credit_minor"]) for r in _ar_credits(ev_rows, target))
+    credits = cited_all(_ar_credits, target)
+    if credits is None:
+        return _fail()
+    posted = sum(int(r["credit_minor"]) for r in credits)
     amount = expected - posted
     return (amount > 0), amount

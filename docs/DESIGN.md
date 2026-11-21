@@ -91,22 +91,26 @@ episode with reward -1. Integers wider than 64 bits are replaced by a placeholde
 trajectories (so a 5000-digit integer cannot break serialisation). Repeated ids in `affected_ids` / `evidence_ids`
 are accepted and compared as sets, so a repeat neither helps nor hurts.
 
-**Deployment recipe for a closed run.** Process isolation only works with a matching filesystem layout:
+**Deployment recipe for a closed run.** `python -m auditgym isolate` is the shipped closed-run harness:
 
-* the grader (server + harness) runs as its own user or container; `grader_data/` and the grader log directory are
-  mounted only there, never into the agent's container (the agent container gets no volume from the grader);
-* the agent runs as another user or container, without the grader's environment (the token lives only in the server's
-  environment) and reaches the harness only through the JSON-lines protocol;
+* the grader server (truth, token, grader reports) and the harness run as one user; the agent runs as a fresh
+  process per episode under a separate unprivileged uid with `no_new_privs`, an empty workdir, an environment rebuilt
+  from scratch (the token lives only in the server's environment) and no inherited descriptors, and reaches the harness
+  only through the JSON-lines agent protocol, whose lines can only become `step` actions;
+* `grader_data/`, the grader log directory and the episodes file are made unreadable to the agent uid for the run,
+  and a preflight probe running as that uid must fail to read them (fail closed); without root the command refuses
+  to run unless `--sandbox none` (no boundary) is requested explicitly;
 * **holdout truth is generated on the fly** from `(seed, config)` inside the grader process and is never stored;
   only the open `train` / `dev` truth is on disk, shipped on purpose, so a closed run must use the jury's own hidden
-  seeds. See the README for a `docker run` sketch.
+  seeds;
+* `isolate --self-test` runs a hostile probe agent (token hunting via `/proc`, grader paths, `/proc/<pid>/mem`,
+  server commands and malformed bytes over the action channel); `check` runs it as a hard check when it runs as root.
 
-This repository ships the single-machine harness (`check`, `run`); the container split is a documented recipe and has
-not been exercised against an adaptive attacker.
+Separate containers for grader and agent can be layered on top; the agent then needs only the pipe.
 
 Per-episode grader reports are written to `--log-dir` (the runner and `check` pass
 `reports/grader_logs/<policy>/`), including `errors` for an invalid submission and `ended_by`
-(`submit`, `steps`, `time`, `abandoned`).
+(`submit`, `steps`, `time`, `abandoned`, `agent_failed`, `closed`, `disconnected`).
 
 ## Reproducibility
 
@@ -197,26 +201,27 @@ These items were raised in review and deliberately not changed. Each says why.
 * **Open dev/train truth and provenance files are world-readable and sit in the same repo tree as agent code.** The
   brief makes dev/train open on purpose and ships `grader_data` for those splits. Holdout truth is generated on the
   fly and never stored. OS-level separation (a separate user or container for the grader, agent code without read
-  access to `grader_data/`) is a deployment matter. We document the recipe (README "Trust boundary and deployment", DESIGN "Deployment recipe") and do not
-  try to enforce it in code.
+  access to `grader_data/`) is enforced by `python -m auditgym isolate` (DESIGN "Deployment recipe"): under its
+  default sandbox the agent's uid cannot read `grader_data/` for the duration of the run. Plain `run` / `check` keep
+  the single-trust-domain layout.
 * **In-process policies share the harness interpreter.** A hostile policy run in the same Python process can reach
-  private attributes of the harness. Real isolation needs a separate process or container with a step-only pipe,
-  which is out of scope for this hackathon; the shipped server/client path is the boundary. The handle is hardened
+  private attributes of the harness. A hostile agent belongs in `python -m auditgym isolate` (separate process and
+  uid, step-only pipe); the in-process path is for trusted code. The handle is hardened
   cheaply, and the assumption is stated: in-process policies are trusted code.
 * **No wall-clock watchdog for blocked in-process `policy.act`.** Preempting arbitrary in-process Python without
   threads or signals is not reliable. A transport-level deadline is enforced in the server/client path where
   feasible; in the in-process path the time limit is cooperative.
-* **Every issue has exactly one evidence set; generated issues are single-id; no same-type, same-ids pairs.** The
-  brief does not require multiple sets or multi-id issues. The `payment_misallocation` minimal set adds a second set
-  where one genuinely exists. The remaining matcher paths are covered by synthetic matcher tests, not generated data.
+* **Generated issues are single-id; no same-type, same-ids pairs.** The brief does not require multi-id issues. Each
+  issue carries its canonical maximal evidence set plus the minimal set(s) where a smaller proof exists (for
+  `payment_misallocation` without a posted AR credit, one minimal set per candidate row). Every set must cite all
+  ledger rows the posted amount is summed from: `rules.check_evidence` rejects a citation that leaves one out. The
+  remaining matcher paths are covered by synthetic matcher tests, not generated data.
 * **Truncation on a clean book scores about +0.8, close to an honest empty submit.** This is what the brief mandates
   (truncation is scored as an empty answer: `2F1 - 1 - 0.002*steps`). Behaviour kept; a test pins it.
 * **Fixed-offset time zones only (no DST); company names can collide.** DST needs a timezone database for little
   gain, and truth correctness is unaffected. Name collisions are likewise harmless for truth.
 * **No hash-pinned requirements, no mypy/strict lint.** Optional hygiene with no bearing on the brief's criteria;
   only minimal CI and an optional ruff config are included.
-* **Duplicate JSON keys are not rejected.** The agent controls both copies, so there is no scoring gain, and the
-  brief does not require rejection.
 * **The oracle is grader-side regeneration, so the oracle paired check is partly self-consistent.** That is inherent to
   what an oracle is. It is cross-checked against the committed `grader_data` `truth.json` and by the non-oracle
   `careful_auditor` / `reconcile` invariance checks. Documented, not redesigned.
@@ -228,7 +233,7 @@ These items were raised in review and deliberately not changed. Each says why.
 
 <!-- RESULTS:BEGIN (generated by `python -m auditgym check --update-docs`; do not edit) -->
 
-Generated by the latest **full** `python -m auditgym check` run: 73 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1043 passed. Full per-check table: [docs/check_report.md](check_report.md).
+Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1070 passed. Full per-check table: [docs/check_report.md](check_report.md).
 
 
 #### Baseline policies (eval mode, holdout, remote env)
@@ -237,12 +242,12 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.08 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.09 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.08 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.08 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.952] | +0.949 | 26.4 | 0.09 |
-| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.09 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.10 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
+| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.12 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.
 

@@ -2,7 +2,7 @@
   "all_hard_checks_passed": true,
   "checks": [
     {
-      "detail": "1043 passed in 64.89s (0:01:04) (66.5s)",
+      "detail": "1070 passed in 102.77s (0:01:42) (104.9s)",
       "hard": true,
       "name": "pytest",
       "status": "PASS",
@@ -51,7 +51,7 @@
       "step": "2"
     },
     {
-      "detail": "6 episodes, python 3.11.15 on Darwin",
+      "detail": "6 episodes, python 3.13.18 on Linux",
       "hard": true,
       "name": "golden digests (tests/golden_hashes.json) match this machine (episodes, truth, trajectories)",
       "status": "PASS",
@@ -352,9 +352,16 @@
       "step": "6"
     },
     {
-      "detail": "2 logs, invalid-with-error=True, abandoned=1",
+      "detail": "3 logs, invalid-with-error=True, abandoned=1",
       "hard": true,
       "name": "grader log file written for the invalid submission and for an episode abandoned by re-reset",
+      "status": "PASS",
+      "step": "6"
+    },
+    {
+      "detail": "probe passed (separate uid, scrubbed env, grader paths unreadable)",
+      "hard": true,
+      "name": "isolated agent run: escape probe finds no token, grader file or protocol hole",
       "status": "PASS",
       "step": "6"
     },
@@ -542,14 +549,14 @@
   },
   "counts": {
     "FAIL": 0,
-    "PASS": 73,
+    "PASS": 74,
     "SKIP": 0,
     "WARN": 1
   },
-  "elapsed_s": 107.8,
+  "elapsed_s": 159.7,
   "env_version": "auditgym-1.0.0",
-  "platform": "macOS-26.5.1-arm64-arm-64bit",
-  "python": "3.11.15",
+  "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+  "python": "3.13.18",
   "quick": false,
   "sections": {
     "baselines": {
@@ -570,7 +577,7 @@
             "shared": 0.934,
             "steps": 34,
             "tp": 0,
-            "wall_s": 0.1014
+            "wall_s": 0.1444
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -587,7 +594,7 @@
             "shared": 0.942,
             "steps": 30,
             "tp": 0,
-            "wall_s": 0.0899
+            "wall_s": 0.1334
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -604,7 +611,7 @@
             "shared": 0.952,
             "steps": 25,
             "tp": 0,
-            "wall_s": 0.095
+            "wall_s": 0.1206
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -621,7 +628,7 @@
             "shared": 0.952,
             "steps": 25,
             "tp": 0,
-            "wall_s": 0.0892
+            "wall_s": 0.1113
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -638,7 +645,7 @@
             "shared": 0.956,
             "steps": 23,
             "tp": 0,
-            "wall_s": 0.0904
+            "wall_s": 0.1126
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -655,7 +662,7 @@
             "shared": 0.966,
             "steps": 18,
             "tp": 2,
-            "wall_s": 0.0816
+            "wall_s": 0.0985
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -672,7 +679,7 @@
             "shared": 0.954,
             "steps": 24,
             "tp": 2,
-            "wall_s": 0.0905
+            "wall_s": 0.1179
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -689,7 +696,7 @@
             "shared": 0.96,
             "steps": 21,
             "tp": 4,
-            "wall_s": 0.0844
+            "wall_s": 0.0998
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -706,7 +713,7 @@
             "shared": 0.946,
             "steps": 28,
             "tp": 7,
-            "wall_s": 0.095
+            "wall_s": 0.1152
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -723,7 +730,7 @@
             "shared": 0.946,
             "steps": 28,
             "tp": 8,
-            "wall_s": 0.0978
+            "wall_s": 0.1706
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -740,7 +747,7 @@
             "shared": 0.948,
             "steps": 27,
             "tp": 2,
-            "wall_s": 0.0843
+            "wall_s": 0.1049
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -757,7 +764,7 @@
             "shared": 0.956,
             "steps": 23,
             "tp": 3,
-            "wall_s": 0.0859
+            "wall_s": 0.1117
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -774,7 +781,7 @@
             "shared": 0.954,
             "steps": 24,
             "tp": 6,
-            "wall_s": 0.0882
+            "wall_s": 0.1576
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -791,7 +798,7 @@
             "shared": 0.942,
             "steps": 30,
             "tp": 3,
-            "wall_s": 0.0935
+            "wall_s": 0.1457
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -808,7 +815,7 @@
             "shared": 0.942,
             "steps": 30,
             "tp": 6,
-            "wall_s": 0.0926
+            "wall_s": 0.1105
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -825,7 +832,7 @@
             "shared": 0.946,
             "steps": 28,
             "tp": 6,
-            "wall_s": 0.0944
+            "wall_s": 0.1157
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -842,7 +849,7 @@
             "shared": 0.94,
             "steps": 31,
             "tp": 4,
-            "wall_s": 0.0925
+            "wall_s": 0.1127
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -859,7 +866,7 @@
             "shared": 0.948,
             "steps": 27,
             "tp": 4,
-            "wall_s": 0.0912
+            "wall_s": 0.1131
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -876,7 +883,7 @@
             "shared": 0.946,
             "steps": 28,
             "tp": 8,
-            "wall_s": 0.0952
+            "wall_s": 0.1196
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -893,7 +900,7 @@
             "shared": 0.952,
             "steps": 25,
             "tp": 6,
-            "wall_s": 0.0869
+            "wall_s": 0.1158
           }
         ],
         "careful_auditor_degraded": [
@@ -912,7 +919,7 @@
             "shared": -1.0,
             "steps": 21,
             "tp": 0,
-            "wall_s": 0.0971
+            "wall_s": 0.1158
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -929,7 +936,7 @@
             "shared": 0.96,
             "steps": 21,
             "tp": 0,
-            "wall_s": 0.0888
+            "wall_s": 0.1016
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -946,7 +953,7 @@
             "shared": -1.0,
             "steps": 21,
             "tp": 0,
-            "wall_s": 0.0942
+            "wall_s": 0.1183
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -963,7 +970,7 @@
             "shared": -1.0,
             "steps": 21,
             "tp": 0,
-            "wall_s": 0.0903
+            "wall_s": 0.1071
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -980,7 +987,7 @@
             "shared": -1.0,
             "steps": 21,
             "tp": 0,
-            "wall_s": 0.1007
+            "wall_s": 0.124
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -997,7 +1004,7 @@
             "shared": 0.299334,
             "steps": 18,
             "tp": 2,
-            "wall_s": 0.0834
+            "wall_s": 0.0948
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -1014,7 +1021,7 @@
             "shared": 0.56,
             "steps": 21,
             "tp": 2,
-            "wall_s": 0.0906
+            "wall_s": 0.1068
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -1031,7 +1038,7 @@
             "shared": 0.293334,
             "steps": 21,
             "tp": 3,
-            "wall_s": 0.0846
+            "wall_s": 0.1102
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -1048,7 +1055,7 @@
             "shared": 0.388572,
             "steps": 21,
             "tp": 5,
-            "wall_s": 0.0938
+            "wall_s": 0.118
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -1065,7 +1072,7 @@
             "shared": -0.373334,
             "steps": 21,
             "tp": 2,
-            "wall_s": 0.096
+            "wall_s": 0.1194
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -1082,7 +1089,7 @@
             "shared": 0.102858,
             "steps": 21,
             "tp": 2,
-            "wall_s": 0.0842
+            "wall_s": 0.0991
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -1099,7 +1106,7 @@
             "shared": 0.674286,
             "steps": 21,
             "tp": 3,
-            "wall_s": 0.0861
+            "wall_s": 0.1133
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -1116,7 +1123,7 @@
             "shared": 0.414546,
             "steps": 21,
             "tp": 4,
-            "wall_s": 0.0879
+            "wall_s": 0.1482
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -1133,7 +1140,7 @@
             "shared": 0.293334,
             "steps": 21,
             "tp": 2,
-            "wall_s": 0.0924
+            "wall_s": 0.1684
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -1150,7 +1157,7 @@
             "shared": 0.293334,
             "steps": 21,
             "tp": 3,
-            "wall_s": 0.0914
+            "wall_s": 0.1211
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -1167,7 +1174,7 @@
             "shared": 0.626666,
             "steps": 21,
             "tp": 5,
-            "wall_s": 0.0924
+            "wall_s": 0.1125
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -1184,7 +1191,7 @@
             "shared": -0.54,
             "steps": 21,
             "tp": 1,
-            "wall_s": 0.0911
+            "wall_s": 0.1149
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -1201,7 +1208,7 @@
             "shared": 0.16,
             "steps": 21,
             "tp": 3,
-            "wall_s": 0.0909
+            "wall_s": 0.1096
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -1218,7 +1225,7 @@
             "shared": 0.05091,
             "steps": 21,
             "tp": 3,
-            "wall_s": 0.0923
+            "wall_s": 0.114
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -1235,7 +1242,7 @@
             "shared": 0.388572,
             "steps": 21,
             "tp": 5,
-            "wall_s": 0.086
+            "wall_s": 0.1037
           }
         ],
         "flag_all": [
@@ -1254,7 +1261,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0892
+            "wall_s": 0.1214
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -1271,7 +1278,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0814
+            "wall_s": 0.1001
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -1288,7 +1295,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0948
+            "wall_s": 0.1469
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -1305,7 +1312,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0822
+            "wall_s": 0.122
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -1322,7 +1329,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0817
+            "wall_s": 0.1439
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -1339,7 +1346,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0767
+            "wall_s": 0.0879
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -1356,7 +1363,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0825
+            "wall_s": 0.0968
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -1373,7 +1380,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0778
+            "wall_s": 0.0918
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -1390,7 +1397,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0844
+            "wall_s": 0.0989
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -1407,7 +1414,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0873
+            "wall_s": 0.1063
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -1424,7 +1431,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0786
+            "wall_s": 0.0886
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -1441,7 +1448,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.078
+            "wall_s": 0.0885
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -1458,7 +1465,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0807
+            "wall_s": 0.0915
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -1475,7 +1482,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0833
+            "wall_s": 0.0934
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -1492,7 +1499,7 @@
             "shared": -0.898888,
             "steps": 6,
             "tp": 1,
-            "wall_s": 0.0837
+            "wall_s": 0.1073
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -1509,7 +1516,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0844
+            "wall_s": 0.1013
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -1526,7 +1533,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0827
+            "wall_s": 0.0989
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -1543,7 +1550,7 @@
             "shared": -0.892352,
             "steps": 6,
             "tp": 1,
-            "wall_s": 0.0839
+            "wall_s": 0.0938
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -1560,7 +1567,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0851
+            "wall_s": 0.0957
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -1577,7 +1584,7 @@
             "shared": -1.0,
             "steps": 6,
             "tp": 0,
-            "wall_s": 0.0801
+            "wall_s": 0.0923
           }
         ],
         "oracle": [
@@ -1596,7 +1603,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 0,
-            "wall_s": 0.0857
+            "wall_s": 0.1027
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -1613,7 +1620,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 0,
-            "wall_s": 0.0773
+            "wall_s": 0.0864
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -1630,7 +1637,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 0,
-            "wall_s": 0.0825
+            "wall_s": 0.0915
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -1647,7 +1654,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 0,
-            "wall_s": 0.077
+            "wall_s": 0.087
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -1664,7 +1671,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 0,
-            "wall_s": 0.0777
+            "wall_s": 0.0876
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -1681,7 +1688,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 2,
-            "wall_s": 0.0729
+            "wall_s": 0.0805
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -1698,7 +1705,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 2,
-            "wall_s": 0.0787
+            "wall_s": 0.089
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -1715,7 +1722,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 4,
-            "wall_s": 0.0747
+            "wall_s": 0.084
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -1732,7 +1739,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 7,
-            "wall_s": 0.0816
+            "wall_s": 0.1084
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -1749,7 +1756,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 8,
-            "wall_s": 0.0841
+            "wall_s": 0.127
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -1766,7 +1773,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 2,
-            "wall_s": 0.0741
+            "wall_s": 0.1045
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -1783,7 +1790,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 3,
-            "wall_s": 0.0752
+            "wall_s": 0.1263
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -1800,7 +1807,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 6,
-            "wall_s": 0.0772
+            "wall_s": 0.0912
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -1817,7 +1824,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 3,
-            "wall_s": 0.08
+            "wall_s": 0.0958
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -1834,7 +1841,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 6,
-            "wall_s": 0.0793
+            "wall_s": 0.0922
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -1851,7 +1858,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 6,
-            "wall_s": 0.0806
+            "wall_s": 0.0968
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -1868,7 +1875,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 4,
-            "wall_s": 0.0785
+            "wall_s": 0.1142
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -1885,7 +1892,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 4,
-            "wall_s": 0.0784
+            "wall_s": 0.1294
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -1902,7 +1909,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 8,
-            "wall_s": 0.0809
+            "wall_s": 0.0938
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -1919,7 +1926,7 @@
             "shared": 1.0,
             "steps": 1,
             "tp": 6,
-            "wall_s": 0.076
+            "wall_s": 0.1026
           }
         ],
         "random_explorer": [
@@ -1938,7 +1945,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0946
+            "wall_s": 0.18
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -1955,7 +1962,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0827
+            "wall_s": 0.1129
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -1972,7 +1979,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0882
+            "wall_s": 0.115
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -1989,7 +1996,7 @@
             "shared": 0.944,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0836
+            "wall_s": 0.1114
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -2006,7 +2013,7 @@
             "shared": 0.944,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0846
+            "wall_s": 0.1037
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -2023,7 +2030,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0789
+            "wall_s": 0.0943
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -2040,7 +2047,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0855
+            "wall_s": 0.1358
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -2057,7 +2064,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0799
+            "wall_s": 0.1055
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -2074,7 +2081,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0875
+            "wall_s": 0.1125
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -2091,7 +2098,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0898
+            "wall_s": 0.1067
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -2108,7 +2115,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0799
+            "wall_s": 0.1396
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -2125,7 +2132,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0816
+            "wall_s": 0.0954
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -2142,7 +2149,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0838
+            "wall_s": 0.1046
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -2159,7 +2166,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0858
+            "wall_s": 0.1033
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -2176,7 +2183,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0856
+            "wall_s": 0.0999
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -2193,7 +2200,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0865
+            "wall_s": 0.0987
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -2210,7 +2217,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0861
+            "wall_s": 0.0994
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -2227,7 +2234,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0845
+            "wall_s": 0.1088
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -2244,7 +2251,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0863
+            "wall_s": 0.1085
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -2261,7 +2268,7 @@
             "shared": -1.0,
             "steps": 29,
             "tp": 0,
-            "wall_s": 0.0831
+            "wall_s": 0.0999
           }
         ],
         "reconcile": [
@@ -2280,7 +2287,7 @@
             "shared": -1.0,
             "steps": 27,
             "tp": 0,
-            "wall_s": 0.101
+            "wall_s": 0.1299
           },
           {
             "episode_id": "ep_5bda0c9fdabf",
@@ -2297,7 +2304,7 @@
             "shared": -1.0,
             "steps": 22,
             "tp": 0,
-            "wall_s": 0.089
+            "wall_s": 0.1061
           },
           {
             "episode_id": "ep_836966e3c8fd",
@@ -2314,7 +2321,7 @@
             "shared": -1.0,
             "steps": 23,
             "tp": 0,
-            "wall_s": 0.0966
+            "wall_s": 0.1353
           },
           {
             "episode_id": "ep_f8e9936d6632",
@@ -2331,7 +2338,7 @@
             "shared": -1.0,
             "steps": 17,
             "tp": 0,
-            "wall_s": 0.0884
+            "wall_s": 0.1078
           },
           {
             "episode_id": "ep_c8a914bc20f6",
@@ -2348,7 +2355,7 @@
             "shared": -1.0,
             "steps": 20,
             "tp": 0,
-            "wall_s": 0.0897
+            "wall_s": 0.1548
           },
           {
             "episode_id": "ep_f3f0d1602e9c",
@@ -2365,7 +2372,7 @@
             "shared": -1.0,
             "steps": 16,
             "tp": 0,
-            "wall_s": 0.0809
+            "wall_s": 0.1095
           },
           {
             "episode_id": "ep_9388cc8497a4",
@@ -2382,7 +2389,7 @@
             "shared": -0.593556,
             "steps": 20,
             "tp": 2,
-            "wall_s": 0.0908
+            "wall_s": 0.1071
           },
           {
             "episode_id": "ep_8d62201e59c4",
@@ -2399,7 +2406,7 @@
             "shared": -1.0,
             "steps": 19,
             "tp": 0,
-            "wall_s": 0.0851
+            "wall_s": 0.1024
           },
           {
             "episode_id": "ep_12d26be6e808",
@@ -2416,7 +2423,7 @@
             "shared": -0.915,
             "steps": 21,
             "tp": 1,
-            "wall_s": 0.0938
+            "wall_s": 0.1137
           },
           {
             "episode_id": "ep_ff97231ecfda",
@@ -2433,7 +2440,7 @@
             "shared": -0.938736,
             "steps": 23,
             "tp": 1,
-            "wall_s": 0.0974
+            "wall_s": 0.1192
           },
           {
             "episode_id": "ep_1b218fe35c75",
@@ -2450,7 +2457,7 @@
             "shared": -0.756138,
             "steps": 17,
             "tp": 2,
-            "wall_s": 0.0836
+            "wall_s": 0.1131
           },
           {
             "episode_id": "ep_8e13c0d610d6",
@@ -2467,7 +2474,7 @@
             "shared": -0.758138,
             "steps": 18,
             "tp": 2,
-            "wall_s": 0.0851
+            "wall_s": 0.1343
           },
           {
             "episode_id": "ep_65698ba4889b",
@@ -2484,7 +2491,7 @@
             "shared": -0.589556,
             "steps": 18,
             "tp": 4,
-            "wall_s": 0.0905
+            "wall_s": 0.1334
           },
           {
             "episode_id": "ep_7af49413069f",
@@ -2501,7 +2508,7 @@
             "shared": -0.628206,
             "steps": 22,
             "tp": 3,
-            "wall_s": 0.0929
+            "wall_s": 0.1474
           },
           {
             "episode_id": "ep_77b9cefad61c",
@@ -2518,7 +2525,7 @@
             "shared": -0.312728,
             "steps": 21,
             "tp": 6,
-            "wall_s": 0.0917
+            "wall_s": 0.1175
           },
           {
             "episode_id": "ep_9b2e6bcf00e2",
@@ -2535,7 +2542,7 @@
             "shared": -0.932888,
             "steps": 23,
             "tp": 1,
-            "wall_s": 0.095
+            "wall_s": 0.1213
           },
           {
             "episode_id": "ep_72362a47cf1d",
@@ -2552,7 +2559,7 @@
             "shared": -0.642,
             "steps": 22,
             "tp": 3,
-            "wall_s": 0.0916
+            "wall_s": 0.1141
           },
           {
             "episode_id": "ep_6b4715864a64",
@@ -2569,7 +2576,7 @@
             "shared": -0.802706,
             "steps": 20,
             "tp": 2,
-            "wall_s": 0.09
+            "wall_s": 0.1097
           },
           {
             "episode_id": "ep_9b7521b3a14e",
@@ -2586,7 +2593,7 @@
             "shared": -0.72621,
             "steps": 22,
             "tp": 3,
-            "wall_s": 0.0936
+            "wall_s": 0.1281
           },
           {
             "episode_id": "ep_e380e37ff0ea",
@@ -2603,7 +2610,7 @@
             "shared": -0.545152,
             "steps": 16,
             "tp": 4,
-            "wall_s": 0.0857
+            "wall_s": 0.1293
           }
         ]
       },
@@ -2625,26 +2632,26 @@
             -0.514
           ],
           "steps": 29.0,
-          "wall_s": 0.084925
+          "wall_s": 0.111795
         },
         {
-          "experimental": -0.7908345000000001,
+          "experimental": -0.7908345,
           "f1": [
-            0.10897465000000002,
+            0.10897464999999999,
             0.06346125,
-            0.15487275000000003
+            0.15487275
           ],
           "n": 20,
           "policy": "reconcile",
           "precision": 0.06640625,
           "recall": 0.4788732394366197,
           "shared": [
-            -0.8070507000000001,
+            -0.8070506999999999,
             -0.8909663,
             -0.721345
           ],
           "steps": 20.35,
-          "wall_s": 0.09061999999999999
+          "wall_s": 0.1217
         },
         {
           "experimental": -0.9839374,
@@ -2663,7 +2670,7 @@
             -0.9740684
           ],
           "steps": 6.0,
-          "wall_s": 0.082925
+          "wall_s": 0.103365
         },
         {
           "experimental": 1.0,
@@ -2682,7 +2689,7 @@
             1.0
           ],
           "steps": 1.0,
-          "wall_s": 0.07862000000000001
+          "wall_s": 0.099545
         },
         {
           "experimental": 0.9490999999999999,
@@ -2697,30 +2704,30 @@
           "recall": 1.0,
           "shared": [
             0.9490999999999999,
-            0.9456000000000001,
-            0.9524999999999999
+            0.9456,
+            0.9525
           ],
           "steps": 26.45,
-          "wall_s": 0.090995
+          "wall_s": 0.12158
         },
         {
           "experimental": 0.029620250000000004,
           "f1": [
             0.5306603,
-            0.39020580000000005,
-            0.6629655000000001
+            0.3902058,
+            0.6629655
           ],
           "n": 20,
           "policy": "careful_auditor_degraded (extra)",
           "precision": 0.569620253164557,
           "recall": 0.6338028169014085,
           "shared": [
-            0.02962059999999998,
+            0.029620599999999997,
             -0.24604940000000003,
             0.2900431
           ],
           "steps": 20.85,
-          "wall_s": 0.09071000000000001
+          "wall_s": 0.11604
         }
       ]
     },
@@ -3194,8 +3201,8 @@
     "golden": {
       "episodes": 6,
       "match": true,
-      "platform": "macOS-26.5.1-arm64-arm-64bit",
-      "python": "3.11.15"
+      "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+      "python": "3.13.18"
     },
     "holdout": {
       "classes": {
@@ -4550,19 +4557,19 @@
       "tail": [
         "........................................................................ [ 13%]",
         "........................................................................ [ 20%]",
-        "........................................................................ [ 27%]",
-        "........................................................................ [ 34%]",
-        "........................................................................ [ 41%]",
-        "........................................................................ [ 48%]",
-        "........................................................................ [ 55%]",
-        "........................................................................ [ 62%]",
-        "........................................................................ [ 69%]",
-        "........................................................................ [ 75%]",
-        "........................................................................ [ 82%]",
-        "........................................................................ [ 89%]",
-        "........................................................................ [ 96%]",
-        "...................................                                      [100%]",
-        "1043 passed in 64.89s (0:01:04)"
+        "........................................................................ [ 26%]",
+        "........................................................................ [ 33%]",
+        "........................................................................ [ 40%]",
+        "........................................................................ [ 47%]",
+        "........................................................................ [ 53%]",
+        "........................................................................ [ 60%]",
+        "........................................................................ [ 67%]",
+        "........................................................................ [ 74%]",
+        "........................................................................ [ 80%]",
+        "........................................................................ [ 87%]",
+        "........................................................................ [ 94%]",
+        "..............................................................           [100%]",
+        "1070 passed in 102.77s (0:01:42)"
       ]
     },
     "reproducibility": {

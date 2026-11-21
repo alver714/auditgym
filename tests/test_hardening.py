@@ -416,7 +416,7 @@ def test_server_without_token_subprocess_fails_closed_and_insecure_open_is_expli
                            input='{"cmd":"reset","seed":1,"config":"train"}\n'
                                  '{"cmd":"reset","seed":2,"config":"train"}\n{"cmd":"close"}\n')
         return [json.loads(x)["ok"] for x in p.stdout.splitlines()]
-    assert run() == [False, False, True]
+    assert run() == [False, False, False]          # close is a harness command too; the server stops at EOF
     assert run("--insecure-open") == [True, True, True]
 
 

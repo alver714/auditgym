@@ -1,15 +1,15 @@
 # AuditGym check report
 
-- env_version: `auditgym-1.0.0`  python: `3.11.15`  platform: `Darwin`  mode: `full`
+- env_version: `auditgym-1.0.0`  python: `3.13.18`  platform: `Linux`  mode: `full`
 - configs: `dev` dev@1.3.0 (hash `fb29dd57ab25`), `holdout` holdout@1.3.0 (hash `3396914da9dc`), `train` train@1.3.0 (hash `b0cdce3de8ea`)
-- result: **PASS**  (73 pass, 0 fail, 1 warn, 0 skip)
+- result: **PASS**  (74 pass, 0 fail, 1 warn, 0 skip)
 
 
 ## Step 1
 
 | status | check | detail |
 |---|---|---|
-| PASS | pytest | 1043 passed in 64.89s (0:01:04) (66.5s) |
+| PASS | pytest | 1070 passed in 102.77s (0:01:42) (104.9s) |
 
 ## Step 2
 
@@ -21,7 +21,7 @@
 | PASS | dev: matches committed episodes/dev/ | 10 compared, 0 not committed |
 | PASS | every shipped config has config_id, config_version and a resolvable config_hash | dev@1.3.0, holdout@1.3.0, train@1.3.0 |
 | PASS | configs lock (CONFIG_VERSIONS.json) binds every config_id@config_version to its content hash (no content change without a version bump) | 3 configs locked |
-| PASS | golden digests (tests/golden_hashes.json) match this machine (episodes, truth, trajectories) | 6 episodes, python 3.11.15 on Darwin |
+| PASS | golden digests (tests/golden_hashes.json) match this machine (episodes, truth, trajectories) | 6 episodes, python 3.13.18 on Linux |
 | PASS | every shipped trajectory row conforms to schemas/trajectory_row.schema.json | 2211 rows in 3 files |
 | PASS | oracle rows are in oracle_reference.jsonl (labelled), not mixed into trajectories.jsonl | trajectories.jsonl policies ['careful_auditor', 'careful_auditor_degraded', 'flag_all', 'random_explorer', 'reconcile'] |
 | PASS | samples.jsonl has an eval-mode run (reward hidden) and truncated=true runs (steps and wall clock) | truncated by ['steps', 'time'], eval-mode samples 1 |
@@ -84,7 +84,8 @@
 | PASS | reset and grader_report are harness-only: refused without the control token | refused=[True, True] |
 | PASS | a deeply nested action gives a bounded invalid_args error, consumes one step, keeps the run alive | code=invalid_args, next step=2 |
 | PASS | submit without args.findings: ends the episode; eval shows no error (validity is not leaked), grader log has reward -1 and the reason | terminated=True, grader reward -1.0 |
-| PASS | grader log file written for the invalid submission and for an episode abandoned by re-reset | 2 logs, invalid-with-error=True, abandoned=1 |
+| PASS | grader log file written for the invalid submission and for an episode abandoned by re-reset | 3 logs, invalid-with-error=True, abandoned=1 |
+| PASS | isolated agent run: escape probe finds no token, grader file or protocol hole | probe passed (separate uid, scrubbed env, grader paths unreadable) |
 
 ## Step 7
 
@@ -120,12 +121,12 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.08 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.09 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.08 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.08 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.952] | +0.949 | 26.4 | 0.09 |
-| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.09 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.10 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
+| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.12 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.
 

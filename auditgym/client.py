@@ -113,6 +113,11 @@ class RemoteAuditEnv:
     def grader_report(self) -> dict:
         return self._call({"cmd": "grader_report", "token": self._token})["report"]
 
+    def abandon(self) -> None:
+        """Harness: score the running episode as truncated/empty (ended_by=agent_failed) and log it, e.g.
+        because the agent process died or timed out. The grader report is then available as usual."""
+        self._call({"cmd": "abandon", "token": self._token})
+
     def agent_handle(self) -> "AgentHandle":
         """What a policy may hold: `step` only (no reset, no grader report, no token, no env attribute).
         See AgentHandle: closures are introspectable, so this is hygiene; process isolation is the boundary."""
@@ -125,7 +130,7 @@ class RemoteAuditEnv:
         try:
             if p.poll() is None and p.stdin is not None:
                 try:
-                    p.stdin.write('{"cmd":"close"}\n')
+                    p.stdin.write(json.dumps({"cmd": "close", "token": self._token}) + "\n")
                     p.stdin.flush()
                 except (BrokenPipeError, OSError):
                     pass

@@ -102,11 +102,16 @@ server only through `step`.
 
 What the server enforces:
 
-* `step` is the only agent command. `reset` (seed / config / options) and `grader_report` are harness commands
-  that the server refuses without the per-process random token (`AUDITGYM_CONTROL_TOKEN`), which only
-  `RemoteAuditEnv` holds; with no token configured they are refused outright (`--insecure-open` exists for local
-  experiments only). File paths (`episode_dir`, `grader_dir`) are never accepted over the wire.
-* A re-reset mid-episode is scored as an empty truncated answer and logged.
+* `step` is the only agent command. `reset` (seed / config / options), `grader_report`, `abandon` and `close` are
+  harness commands that the server refuses without the per-process random token (`AUDITGYM_CONTROL_TOKEN`), which
+  only `RemoteAuditEnv` holds; with no token configured they are refused outright (`--insecure-open` exists for
+  local experiments only). File paths (`episode_dir`, `grader_dir`) are never accepted over the wire.
+* No request can stop the server: a malformed token (non-string, over-long, lone surrogate such as `"\ud800"`),
+  invalid UTF-8, duplicate JSON keys and garbage lines all get a bounded `{"ok": false}` reply. Only an authorised
+  `close` or end of input ends the loop.
+* An unfinished episode is never silently dropped: a re-reset (`ended_by=abandoned`), an `abandon` by the harness
+  after an agent failure (`agent_failed`), an authorised `close` (`closed`) or a lost connection (`disconnected`)
+  scores it as an empty truncated answer and logs the grader report.
 * Malformed `submit` payloads (missing/non-object `args`, extra keys, bad findings, absurd nesting, claimed amounts
   outside `0..10**18`, lone surrogates) end the episode with reward -1. Deeply nested or huge actions give a
   bounded `invalid_args` error; integers wider than 64 bits are replaced by a placeholder in logs and
@@ -118,38 +123,55 @@ What the server enforces:
 * In `eval` mode the terminal reward returned to the policy is `0.0` and `info` is `{}`; the real result is kept
   grader-side (see "Reproducibility and trajectory format").
 
-**Recipe for a closed (jury) run.** Isolation is only as good as the filesystem layout around the server. The
-grader and the agent must not share a user or a container, and the private data must exist only on the grader
-side:
+**Closed (jury) run: `python -m auditgym isolate`.** One command starts the three parties as separate processes:
 
-1. Hidden seeds and configs are chosen by the jury (see the caveat under Results). Holdout truth is **never
-   written to disk**: the server generates the episode on the fly from `(seed, config)` and keeps truth in memory;
-   only the public records go to the agent through observations.
-2. The grader process (`python -m auditgym.server --mode eval --log-dir /grader/logs`, started by the harness
-   through `RemoteAuditEnv`) runs as its own user or container. `grader_data/` (the truth of the OPEN splits) and the
-   log directory are mounted **only** into that container, read-only for everything else, and never into the
-   agent's container. Open-split truth is not secret by design (it ships in this repo), but a closed run must not
-   put any other truth on the agent's filesystem.
-3. The agent runs as a different user or container, with no access to the grader's filesystem or environment
-   (the control token travels only in the server's environment), and talks to the harness through the
-   JSON-lines protocol.
-4. The harness (the process that owns `RemoteAuditEnv`) is the only holder of the token: it calls `reset`, relays
-   the agent's `step` actions and reads `grader_report` after the episode ended.
-
-A sketch with Docker (grader container holds the data, the agent container gets nothing but a pipe to the
-harness; the `harness.py` driver is yours, it uses `auditgym.client.RemoteAuditEnv`):
-
-```bash
-# grader + harness side: code, configs and open truth are inside the image; logs go to a grader-only volume
-docker run --rm --network none --user 10001:10001 \
-  -v grader_logs:/app/reports/grader_logs \
-  auditgym python harness.py --seeds-file /secrets/hidden_seeds.json
-# agent side: a separate container, no volume from the grader, talks to the harness over stdio / a socket
-docker run --rm --network none --user 10002:10002 my_agent_image
+```
+grader server  <-- JSON lines + control token -->  harness  <-- observations / actions only -->  agent
+(truth, token, grader reports)                     (this process)                                 (own uid, per episode)
 ```
 
-This repository ships the single-machine, same-trust-domain harness (`check`, `run`); the container split above is
-the documented deployment, and it has not been exercised against an adaptive attacker (see Limitations).
+```bash
+# inside the image (runs as root, so the agent can get its own uid); --network none keeps everything offline
+docker run --rm --network none -v "$PWD/secrets:/secrets:ro" -v "$PWD/my_agent:/agent:ro" auditgym \
+  python -m auditgym isolate --agent "python3 /agent/agent.py" --episodes /secrets/hidden_seeds.json \
+                             --log-dir /app/reports/isolated_logs
+python -m auditgym isolate --policy careful_auditor --split dev      # a built-in policy as the isolated agent
+python -m auditgym isolate --self-test                               # hostile probe agent; exit 1 on any leak
+```
+
+* **Agent protocol.** The agent reads `{"type":"observation","obs":..,"reward":..,"terminated":..,"truncated":..,
+  "info":..}` lines on stdin and answers each with one `{"action": {...}}` line on stdout. The harness builds every
+  server message itself, so a line can only ever become the `action` of a `step`: `{"cmd":"close"}`, a forged
+  token or invalid bytes from the agent are answered as an invalid action of the same episode. An agent that exits,
+  stays silent longer than `--step-timeout` or sends a line longer than 1 MB is killed; its episode is scored empty
+  (`ended_by=agent_failed`) and logged.
+* **Sandbox `uid` (default; needs root, e.g. the Docker image).** A fresh agent process per episode runs under a
+  separate unprivileged uid/gid (default 65534, use a dedicated one) with no supplementary groups and
+  `no_new_privs`, in its own session, in an empty temporary working directory, with an environment rebuilt from
+  scratch (no token, no harness variables) and no inherited file descriptors. The grader log directory, the episodes
+  file and `grader_data/` are made unreadable to it for the run (mode 0700, restored afterwards), and a preflight
+  probe running **as the agent uid** must fail to read each of them, otherwise the run is refused. The server and
+  harness run as another user, so the kernel denies the agent their `/proc/<pid>/environ`, `/proc/<pid>/mem` and
+  ptrace. After each episode every process of the agent uid is killed and the workdir is deleted. `--no-network`
+  additionally gives the agent an empty network namespace (refused if unavailable).
+* **Fail closed.** Without root, `--sandbox auto` refuses to run; `--sandbox none` (process split and scrubbed
+  environment only, the agent runs as the harness user) must be asked for explicitly and every summary records
+  `isolation_boundary: false`. The self-test demonstrates the difference: under `uid` the probe finds nothing, under
+  `none` it reads the control token from the grader's `/proc/<pid>/environ` and the grader files.
+* **Self-test.** `isolate --self-test` runs `auditgym/agents/escape_probe.py`, an agent that hunts for the token (own
+  environment, every `/proc/<pid>/environ`), opens the grader's `/proc/<pid>/mem`, reads and writes the grader paths
+  it finds in the (world-readable) process command lines and next to its own script, looks for inherited file
+  descriptors and for a seed in the observations, and sends server commands, invalid UTF-8 and duplicate keys over
+  the action channel. It passes only if nothing leaks, the episode survives every hostile line and ends with the
+  probe's own `submit`. `check` runs it as a hard check when it runs as root (otherwise it is a SKIP).
+* Holdout truth is **never written to disk**: the server generates each episode from `(seed, config)` in memory, so
+  the files worth protecting are the jury's episodes file and the grader logs. Results land in
+  `<log-dir>/isolated_summary.json`, grader reports in `<log-dir>/report_*.json`, agent stderr in
+  `<log-dir>/agent_stderr/`.
+
+This is process-level isolation on one kernel, not a VM: a kernel exploit, a world-readable copy of private data
+elsewhere on the host or an agent uid shared with other processes are out of scope. Splitting grader and agent into
+separate containers on top of this is still possible (the agent then only needs the JSON-lines pipe).
 
 ## Findings schema / Схема находок
 
@@ -277,7 +299,7 @@ mode, remote grader. The `careful_auditor` row is an extra diagnostic policy, no
 
 <!-- RESULTS:BEGIN (generated by `python -m auditgym check --update-docs`; do not edit) -->
 
-Generated by the latest **full** `python -m auditgym check` run: 73 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1043 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
+Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1070 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
 
 
 #### Baseline policies (eval mode, holdout, remote env)
@@ -286,12 +308,12 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.08 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.09 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.08 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.08 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.952] | +0.949 | 26.4 | 0.09 |
-| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.09 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.10 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
+| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.12 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.
 
@@ -445,26 +467,28 @@ These items were raised in review and deliberately not changed. Each says why.
 * **Open dev/train truth and provenance files are world-readable and sit in the same repo tree as agent code.** The
   brief makes dev/train open on purpose and ships `grader_data` for those splits. Holdout truth is generated on the
   fly and never stored. OS-level separation (a separate user or container for the grader, agent code without read
-  access to `grader_data/`) is a deployment matter. We document the recipe (README "Trust boundary and deployment", DESIGN "Deployment recipe") and do not
-  try to enforce it in code.
+  access to `grader_data/`) is enforced by `python -m auditgym isolate` (README "Trust boundary and deployment"):
+  under its default sandbox the agent's uid cannot read `grader_data/` for the duration of the run. Plain `run` /
+  `check` keep the single-trust-domain layout.
 * **In-process policies share the harness interpreter.** A hostile policy run in the same Python process can reach
-  private attributes of the harness. Real isolation needs a separate process or container with a step-only pipe,
-  which is out of scope for this hackathon; the shipped server/client path is the boundary. The handle is hardened
+  private attributes of the harness. A hostile agent belongs in `python -m auditgym isolate` (separate process and
+  uid, step-only pipe); the in-process path is for trusted code. The handle is hardened
   cheaply, and the assumption is stated: in-process policies are trusted code.
 * **No wall-clock watchdog for blocked in-process `policy.act`.** Preempting arbitrary in-process Python without
   threads or signals is not reliable. A transport-level deadline is enforced in the server/client path where
   feasible; in the in-process path the time limit is cooperative.
-* **Every issue has exactly one evidence set; generated issues are single-id; no same-type, same-ids pairs.** The
-  brief does not require multiple sets or multi-id issues. The `payment_misallocation` minimal set adds a second set
-  where one genuinely exists. The remaining matcher paths are covered by synthetic matcher tests, not generated data.
+* **Generated issues are single-id; no same-type, same-ids pairs.** The brief does not require multi-id issues. Each
+  issue carries its canonical maximal evidence set plus the minimal set(s) where a smaller proof exists (for
+  `payment_misallocation` without a posted AR credit, one minimal set per candidate row). Every set must cite all
+  ledger rows the posted amount is summed from: `rules.check_evidence` rejects a citation that leaves one out
+  (it would otherwise recompute a different amount). The remaining matcher paths are covered by synthetic matcher
+  tests, not generated data.
 * **Truncation on a clean book scores about +0.8, close to an honest empty submit.** This is what the brief mandates
   (truncation is scored as an empty answer: `2F1 - 1 - 0.002*steps`). Behaviour kept; a test pins it.
 * **Fixed-offset time zones only (no DST); company names can collide.** DST needs a timezone database for little
   gain, and truth correctness is unaffected. Name collisions are likewise harmless for truth.
 * **No hash-pinned requirements, no mypy/strict lint.** Optional hygiene with no bearing on the brief's criteria;
   only minimal CI and an optional ruff config are included.
-* **Duplicate JSON keys are not rejected.** The agent controls both copies, so there is no scoring gain, and the
-  brief does not require rejection.
 * **The oracle is grader-side regeneration, so the oracle paired check is partly self-consistent.** That is inherent to
   what an oracle is. It is cross-checked against the committed `grader_data` `truth.json` and by the non-oracle
   `careful_auditor` / `reconcile` invariance checks. Documented, not redesigned.

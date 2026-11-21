@@ -12,6 +12,28 @@ Two version numbers matter and move independently:
 Generator output is a function of `(seed, config, ENV_VERSION)`; a generator change that alters output therefore
 comes with a config bump and a regenerated `episodes/`, `grader_data/`, `trajectories/` and `tests/golden_hashes.json`.
 
+## Harness and grader hardening (no ENV_VERSION or config change)
+
+Nothing below alters generated data, the matcher, the reward or the action interface.
+
+* Server: a malformed control token (lone surrogate such as `"\ud800"`, non-string, over-long) is refused like a wrong
+  one instead of crashing the process with `UnicodeEncodeError`; invalid UTF-8 on stdin and any unexpected exception
+  in a handler get a bounded `{"ok": false}` reply. Only an authorised `close` or end of input ends the loop.
+* Server: `close` is a harness command (token required), and so is the new `abandon` (the harness scores a running
+  episode empty after an agent failure). An episode still running when the server stops is scored as an empty
+  truncated answer and its grader report is logged (`ended_by` = `closed` / `disconnected` / `agent_failed`).
+* New `python -m auditgym isolate`: grader, harness and agent as separate processes, the agent under its own uid with
+  a scrubbed environment, an empty workdir and the grader paths made unreadable (verified by a preflight probe as the
+  agent uid, fail closed); `--self-test` runs a hostile escape-probe agent. `check` runs the self-test as a hard check
+  when it runs as root.
+* `check`: a missing pytest or an empty `tests/` is a FAIL, not a SKIP; `--allow-skip-tests` is the explicit opt-out
+  (and never updates the docs).
+* `rules.check_evidence` (the independent verifier used by `validate` and the tests, not by the scorer) requires
+  every ledger row the posted amount is summed from; a citation that omits one is rejected instead of yielding a
+  different amount. All generated evidence sets already satisfy this.
+* README / DESIGN: the closed-run recipe is now the `isolate` command; removed the outdated statements that duplicate
+  JSON keys are accepted (the server rejects them) and that every issue has exactly one evidence set.
+
 ## Config 1.3.0 (current; `train`, `dev`, `holdout`)
 
 Cumulative summary of the generator and config changes since 1.0.0. Only 1.3.0 is shipped and locked; the
