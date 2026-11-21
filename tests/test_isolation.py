@@ -442,3 +442,14 @@ def test_protect_closes_a_traversable_but_unlistable_directory():
     finally:
         sb.restore()
     assert os.stat(d).st_mode & 0o777 == 0o711
+
+
+# ------------------------------------------------------------------ 7. defense demo
+def test_story_demo_runs_and_its_rerun_is_identical():
+    p = subprocess.run([sys.executable, "-m", "auditgym", "demo", "--story"], cwd=ROOT, capture_output=True, text=True,
+                       timeout=300, env=dict(os.environ, PYTHONPATH=ROOT, PYTHONDONTWRITEBYTECODE="1"))
+    assert p.returncode == 0, p.stdout[-2000:] + p.stderr
+    out = p.stdout
+    assert "1. CLEAN COMPANY" in out and "F1=1.000" in out
+    assert "truth-like keys in any observation: none" in out and "-> IDENTICAL" in out
+    assert "flag_all" in out and "false positives" in out

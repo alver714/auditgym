@@ -27,7 +27,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt && .venv/
 requirements-dev.txt`, or the `docker build` step). After that `run`, `check`, `demo` and `generate` are fully
 offline (`docker run --network none` is the recorded way). Expected runtime, measured on a laptop-class
 CPU: about 80 s for `check --quick` and about 110 s for the full `check` (both include the pytest suite; the
-Linux/Docker run, about 112 s, is recorded in `docs/docker_check_result.md`; slower machines scale roughly linearly). The `wall s` column of the
+full Linux/x86-64 Docker run, about 230 s as root with every isolation test active, is recorded in
+`docs/docker_check_result.md`; slower machines scale roughly linearly). The `wall s` column of the
 Results table is the scripted policy's own time per episode (tens of milliseconds), not the check's runtime and
 not LLM latency.
 
@@ -43,10 +44,12 @@ Continuous integration (`.github/workflows/ci.yml`) runs `python -m auditgym che
 | Command | EN | RU |
 |---|---|---|
 | `python -m auditgym generate` | Write `episodes/{train,dev}/`, private `grader_data/`, and `trajectories/{trajectories,oracle_reference,samples}.jsonl` (see "Reproducibility and trajectory format") | Записать эпизоды, приватные данные грейдера и траектории |
-| `python -m auditgym check [--quick] [--out reports/] [--update-docs]` | Tests, reproducibility, validation, schemas, baselines, paired checks, isolation and leak scan, reward properties, failure analysis; writes `reports/check_report.{json,md}` and per-episode grader logs in `reports/grader_logs/<policy>/`. `--update-docs` (full run only) regenerates the results blocks below and `docs/check_report.*` | Тесты, воспроизводимость, валидация, схемы, базовые политики, парные проверки, изоляция, скан утечек, свойства награды, анализ ошибок |
+| `python -m auditgym check [--quick] [--out reports/] [--update-docs] [--allow-skip-tests]` | Tests, reproducibility, validation, schemas, baselines, paired checks, isolation and leak scan, reward properties, failure analysis; writes `reports/check_report.{json,md}` and per-episode grader logs in `reports/grader_logs/<policy>/`. `--update-docs` (full run only) regenerates the results blocks below and `docs/check_report.*` | Тесты, воспроизводимость, валидация, схемы, базовые политики, парные проверки, изоляция, скан утечек, свойства награды, анализ ошибок |
 | `python -m auditgym run --policy P --seed N --config C [--mode eval\|train] [--pretty] [--deterministic] [--rename-salt N --rename-mode shape\|aggressive --permute-salt M] [--log-dir D]` | Run ONE policy (any of the 4 baselines, `careful_auditor` or `careful_auditor_degraded`) on ONE episode through the subprocess grader. Prints the grader report as JSON, or with `--pretty` the same readable step log as `demo`. `--deterministic` runs in-process with the wall clock frozen | Один эпизод одной политикой; `--pretty` даёт читаемый лог |
 | `python -m auditgym demo [--policy P] [--contrast Q\|none] [--seed N --config C] [--index I]` | Default: `careful_auditor` on the first dev episode with a readable step log, then `reconcile` on the same episode for contrast (what the naive baseline misses). `--seed/--config` pick any episode (config name or path to a JSON file) | Сначала сильная политика, затем наивная для контраста |
+| `python -m auditgym demo --story [--seed N]` | Defense walk-through in eval mode, about 100 lines: a clean company (no findings, F1 = 1), a company with 4 plain issues and both interaction scenarios (findings with the evidence ids they cite, matched against the truth grader-side), `flag_all` and `reconcile` on the same episode (false accusations and misses cost reward), then a check that no observation carries truth-like keys and that a rerun gives the identical trajectory hash and reward. Exit code 1 if either fails | Демо для защиты: чистая компания, взаимодействующие ошибки, доказательства, оценка, ложные обвинения, идентичный повтор |
 | `python -m auditgym golden [--write]` | Compare (or rewrite) the committed cross-platform digests in `tests/golden_hashes.json` | Сверка эталонных хэшей |
+| `python -m auditgym isolate (--agent CMD \| --policy P \| --self-test) [--episodes FILE\|- \| --split S] [--log-dir D]` | Closed run: grader, harness and agent as separate processes, the agent under its own uid (needs root, e.g. the Docker image). `--self-test` runs a hostile escape-probe agent. See "Trust boundary and deployment" | Закрытый запуск агента под отдельным uid; `--self-test` проверяет изоляцию |
 
 Makefile shortcuts: `make check | quick | test | generate | demo | docker`.
 
@@ -250,7 +253,8 @@ real result. An experimental soft-F1 reward is reported separately and never rep
   provenance sha256, sha256 of the `reconcile` and `careful_auditor` trajectories) for six episodes (train, dev,
   holdout). `test_golden_hashes_match_this_machine` and `check` (step 2) compare them on whatever OS/CPU/Python
   runs the suite; `python -m auditgym golden --write` regenerates them after an intended change. A recorded
-  Docker/Linux run of the full `check` (digests committed from macOS match) is in `docs/docker_check_result.md`.
+  Docker/Linux run of the full `check` (digests committed from macOS/arm64 match on Linux x86-64 and aarch64) is in
+  `docs/docker_check_result.md`.
 * **Id-format independence.** `check` pairs every holdout episode with two transformed twins: `shape`
   (ids keep prefix/length/charset) and `aggressive` (every opaque id replaced by a numeric-only or `z`+hex id of
   different length and sort order, e.g. `INV-2026-0042` -> `70419283356` / `z5d314310cf0`). The rename is a pure
@@ -315,7 +319,7 @@ mode, remote grader. The `careful_auditor` row is an extra diagnostic policy, no
 
 <!-- RESULTS:BEGIN (generated by `python -m auditgym check --update-docs`; do not edit) -->
 
-Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1078 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
+Generated by the latest **full** `python -m auditgym check` run: 74 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1079 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
 
 
 #### Baseline policies (eval mode, holdout, remote env)
@@ -324,12 +328,12 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.10 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
-| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.12 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.12 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.14 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.12 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.11 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.14 |
+| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.13 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.
 
@@ -453,9 +457,11 @@ trajectory (careful_auditor) next to the four baselines on the 20 open episodes.
   but it is **not hard for a scripted solver that knows the policy**: the benchmark's headroom is for agents
   that must discover the rules, not for a programmed one. The reward separates careful work from naive
   heuristics by about 1.7 shared-return points.
-* **Period errors have one direction.** `period_cutoff` is always "invoice issued after period end, posted
-  inside the period". There is no prior-period invoice, no in-period invoice missing from the ledger and no
-  late posting variant (records outside the period never appear in the ledger by construction).
+* **Period errors are two-directional, but only about posting inside the period.** `period_cutoff` covers an
+  invoice issued after `period_end` (including date strings that still show the last day and exactly
+  `period_end + 1 s`) and the mirror case of an invoice issued before `period_start` (including exactly
+  `period_start - 1 s`), in both cases posted inside the period. There is no in-period invoice missing from the
+  ledger and no late posting variant (records outside the period never appear in the ledger by construction).
 * Foreign-currency `overpayment_refund` distractors leave a small base-currency residual in
   `2300_unapplied_cash` (refund booked at the refund-date rate, excess at the payment-date rate, no
   `7900_fx_gain_loss` row). This is policy-conformant and stated in the policy text; it is not an error.

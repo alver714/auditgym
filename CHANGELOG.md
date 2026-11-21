@@ -40,6 +40,12 @@ Nothing below alters generated data, the matcher, the reward or the action inter
   not a known file inside), so `protect` closes such directories too. New CI job
   `isolation-docker` runs `scripts/docker_isolation_check.sh` (isolation tests, self-test and the README commands)
   as root inside the Python 3.11 image with `--network none`.
+* New `python -m auditgym demo --story`: defense walk-through (clean book, interacting errors, cited evidence, score,
+  false accusations, truth never in observations, identical rerun); exit code 1 if the last two checks fail.
+* README: `period_cutoff` described as two-directional (issued after `period_end` or before `period_start`, posted
+  inside the period), matching DESIGN, SPEC and the generator; commands table lists `isolate`, `demo --story` and
+  `check --allow-skip-tests`. `docs/docker_check_result.md` records a full `check` in the image on Linux/x86-64
+  (golden digests match; previously only arm64 was recorded).
 * README / DESIGN: the closed-run recipe is now the `isolate` command; removed the outdated statements that duplicate
   JSON keys are accepted (the server rejects them) and that every issue has exactly one evidence set.
 

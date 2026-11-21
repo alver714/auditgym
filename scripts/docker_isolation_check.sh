@@ -8,8 +8,8 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 run() { docker run --rm --network none "$@"; }
 
-echo "== python version in the image"
-run "$IMG" python -c 'import sys; print(sys.version); assert sys.version_info[:2] == (3, 11)'
+echo "== python version and machine architecture in the image"
+run "$IMG" python -c 'import platform, sys; print(sys.version, platform.machine()); assert sys.version_info[:2] == (3, 11)'
 
 echo "== isolation tests (uid sandbox, not skipped: root inside the container)"
 run "$IMG" python -m pytest -q -p no:cacheprovider -rs tests/test_isolation.py | tee "$WORK/pytest.txt"

@@ -199,8 +199,65 @@ def format_contrast(main: dict, other: dict, seed: int, config) -> str:
     return "\n".join(L)
 
 
+def _find_keys(obj, keys: set) -> set:
+    if isinstance(obj, dict):
+        return (keys & set(obj)) | set().union(*(_find_keys(v, keys) for v in obj.values()))
+    if isinstance(obj, list):
+        return set().union(*(_find_keys(v, keys) for v in obj)) if obj else set()
+    return set()
+
+
+def cmd_story(seed: int) -> int:
+    """Defense demo: clean book -> interacting errors -> findings with evidence -> score -> false accusations cost
+    reward -> an identical rerun. Eval mode, so the policy never sees the reward; the score is grader-side."""
+    from .generator import config_with_force
+    from .runner import run_episode, trajectory_hash
+    clean = config_with_force("dev", {"clean": True})
+    issues = config_with_force("dev", {
+        "issues": {"duplicate_invoice": 1, "payment_misallocation": 1, "fx_error": 1, "period_cutoff": 1},
+        "interactions": {"fx_partial_payment_at_boundary": 1, "cutoff_with_wrong_rate_date": 1}})
+    bar = "=" * 100
+
+    def run(policy, cfg):
+        return run_episode(policy, seed, cfg, mode=MODE_EVAL, remote=False, deterministic=True)
+
+    print(f"{bar}\n1. CLEAN COMPANY (seed {seed}, no errors injected; distractors only)\n{bar}")
+    r = run("careful_auditor", clean)
+    _s, _t, res = _score_run(r, seed, clean, None)
+    print(f"careful_auditor: {r['steps'] - 1} inspection steps, {len(_s['findings'])} findings, "
+          f"truth issues {len(_t['issues'])}\n{_score_line(res)}")
+
+    print(f"\n{bar}\n2. INTERACTING ERRORS (4 plain issues + 2 interaction scenarios), careful_auditor\n{bar}")
+    r1 = run("careful_auditor", issues)
+    print(format_run(r1, seed, issues))
+    sub, _truth, res1 = _score_run(r1, seed, issues, None)
+    print("\nEvidence cited per finding (ids the agent read through the tools):")
+    for i, f in enumerate(sub["findings"]):
+        print(f"  {i + 1:>2}. {f['type']:<22} {', '.join(f['evidence_ids'])}")
+
+    print(f"\n{bar}\n3. FALSE ACCUSATIONS COST REWARD: flag_all and reconcile on the same episode\n{bar}")
+    for other in ("flag_all", "reconcile"):
+        print(format_contrast(r1, run(other, issues), seed, issues))
+
+    print(f"\n{bar}\n4. THE AGENT NEVER SEES THE TRUTH; THE RUN IS REPRODUCIBLE\n{bar}")
+    leaked = _find_keys([row["observation"] for row in r1["trajectory"]],
+                        {"truth", "issues", "evidence_sets", "expected_amount_minor", "seed", "provenance"})
+    seen = sorted({row["reward"] for row in r1["trajectory"]})
+    print(f"truth-like keys in any observation: {sorted(leaked) or 'none'}; "
+          f"rewards visible to the policy in eval mode: {seen}; grader reward_shared: "
+          f"{r1['grader_report']['reward_shared']:+.4f}")
+    r2 = run("careful_auditor", issues)
+    same = (trajectory_hash(r1["trajectory"]) == trajectory_hash(r2["trajectory"])
+            and r1["grader_report"]["reward_shared"] == r2["grader_report"]["reward_shared"])
+    print(f"rerun with the same (seed, config): trajectory sha256 {trajectory_hash(r2['trajectory'])[:16]}..., "
+          f"reward {r2['grader_report']['reward_shared']:+.4f} -> {'IDENTICAL' if same else 'DIFFERENT'}")
+    return 0 if same and not leaked else 1
+
+
 def cmd_demo(a) -> int:
     from .runner import load_splits, resolve_config, run_episode
+    if getattr(a, "story", False):
+        return cmd_story(a.seed if a.seed is not None else 7)
 
     root = _root(a)
     if a.seed is not None:
@@ -309,6 +366,9 @@ def build_parser() -> argparse.ArgumentParser:
     d.add_argument("--policy", default="careful_auditor", choices=list(ALL_POLICY_NAMES))
     d.add_argument("--contrast", default="reconcile", choices=list(ALL_POLICY_NAMES) + ["none"],
                    help="second policy run on the same episode for comparison (default reconcile; none = skip)")
+    d.add_argument("--story", action="store_true",
+                   help="defense walk-through: clean book, interacting errors, evidence, score, false accusations, "
+                        "identical rerun (uses --seed, default 7)")
     d.add_argument("--index", type=int, default=0, help="which dev episode (ignored with --seed)")
     d.add_argument("--seed", type=int, default=None, help="run this seed instead of a dev episode")
     d.add_argument("--config", default=None,
