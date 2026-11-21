@@ -453,3 +453,26 @@ def test_story_demo_runs_and_its_rerun_is_identical():
     assert "1. CLEAN COMPANY" in out and "F1=1.000" in out
     assert "truth-like keys in any observation: none" in out and "-> IDENTICAL" in out
     assert "flag_all" in out and "false positives" in out
+
+
+# ------------------------------------------------------------------ 8. shipped trajectories carry no truth
+def test_check_flags_truth_planted_in_a_shipped_trajectory(tmp_path, monkeypatch):
+    import shutil as _sh
+
+    from auditgym import check
+    src = os.path.join(ROOT, "trajectories")
+    for n in ("trajectories.jsonl", "oracle_reference.jsonl", "samples.jsonl"):
+        _sh.copy(os.path.join(src, n), tmp_path / n)
+    monkeypatch.setattr(check, "TRAJ_DIR", str(tmp_path))
+    rep = check.Report()
+    check.step_trajectory_files(rep)
+    name = "no private truth"
+    assert [c["status"] for c in rep.checks if name in c["name"]] == ["PASS"]
+    lines = (tmp_path / "trajectories.jsonl").read_text().splitlines()
+    row = json.loads(lines[3])
+    row["observation"]["result"] = {"evidence_sets": [["D-1"]]}
+    lines[3] = json.dumps(row)
+    (tmp_path / "trajectories.jsonl").write_text("\n".join(lines) + "\n")
+    rep = check.Report()
+    check.step_trajectory_files(rep)
+    assert [c["status"] for c in rep.checks if name in c["name"]] == ["FAIL"]

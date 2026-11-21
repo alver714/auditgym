@@ -2,14 +2,14 @@
 
 - env_version: `auditgym-1.0.0`  python: `3.13.18`  platform: `Linux`  mode: `full`
 - configs: `dev` dev@1.3.0 (hash `fb29dd57ab25`), `holdout` holdout@1.3.0 (hash `3396914da9dc`), `train` train@1.3.0 (hash `b0cdce3de8ea`)
-- result: **PASS**  (74 pass, 0 fail, 1 warn, 0 skip)
+- result: **PASS**  (75 pass, 0 fail, 1 warn, 0 skip)
 
 
 ## Step 1
 
 | status | check | detail |
 |---|---|---|
-| PASS | pytest | 1079 passed in 118.28s (0:01:58) (120.9s) |
+| PASS | pytest | 1080 passed in 118.76s (0:01:58) (121.2s) |
 
 ## Step 2
 
@@ -25,6 +25,7 @@
 | PASS | every shipped trajectory row conforms to schemas/trajectory_row.schema.json | 2211 rows in 3 files |
 | PASS | oracle rows are in oracle_reference.jsonl (labelled), not mixed into trajectories.jsonl | trajectories.jsonl policies ['careful_auditor', 'careful_auditor_degraded', 'flag_all', 'random_explorer', 'reconcile'] |
 | PASS | samples.jsonl has an eval-mode run (reward hidden) and truncated=true runs (steps and wall clock) | truncated by ['steps', 'time'], eval-mode samples 1 |
+| PASS | no private truth (truth/evidence/scenario tokens, seed key) in any observation of the shipped trajectories | 2211 observations in 3 files scanned for 14 tokens |
 | PASS | every trajectory header carries env_version, config_id, config_version and config_hash | 2 distinct (env, config, version) combinations |
 
 ## Step 3
@@ -121,11 +122,11 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.12 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.14 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.12 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.11 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.14 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.11 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
 | careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.13 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.

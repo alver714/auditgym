@@ -347,6 +347,22 @@ def step_trajectory_files(rep: Report) -> None:
             f"truncated by {sorted(have_trunc)}, eval-mode samples {len(have_eval)}")
     versions = {(h["env_version"], h["config_id"], h["config_version"]) for r in rows.values()
                 for h in (x["header"] for x in r if x["step"] == 0 and "header" in x)}
+    # the brief: no private truth in the observations of the shipped (training) trajectories
+    hits: list[str] = []
+    n_obs = 0
+    for n, rs in rows.items():
+        for r in rs:
+            obs = r.get("observation")
+            n_obs += 1
+            text = json.dumps(obs, ensure_ascii=False).lower()
+            toks = [t for t in LEAK_TOKENS if t.lower() in text]
+            if toks:
+                hits.append(f"{n} {r.get('episode_id')}/step{r.get('step')}: {toks[0]!r}")
+            if "seed" in {str(k).lower() for k in _walk_keys(obs)}:
+                hits.append(f"{n} {r.get('episode_id')}/step{r.get('step')}: key 'seed'")
+    rep.add(s, "no private truth (truth/evidence/scenario tokens, seed key) in any observation of the shipped trajectories",
+            not hits, f"{len(hits)} hits, e.g. {hits[:2]}" if hits else f"{n_obs} observations in 3 files scanned "
+            f"for {len(LEAK_TOKENS)} tokens")
     rep.add(s, "every trajectory header carries env_version, config_id, config_version and config_hash",
             all(h.get("config_hash") and h.get("env_version") for r in rows.values()
                 for h in (x["header"] for x in r if x["step"] == 0 and "header" in x))
