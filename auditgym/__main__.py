@@ -209,7 +209,9 @@ def _find_keys(obj, keys: set) -> set:
 
 def cmd_story(seed: int) -> int:
     """Defense demo: clean book -> interacting errors -> findings with evidence -> score -> false accusations cost
-    reward -> an identical rerun. Eval mode, so the policy never sees the reward; the score is grader-side."""
+    reward -> an identical rerun. Eval mode, so the policy never sees the reward; the score is grader-side.
+    Exit code 1 unless all three self-checks hold: no truth-like key in any observation, every reward the policy saw
+    is 0.0 (eval hides it), and the rerun has the same trajectory hash and grader reward."""
     from .generator import config_with_force
     from .runner import run_episode, trajectory_hash
     clean = config_with_force("dev", {"clean": True})
@@ -251,7 +253,14 @@ def cmd_story(seed: int) -> int:
             and r1["grader_report"]["reward_shared"] == r2["grader_report"]["reward_shared"])
     print(f"rerun with the same (seed, config): trajectory sha256 {trajectory_hash(r2['trajectory'])[:16]}..., "
           f"reward {r2['grader_report']['reward_shared']:+.4f} -> {'IDENTICAL' if same else 'DIFFERENT'}")
-    return 0 if same and not leaked else 1
+    rewards_hidden = all(row["reward"] == 0.0 for run_ in (r1, r2) for row in run_["trajectory"])
+    if not rewards_hidden:
+        print("FAIL: a reward was visible to the policy in eval mode")
+    if leaked:
+        print("FAIL: truth-like keys in an observation")
+    if not same:
+        print("FAIL: the rerun differs")
+    return 0 if same and not leaked and rewards_hidden else 1
 
 
 def cmd_demo(a) -> int:
@@ -368,7 +377,8 @@ def build_parser() -> argparse.ArgumentParser:
                    help="second policy run on the same episode for comparison (default reconcile; none = skip)")
     d.add_argument("--story", action="store_true",
                    help="defense walk-through: clean book, interacting errors, evidence, score, false accusations, "
-                        "identical rerun (uses --seed, default 7)")
+                        "identical rerun (uses --seed, default 7); exit 1 if a truth-like key reaches an observation, a reward is "
+                        "visible to the policy or the rerun differs")
     d.add_argument("--index", type=int, default=0, help="which dev episode (ignored with --seed)")
     d.add_argument("--seed", type=int, default=None, help="run this seed instead of a dev episode")
     d.add_argument("--config", default=None,

@@ -476,3 +476,37 @@ def test_check_flags_truth_planted_in_a_shipped_trajectory(tmp_path, monkeypatch
     rep = check.Report()
     check.step_trajectory_files(rep)
     assert [c["status"] for c in rep.checks if name in c["name"]] == ["FAIL"]
+
+
+@pytest.mark.parametrize("tamper,message", [
+    ("reward", "a reward was visible to the policy"),
+    ("leak", "truth-like keys in an observation"),
+    ("rerun", "the rerun differs"),
+])
+def test_story_demo_fails_when_a_self_check_fails(monkeypatch, capsys, tamper, message):
+    """Each self-check of `demo --story` must turn into exit code 1, not only into printed text."""
+    import copy
+
+    from auditgym import __main__ as cli
+    from auditgym import runner
+    real = runner.run_episode
+    calls = {"n": 0}
+
+    def fake(policy, seed, cfg, **kw):
+        r = real(policy, seed, cfg, **kw)
+        if policy != "careful_auditor" or not (cfg.get("force") or {}).get("interactions"):
+            return r
+        calls["n"] += 1
+        r = copy.deepcopy(r)
+        if tamper == "reward":
+            r["trajectory"][-1]["reward"] = 0.25            # eval mode must hide it
+        elif tamper == "leak":
+            r["trajectory"][1]["observation"]["result"] = {"truth": {"issues": []}}
+        elif tamper == "rerun" and calls["n"] == 2:
+            r["grader_report"]["reward_shared"] += 0.001
+        return r
+    monkeypatch.setattr(runner, "run_episode", fake)
+    assert cli.cmd_story(7) == 1
+    assert message in capsys.readouterr().out
+    monkeypatch.setattr(runner, "run_episode", real)
+    assert cli.cmd_story(7) == 0

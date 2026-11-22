@@ -41,7 +41,8 @@ Nothing below alters generated data, the matcher, the reward or the action inter
   `isolation-docker` runs `scripts/docker_isolation_check.sh` (isolation tests, self-test and the README commands)
   as root inside the Python 3.11 image with `--network none`.
 * New `python -m auditgym demo --story`: defense walk-through (clean book, interacting errors, cited evidence, score,
-  false accusations, truth never in observations, identical rerun); exit code 1 if the last two checks fail.
+  false accusations, truth never in observations, identical rerun); exit code 1 if any self-check fails (a truth-like
+  key in an observation, a reward visible to the policy in eval mode, or a differing rerun).
 * README: `period_cutoff` described as two-directional (issued after `period_end` or before `period_start`, posted
   inside the period), matching DESIGN, SPEC and the generator; commands table lists `isolate`, `demo --story` and
   `check --allow-skip-tests`. `docs/docker_check_result.md` records a full `check` in the image on Linux/x86-64

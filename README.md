@@ -47,7 +47,7 @@ Continuous integration (`.github/workflows/ci.yml`) runs `python -m auditgym che
 | `python -m auditgym check [--quick] [--out reports/] [--update-docs] [--allow-skip-tests]` | Tests, reproducibility, validation, schemas, baselines, paired checks, isolation and leak scan, reward properties, failure analysis; writes `reports/check_report.{json,md}` and per-episode grader logs in `reports/grader_logs/<policy>/`. `--update-docs` (full run only) regenerates the results blocks below and `docs/check_report.*` | Тесты, воспроизводимость, валидация, схемы, базовые политики, парные проверки, изоляция, скан утечек, свойства награды, анализ ошибок |
 | `python -m auditgym run --policy P --seed N --config C [--mode eval\|train] [--pretty] [--deterministic] [--rename-salt N --rename-mode shape\|aggressive --permute-salt M] [--log-dir D]` | Run ONE policy (any of the 4 baselines, `careful_auditor` or `careful_auditor_degraded`) on ONE episode through the subprocess grader. Prints the grader report as JSON, or with `--pretty` the same readable step log as `demo`. `--deterministic` runs in-process with the wall clock frozen | Один эпизод одной политикой; `--pretty` даёт читаемый лог |
 | `python -m auditgym demo [--policy P] [--contrast Q\|none] [--seed N --config C] [--index I]` | Default: `careful_auditor` on the first dev episode with a readable step log, then `reconcile` on the same episode for contrast (what the naive baseline misses). `--seed/--config` pick any episode (config name or path to a JSON file) | Сначала сильная политика, затем наивная для контраста |
-| `python -m auditgym demo --story [--seed N]` | Defense walk-through in eval mode, about 100 lines: a clean company (no findings, F1 = 1), a company with 4 plain issues and both interaction scenarios (findings with the evidence ids they cite, matched against the truth grader-side), `flag_all` and `reconcile` on the same episode (false accusations and misses cost reward), then a check that no observation carries truth-like keys and that a rerun gives the identical trajectory hash and reward. Exit code 1 if either fails | Демо для защиты: чистая компания, взаимодействующие ошибки, доказательства, оценка, ложные обвинения, идентичный повтор |
+| `python -m auditgym demo --story [--seed N]` | Defense walk-through in eval mode, about 100 lines: a clean company (no findings, F1 = 1), a company with 4 plain issues and both interaction scenarios (findings with the evidence ids they cite, matched against the truth grader-side), `flag_all` and `reconcile` on the same episode (false accusations and misses cost reward), then three self-checks: no observation carries truth-like keys, every reward the policy saw is 0.0 (eval mode hides it), and a rerun gives the identical trajectory hash and grader reward. Exit code 1 if any of them fails | Демо для защиты: чистая компания, взаимодействующие ошибки, доказательства, оценка, ложные обвинения, идентичный повтор |
 | `python -m auditgym golden [--write]` | Compare (or rewrite) the committed cross-platform digests in `tests/golden_hashes.json` | Сверка эталонных хэшей |
 | `python -m auditgym isolate (--agent CMD \| --policy P \| --self-test) [--episodes FILE\|- \| --split S] [--log-dir D]` | Closed run: grader, harness and agent as separate processes, the agent under its own uid (needs root, e.g. the Docker image). `--self-test` runs a hostile escape-probe agent. See "Trust boundary and deployment" | Закрытый запуск агента под отдельным uid; `--self-test` проверяет изоляцию |
 
@@ -303,7 +303,7 @@ Each item of the submission list, where it lives, and what verifies it. `python 
 | **README** with container instructions and one verification command | this file: Quickstart (`docker build` / `docker run --network none`), Commands, `python -m auditgym check` | CI on every push (`check --quick`, plus the Docker job) |
 | **Matcher and reward**: shared matching and reward code, schemas and policies | `auditgym/matcher.py` (1-1 maximum bipartite matching, amount / currency / evidence rules), reward in Reward above, `schemas/` (13 JSON Schemas), `configs/` (policy text and configs) | `tests/test_matcher_reward.py`, `check` steps 6-7 (leak scan, reward checks) |
 | **Episodes**: 10 open train and 10 dev | `episodes/train/` (10), `episodes/dev/` (10); their truth in `grader_data/` | `check` step 2 regenerates all 20 byte-for-byte; `schema_check` |
-| **Tests** of environment, matching and reward | `tests/` (`test_env_contract.py`, `test_matcher_reward.py`, `test_hardening.py`, `test_isolation.py`, ...): 1080 tests | `check` step 1; Docker CI job runs them as root so nothing is skipped |
+| **Tests** of environment, matching and reward | `tests/` (`test_env_contract.py`, `test_matcher_reward.py`, `test_hardening.py`, `test_isolation.py`, ...): 1083 tests | `check` step 1; Docker CI job runs them as root so nothing is skipped |
 | **Four baseline policy adapters** | `auditgym/policies/`: `random_explorer`, `reconcile`, `flag_all`, `oracle` (grader-side reward ceiling); extra: `careful_auditor`, `careful_auditor_degraded` | `check` step 4 (all baselines on the holdout, see Results) |
 | **Trajectories**: `trajectories.jsonl` with `episode_id, step, action, observation, reward, terminated, truncated`; no private truth in training observations | `trajectories/trajectories.jsonl` (20 open episodes, train mode), `oracle_reference.jsonl` (kept apart, labelled), `samples.jsonl`; schema `schemas/trajectory_row.schema.json` | `check` step 2: every row against the schema, oracle kept apart, and a leak scan of all 2211 shipped observations (no truth / evidence / scenario token, no seed key); step 6 scans every fresh holdout run the same way |
 | **Design note** | `docs/DESIGN.md` (+ `SPEC.md`, `docs/CFA_GROUNDING.md`) | `tests/test_docs.py` keeps docs and code in sync |
@@ -324,7 +324,7 @@ mode, remote grader. The `careful_auditor` row is an extra diagnostic policy, no
 
 <!-- RESULTS:BEGIN (generated by `python -m auditgym check --update-docs`; do not edit) -->
 
-Generated by the latest **full** `python -m auditgym check` run: 75 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1080 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
+Generated by the latest **full** `python -m auditgym check` run: 75 PASS, 0 FAIL, 1 WARN, 0 SKIP; pytest: 1083 passed. Full per-check table: [docs/check_report.md](docs/check_report.md).
 
 
 #### Baseline policies (eval mode, holdout, remote env)
@@ -333,12 +333,12 @@ Shared reward, F1, experimental reward, steps and wall time are means over episo
 
 | policy | n | precision (pooled) | recall (pooled) | F1 [95% CI] | shared reward [95% CI] | experimental | steps | wall s |
 |---|---|---|---|---|---|---|---|---|
-| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.11 |
-| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.12 |
-| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.11 |
-| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.10 |
-| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.12 |
-| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.13 |
+| random_explorer | 20 | 0.000 | 0.000 | +0.100 [+0.000, +0.250] | -0.806 [-1.000, -0.514] | -0.806 | 29.0 | 0.09 |
+| reconcile | 20 | 0.066 | 0.479 | +0.109 [+0.063, +0.155] | -0.807 [-0.891, -0.721] | -0.791 | 20.4 | 0.10 |
+| flag_all | 20 | 0.003 | 0.028 | +0.006 [+0.000, +0.014] | -0.990 [-1.000, -0.974] | -0.984 | 6.0 | 0.07 |
+| oracle | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +1.000 [+1.000, +1.000] | +1.000 | 1.0 | 0.08 |
+| careful_auditor (extra) | 20 | 1.000 | 1.000 | +1.000 [+1.000, +1.000] | +0.949 [+0.946, +0.953] | +0.949 | 26.4 | 0.10 |
+| careful_auditor_degraded (extra) | 20 | 0.570 | 0.634 | +0.531 [+0.390, +0.663] | +0.030 [-0.246, +0.290] | +0.030 | 20.9 | 0.10 |
 
 `oracle` reads the truth grader-side and only demonstrates the reward ceiling; it is not agent ability.
 
